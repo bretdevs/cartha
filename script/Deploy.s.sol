@@ -123,12 +123,15 @@ contract Deploy is Script {
 
     /// @dev Buy on the curve, deposit, park the shares at the dead address. This is the
     ///      inflation-attack defence: the share supply is never tiny.
+    ///      Mandatory per audit finding L-01: the script reverts rather than deploying unseeded.
     function _seed(Cfg memory c, Out memory o) internal {
-        if (c.seedEth == 0) return;
+        require(c.seedEth > 0, "L-01: seed is mandatory (SEED_ETH_WEI == 0)");
+        require(c.seedCartha > 0, "L-01: seed is mandatory (SEED_CARTHA_WEI == 0)");
         uint256 got = IPonsCurve(o.curve).buy{value: c.seedEth}(c.seedEth, 0, c.deployer);
         uint256 toDeposit = c.seedCartha > got ? got : c.seedCartha;
         IERC20(o.token).approve(o.vault, toDeposit);
         CarthaVault(o.vault).deposit(toDeposit, DEAD);
+        require(CarthaVault(o.vault).balanceOf(DEAD) >= 1e18, "L-01: dead-address shares below minimum");
         console.log("seed buy CARTHA    ", got);
         console.log("seeded CARTHA      ", toDeposit);
     }
