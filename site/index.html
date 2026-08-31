@@ -926,7 +926,10 @@ function renderAudit() {
     tile = ["wait", "Under review", `${a.firm} is reviewing the vault and the harvester. Report pending.`];
   } else if (a.status === "scheduled") {
     risk = `<strong>The contracts are not audited yet.</strong> <span>${firm} is scheduled to review the vault and the harvester. An <a href="#security">independent, unattributed security review</a> found no critical or high severity issues; it is not an audit. Until an audit report is published, size any deposit as if the code could be wrong. ${pons}</span>`;
-    line = `Audit: scheduled with ${firm}. An unattributed <a href="#security">security review</a> is published.`; foot = `Not investment advice. The contracts are unaudited. An audit by ${firm} is scheduled.`;
+    line = `Audit: scheduled with ${firm}. An unattributed <a href="#security">security review</a> is published.`;
+    foot = CONFIG.review?.url
+      ? `Not investment advice. Independently <a href="${CONFIG.review.url}" rel="noopener">reviewed</a>, not yet audited. The review found no critical or high severity issues. An audit by ${firm} is scheduled.`
+      : `Not investment advice. The contracts are unaudited. An audit by ${firm} is scheduled.`;
     faq = `Not yet. An audit by ${a.firm} is scheduled. An unattributed independent security review is published in the security section; by its own terms it is not an audit. Until an audit report is published, size any deposit as if the code could be wrong.`;
     tile = ["wait", "Scheduled", `${a.firm} will review the vault and the harvester. Unaudited until the report exists.`];
   } else {
