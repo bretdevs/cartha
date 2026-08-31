@@ -131,4 +131,6 @@ Motion: GSAP with ScrollTrigger from cdnjs. A canvas of slow water lines under t
 
 Sections beyond the vault itself: a position card and a vault card next to the deposit panel, an illustrative projection driven by volume, market value and deposit share, a comparison of the yield shapes launchpad tokens use, a status board that reads the audit slot, a questions list and a listing checklist for integrators.
 
+Security review: an independent, unattributed review of commit 6b1ae81 (31 Aug 2026) is published at `/security-review-v1.pdf` and summarised in the site's security section. Its own attribution disclaimer says it is not an audit by Hashlock or any named firm and may only be described as an independent smart contract security review, so that is exactly how the site describes it. Findings: 0 critical, 0 high, 1 medium (M-01, bounded MEV on permissionless harvests, disclosed in the risks), 2 low (L-01 seed now mandatory in the deploy script, L-02 acknowledged), 4 QA. The audit slot is unchanged by this.
+
 Audit slot: `CONFIG.audit` in `site/index.html`. `status` is `none`, `scheduled`, `review` or `complete`; the footer, the first risk item and the line under the addresses all read from it. It only says "Audited by" when `status` is `complete` and `reportUrl` points at the published report. Currently `scheduled` with Hashlock.

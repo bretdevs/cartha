@@ -613,6 +613,27 @@
     </div>
   </section>
 
+  <section id="security">
+    <div class="wrap">
+      <h2 class="rv">Security review</h2>
+      <p class="intro rv">An independent security review of the contracts was completed on 31 August 2026, at commit <span class="mono">6b1ae81</span>, before the rename from STILL to Cartha; the rename changed names, not logic, and the diff is public. The report is deliberately unattributed: by its own terms it names no firm, is not an audit by Hashlock or anyone else, and must not be represented as one. The Hashlock audit remains scheduled, and this page will say audited only when their report exists.</p>
+      <div class="board rv" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); margin-bottom: clamp(24px, 3.5vw, 40px)">
+        <div class="tile good"><h3>Critical</h3><b>0</b></div>
+        <div class="tile good"><h3>High</h3><b>0</b></div>
+        <div class="tile wait"><h3>Medium</h3><b>1</b><p>Open</p></div>
+        <div class="tile wait"><h3>Low</h3><b>2</b><p>1 open, 1 acknowledged</p></div>
+        <div class="tile none"><h3>Quality</h3><b>4</b><p>Open</p></div>
+      </div>
+      <ul class="ruled">
+        <li class="rv"><p class="lead"><strong>M-01. Harvests can be sandwiched, within bounds.</strong> <span>harvest is permissionless and the caller supplies the slippage floor, so a hostile caller can land a fee buy at a worse price. The immutable per-call cap and cooldown bound what a sandwich can take, and the keeper quotes before sending. Open, and disclosed here on purpose.</span></p></li>
+        <li class="rv"><p class="lead"><strong>L-01. The inflation defence is a deploy-time seed.</strong> <span>The first-depositor defence depends on the seed deposit to the dead address. The deploy script now refuses to run without it.</span></p></li>
+        <li class="rv"><p class="lead"><strong>L-02. Fee ETH can wait in two pons phases.</strong> <span>In the swept and rescued phases the harvester holds ETH it cannot spend. Acknowledged; it is the same fact as "some fees wait on pons" below.</span></p></li>
+        <li class="rv"><p class="lead"><strong>Q-01 to Q-04.</strong> <span>Packed ledger fields under extreme parameters, cap enforcement living in harvest rather than the pool callback, constructor addresses taken as given, and a ledger that grows one entry per harvest. All display or defence-in-depth items; none touches funds.</span></p></li>
+      </ul>
+      <p class="rv" style="margin-top:24px"><a class="cta" href="security-review-v1.pdf" rel="noopener">Read the full report, PDF <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 13 13 3M5 3h8v8"/></svg></a></p>
+    </div>
+  </section>
+
   <section id="risks">
     <div class="wrap">
       <h2 class="rv">Read this before you deposit</h2>
@@ -678,7 +699,7 @@ return carthaPerShare * carthaPriceInEth / 1e18;</code></pre>
         <a class="wordmark" href="#top"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="27" fill="none" stroke="currentColor" stroke-width="5"/><path d="M5 32h54a27 27 0 0 1-54 0z" fill="currentColor"/></svg><span>cartha</span></a>
         <p style="max-width:34ch;margin:14px 0 0;font-size:0.92rem">A vault on Robinhood Chain whose share is a plain ERC-20. Fees buy CARTHA into the vault. vCARTHA just gets worth more.</p>
       </div>
-      <div><h4>Vault</h4><ul><li><a href="#deposit">Deposit</a></li><li><a href="#ledger">Harvest ledger</a></li><li><a href="#status">Status</a></li><li><a href="#risks">Risks</a></li></ul></div>
+      <div><h4>Vault</h4><ul><li><a href="#deposit">Deposit</a></li><li><a href="#ledger">Harvest ledger</a></li><li><a href="#status">Status</a></li><li><a href="#security">Security review</a></li><li><a href="#risks">Risks</a></li></ul></div>
       <div><h4>Integrators</h4><ul><li><a href="#read">Contracts</a></li><li><a href="#compare">Yield shapes</a></li><li><a href="#questions">Questions</a></li><li><a href="https://github.com/bretdevs/cartha" rel="noopener">Source</a></li></ul></div>
       <div><h4>Elsewhere</h4><ul><li><a href="#" id="xlink2" rel="noopener">X</a></li><li><a href="#" id="ponslink" rel="noopener">pons</a></li><li><a href="https://robinhoodchain.blockscout.com" rel="noopener">Blockscout</a></li></ul></div>
     </div>
@@ -716,6 +737,8 @@ const CONFIG = {
   ponsHook: "0xE5e702641Ea86F4ae6cC3cDaeD2B886f976Be044",
   x: "https://x.com/",
   pollMs: 15000,
+  // Independent, unattributed security review (not an audit; see its own attribution disclaimer).
+  review: { url: "security-review-v1.pdf", commit: "6b1ae81", date: "31 August 2026" },
   // Audit slot. status: "none" | "scheduled" | "review" | "complete". The badge only says
   // "Audited by" once status is "complete" and reportUrl points at the published report.
   audit: { firm: "Hashlock", firmUrl: "https://x.com/Hashlock_", reportUrl: "", status: "scheduled" },
@@ -902,9 +925,9 @@ function renderAudit() {
     faq = `Not yet. ${a.firm} is reviewing the contracts now. Until the report is published, size any deposit as if the code could be wrong.`;
     tile = ["wait", "Under review", `${a.firm} is reviewing the vault and the harvester. Report pending.`];
   } else if (a.status === "scheduled") {
-    risk = `<strong>The contracts are not audited yet.</strong> <span>${firm} is scheduled to review the vault and the harvester. The report will be linked here when it is published. Until then, size any deposit as if the code could be wrong. ${pons}</span>`;
-    line = `Audit: scheduled with ${firm}. The report will be linked here.`; foot = `Not investment advice. The contracts are unaudited. An audit by ${firm} is scheduled.`;
-    faq = `Not yet. An audit by ${a.firm} is scheduled. Until the report is published, size any deposit as if the code could be wrong.`;
+    risk = `<strong>The contracts are not audited yet.</strong> <span>${firm} is scheduled to review the vault and the harvester. An <a href="#security">independent, unattributed security review</a> found no critical or high severity issues; it is not an audit. Until an audit report is published, size any deposit as if the code could be wrong. ${pons}</span>`;
+    line = `Audit: scheduled with ${firm}. An unattributed <a href="#security">security review</a> is published.`; foot = `Not investment advice. The contracts are unaudited. An audit by ${firm} is scheduled.`;
+    faq = `Not yet. An audit by ${a.firm} is scheduled. An unattributed independent security review is published in the security section; by its own terms it is not an audit. Until an audit report is published, size any deposit as if the code could be wrong.`;
     tile = ["wait", "Scheduled", `${a.firm} will review the vault and the harvester. Unaudited until the report exists.`];
   } else {
     risk = `<strong>The contracts are not audited.</strong> <span>Neither the vault nor the harvester has been reviewed by a third party. Size any deposit as if the code could be wrong. ${pons}</span>`;
@@ -922,6 +945,7 @@ function renderBoard() {
   const tiles = [
     ["Contracts", live ? ["good", "Live on Robinhood Chain", "Verified source on Blockscout. Addresses in the contracts section."] : ["none", "Not deployed yet", "The page runs on simulated numbers until the launch."]],
     ["Audit", audit],
+    ["Security review", ["wait", "Reviewed, unattributed", "0 critical, 0 high, 1 medium open at commit " + (CONFIG.review?.commit || "") + ". Not an audit; see the security section."]],
     ["Vault code", ["good", "Stock OpenZeppelin ERC-4626", "With a name. No custom logic, no override beyond decimals."]],
     ["Admin surface", ["good", "None", "No owner, no pause, no upgrade path, no fee switch. On the harvester either."]],
     ["Ratio invariant", ["good", "Fuzz tested", "CARTHA per vCARTHA never decreases across any sequence of deposits, redemptions and harvests."]],
