@@ -105,6 +105,8 @@ Holding STILL gives you the token. Holding vSTILL gives you the token plus every
 
 Say: ratio, STILL per vSTILL, harvest, vault share, no claim step, no owner.
 
+Colors: navy #0a2540 on #f4f7fb, accent #1f5fff. Type: IBM Plex Sans.
+
 Do not say: APY, yield farm, guaranteed, only goes up (without "in STILL terms"), staking rewards, passive income.
 
 No dashes of any kind in copy. Sentence case. Numbers with four decimals for the ratio.

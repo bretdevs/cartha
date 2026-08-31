@@ -11,23 +11,25 @@
 <meta property="og:image" content="https://holdstill-plum.vercel.app/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://holdstill-plum.vercel.app/og.png">
-<meta name="theme-color" content="#103b2c">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='27' fill='none' stroke='%23103b2c' stroke-width='5'/%3E%3Cpath d='M5 32h54v0a27 27 0 0 1-54 0z' fill='%23103b2c'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#0a2540">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='27' fill='none' stroke='%230a2540' stroke-width='5'/%3E%3Cpath d='M5 32h54v0a27 27 0 0 1-54 0z' fill='%230a2540'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --water: #e6ede8;
-    --deep: #103b2c;
-    --deeper: #0b2a1f;
-    --ink: #0e1f18;
-    --muted: #56695f;
-    --line: #c9d6ce;
-    --surface: #f4f7f5;
-    --serif: "Instrument Serif", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-    --sans: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
-    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --water: #f4f7fb;
+    --deep: #0a2540;
+    --deeper: #071a30;
+    --ink: #0f1f33;
+    --muted: #5b6b80;
+    --line: #d3dbe6;
+    --surface: #ffffff;
+    --accent: #1f5fff;
+    --accent-dark: #174ad1;
+    --serif: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+    --sans: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     --wrap: min(1060px, calc(100% - 44px));
     --ratio-size: clamp(5.6rem, 19vw, 17rem);
   }
@@ -41,11 +43,11 @@
   body.mcta-on { padding-bottom: 76px; }
   a { color: inherit; text-decoration: underline; text-decoration-color: var(--line); text-decoration-thickness: 1px; text-underline-offset: 3px; }
   a:hover { text-decoration-color: var(--muted); }
-  :focus-visible { outline: 2px solid var(--deep); outline-offset: 3px; }
-  ::selection { background: var(--deep); color: var(--surface); }
-  h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; letter-spacing: -0.012em; }
-  h2 { font-size: clamp(1.9rem, 3.3vw, 2.65rem); line-height: 1.08; margin-bottom: 0.55em; }
-  h3 { font-size: 1.4rem; line-height: 1.15; margin-bottom: 0.4em; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  ::selection { background: var(--accent); color: #fff; }
+  h1, h2, h3 { font-family: var(--sans); font-weight: 600; margin: 0; letter-spacing: -0.022em; }
+  h2 { font-size: clamp(1.55rem, 2.5vw, 2.05rem); line-height: 1.15; margin-bottom: 0.6em; }
+  h3 { font-size: 1.12rem; line-height: 1.25; margin-bottom: 0.45em; }
   p { margin: 0 0 1em; max-width: 62ch; }
   code, .mono { font-family: var(--mono); font-size: 0.9em; }
   button { font: inherit; }
@@ -59,34 +61,34 @@
   header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
   .wordmark { display: inline-flex; align-items: baseline; gap: 10px; text-decoration: none; }
   .wordmark svg { width: 22px; height: 22px; transform: translateY(2px); }
-  .wordmark span { font-family: var(--serif); font-size: 1.8rem; line-height: 1; letter-spacing: -0.02em; }
+  .wordmark span { font-weight: 600; font-size: 1.35rem; line-height: 1; letter-spacing: -0.035em; }
   nav { display: flex; gap: clamp(14px, 2.4vw, 28px); font-size: 0.95rem; }
   nav a { text-decoration: none; padding-bottom: 2px; border-bottom: 1px solid transparent; white-space: nowrap; }
   nav a:hover { border-bottom-color: var(--ink); }
 
   /* hero */
   .hero { padding: clamp(56px, 9vw, 116px) 0 0; }
-  .hero h1 { font-size: clamp(2.9rem, 6.2vw, 5.4rem); line-height: 1; letter-spacing: -0.022em; }
+  .hero h1 { font-size: clamp(2.5rem, 5.4vw, 4.4rem); line-height: 1.02; letter-spacing: -0.035em; }
   .hero .lede { font-size: clamp(1.05rem, 1.35vw, 1.2rem); max-width: 58ch; margin: 22px 0 0; }
   .ratio-label { margin: clamp(44px, 7vw, 84px) 0 0; color: var(--muted); font-size: 0.9rem; }
   .ratio {
-    font-family: var(--serif); font-size: var(--ratio-size); line-height: 0.8; letter-spacing: -0.04em;
+    font-family: var(--sans); font-weight: 500; font-size: var(--ratio-size); line-height: 0.8; letter-spacing: -0.06em;
     margin: 12px 0 0; white-space: nowrap; position: relative; z-index: 2; transform: translateY(0.06em);
   }
-  .ratio .tail, .reflection .tail { font-size: 0.34em; letter-spacing: 0; margin-left: 0.08em; }
+  .ratio .tail, .reflection .tail { font-size: 0.34em; font-weight: 400; letter-spacing: -0.02em; margin-left: 0.1em; }
   .ratio .tail { color: var(--muted); }
 
   /* the water */
   .water { background: var(--deep); color: var(--water); position: relative; }
-  .water::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: rgba(230,237,232,0.5); }
+  .water::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: rgba(232,238,246,0.45); }
   .reflect-wrap {
     font-size: var(--ratio-size); height: 0.58em; overflow: hidden; user-select: none; pointer-events: none;
     -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.35) 45%, rgba(0,0,0,0) 92%);
             mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.35) 45%, rgba(0,0,0,0) 92%);
   }
   .reflection {
-    font-family: var(--serif); font-size: 1em; line-height: 0.8; letter-spacing: -0.04em; white-space: nowrap;
-    transform: scaleY(-1) translateY(0.06em); transform-origin: center; color: var(--water); opacity: 0.38; filter: blur(0.7px);
+    font-family: var(--sans); font-weight: 500; font-size: 1em; line-height: 0.8; letter-spacing: -0.06em; white-space: nowrap;
+    transform: scaleY(-1) translateY(0.06em); transform-origin: center; color: #e8eef6; opacity: 0.3; filter: blur(0.8px);
   }
   .reflection .tail { opacity: 0.55; }
   @keyframes ripple {
@@ -97,36 +99,37 @@
     100% { transform: scaleY(-1) translateY(0.06em); }
   }
   .reflection.ripple { animation: ripple 1.6s ease-out 1; }
-  .stats { display: flex; flex-wrap: wrap; gap: 6px 36px; padding: 22px 0 0; font-size: 0.95rem; color: rgba(230,237,232,0.78); }
-  .stats strong { color: var(--surface); font-weight: 600; }
-  .phase { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin: 12px 0 0; font-size: 0.88rem; color: rgba(230,237,232,0.66); }
-  .bar { display: inline-block; width: 150px; height: 2px; background: rgba(230,237,232,0.22); vertical-align: middle; }
-  .bar i { display: block; height: 100%; width: 0; background: var(--water); transition: width 0.6s ease; }
+  .stats { display: flex; flex-wrap: wrap; gap: 6px 36px; padding: 22px 0 0; font-size: 0.95rem; color: rgba(232,238,246,0.75); }
+  .stats strong { color: #fff; font-weight: 600; }
+  .phase { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin: 12px 0 0; font-size: 0.88rem; color: rgba(232,238,246,0.62); }
+  .bar { display: inline-block; width: 150px; height: 3px; border-radius: 2px; background: rgba(232,238,246,0.2); vertical-align: middle; overflow: hidden; }
+  .bar i { display: block; height: 100%; width: 0; background: var(--accent); transition: width 0.6s ease; }
 
   /* panel */
   .panel {
-    background: var(--surface); color: var(--ink); border-radius: 3px;
+    background: var(--surface); color: var(--ink); border-radius: 8px; box-shadow: 0 1px 2px rgba(10,37,64,0.08), 0 12px 32px rgba(10,37,64,0.18);
     margin: clamp(36px, 5vw, 56px) 0 0; padding: clamp(20px, 3.5vw, 30px); max-width: 560px; scroll-margin-top: 90px;
   }
   .tabs { display: flex; gap: 26px; border-bottom: 1px solid var(--line); }
   .tabs button { appearance: none; background: none; border: 0; padding: 0 2px 12px; margin: 0 0 -1px; font-size: 0.97rem; font-weight: 500; cursor: pointer; color: var(--muted); border-bottom: 1.5px solid transparent; }
-  .tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--ink); }
-  .field { margin-top: 22px; display: flex; align-items: center; gap: 10px; border: 1px solid var(--line); border-radius: 3px; padding: 10px 10px 10px 14px; background: #fff; }
+  .tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+  .field { margin-top: 22px; display: flex; align-items: center; gap: 10px; border: 1px solid var(--line); border-radius: 6px; padding: 10px 10px 10px 14px; background: #fff; }
+  .field:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(31,95,255,0.12); }
   .field input { flex: 1; min-width: 0; border: 0; background: transparent; font-size: 1.4rem; padding: 0; outline: none; color: var(--ink); }
   .field input::placeholder { color: var(--muted); opacity: 0.6; }
   .field .unit { font-size: 0.88rem; color: var(--muted); }
-  .field button { font-size: 0.82rem; padding: 5px 10px; border: 1px solid var(--line); background: transparent; border-radius: 3px; cursor: pointer; color: var(--ink); }
+  .field button { font-size: 0.82rem; font-weight: 500; padding: 5px 10px; border: 1px solid var(--line); background: transparent; border-radius: 5px; cursor: pointer; color: var(--ink); }
   .field button:hover { border-color: var(--muted); }
   .field button[disabled] { opacity: 0.45; cursor: default; }
   .btn {
-    display: block; width: 100%; margin-top: 14px; padding: 15px; border: 0; border-radius: 3px; cursor: pointer; text-align: center; text-decoration: none;
-    background: var(--deep); color: var(--surface); font-weight: 500; font-size: 0.97rem;
+    display: block; width: 100%; margin-top: 14px; padding: 15px; border: 0; border-radius: 6px; cursor: pointer; text-align: center; text-decoration: none;
+    background: var(--accent); color: #fff; font-weight: 600; font-size: 0.97rem;
   }
-  .btn:hover { background: var(--deeper); }
-  .btn[disabled] { opacity: 0.55; cursor: default; }
-  .btn[disabled]:hover { background: var(--deep); }
+  .btn:hover { background: var(--accent-dark); }
+  .btn[disabled] { opacity: 0.5; cursor: default; }
+  .btn[disabled]:hover { background: var(--accent); }
   .status-line { margin: 12px 0 0; min-height: 1.4em; font-size: 0.88rem; font-weight: 500; }
-  .status-line.err { color: #7a2e1c; }
+  .status-line.err { color: #b42318; }
   .holdings { margin: 14px 0 0; font-size: 0.9rem; }
   .panel .note { font-size: 0.85rem; color: var(--muted); margin: 16px 0 0; }
   .panel .links { margin: 12px 0 0; font-size: 0.85rem; display: flex; flex-wrap: wrap; gap: 6px 20px; }
@@ -135,13 +138,13 @@
   /* mobile bar */
   .mcta {
     display: none; position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; align-items: center; justify-content: space-between; gap: 12px;
-    padding: 12px 20px calc(12px + env(safe-area-inset-bottom)); background: var(--deep); color: var(--surface);
+    padding: 12px 20px calc(12px + env(safe-area-inset-bottom)); background: var(--deep); color: #fff; box-shadow: 0 -8px 24px rgba(10,37,64,0.25);
     transform: translateY(100%); transition: transform 0.25s ease;
   }
   .mcta.on { transform: translateY(0); }
-  .mcta .r { font-family: var(--serif); font-size: 1.5rem; line-height: 1; letter-spacing: -0.02em; }
-  .mcta .r small { font-family: var(--sans); font-size: 0.72rem; color: rgba(230,237,232,0.7); margin-left: 8px; letter-spacing: 0; }
-  .mcta a { text-decoration: none; background: var(--surface); color: var(--ink); padding: 10px 16px; border-radius: 3px; font-weight: 500; font-size: 0.92rem; }
+  .mcta .r { font-weight: 500; font-size: 1.35rem; line-height: 1; letter-spacing: -0.04em; }
+  .mcta .r small { font-weight: 400; font-size: 0.72rem; color: rgba(232,238,246,0.7); margin-left: 8px; letter-spacing: 0; }
+  .mcta a { text-decoration: none; background: var(--accent); color: #fff; padding: 10px 16px; border-radius: 6px; font-weight: 600; font-size: 0.92rem; }
 
   /* sections */
   section { padding: clamp(64px, 9vw, 116px) 0 0; scroll-margin-top: 76px; }
@@ -152,28 +155,29 @@
   .steps { list-style: none; margin: 0; padding: 0; max-width: 780px; }
   .steps li { display: grid; grid-template-columns: 52px 1fr; gap: 8px; padding: 18px 0; border-top: 1px solid var(--line); }
   .steps li:last-child { border-bottom: 1px solid var(--line); }
-  .steps li > span { font-family: var(--serif); font-size: 1.6rem; line-height: 1.15; }
+  .steps li > span { font-weight: 500; font-size: 1.05rem; line-height: 1.6; color: var(--muted); font-variant-numeric: tabular-nums; }
   .steps p { margin: 0; }
   .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px 52px; }
   .grid p { margin: 0; }
-  .callout { background: var(--deep); color: var(--water); margin-top: clamp(64px, 9vw, 116px); padding: clamp(56px, 8vw, 96px) 0; }
-  .callout h2 { color: var(--surface); }
-  .callout p { color: rgba(230,237,232,0.88); font-size: 1.03rem; }
-  .callout p + p { color: rgba(230,237,232,0.62); }
+  .callout { background: var(--deep); color: #e8eef6; margin-top: clamp(64px, 9vw, 116px); padding: clamp(56px, 8vw, 96px) 0; }
+  .callout h2 { color: #fff; }
+  .callout p { color: rgba(232,238,246,0.88); font-size: 1.03rem; }
+  .callout p + p { color: rgba(232,238,246,0.62); }
   .callout p:last-child { margin-bottom: 0; }
 
   /* ledger */
   .chart { margin: 0 0 32px; }
   .chart svg { display: block; width: 100%; height: clamp(120px, 18vw, 170px); }
   .chart .axis { display: flex; justify-content: space-between; gap: 16px; margin-top: 8px; font-size: 0.8rem; color: var(--muted); }
-  .chart .axis b { color: var(--ink); font-weight: 600; }
+  .chart .axis b { color: var(--ink); font-weight: 600; font-family: var(--mono); }
   .scroll { overflow-x: auto; }
   table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 0.93rem; }
   th { text-align: left; font-weight: 500; font-size: 0.8rem; color: var(--muted); padding: 0 16px 10px 0; border-bottom: 1px solid var(--line); }
   td { padding: 11px 16px 11px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
   th.num, td.num { text-align: right; }
   th:last-child, td:last-child { padding-right: 0; }
-  td a { color: var(--muted); }
+  td a { color: var(--muted); font-family: var(--mono); font-size: 0.86em; }
+  td.num, th.num { font-variant-numeric: tabular-nums; }
   .empty { color: var(--muted); }
 
   /* lists with rules */
@@ -187,7 +191,7 @@
   .addr { display: grid; grid-template-columns: 10.5em 1fr; gap: 8px 18px; margin: 0 0 24px; font-size: 0.92rem; }
   .addr dt { color: var(--muted); margin: 0; }
   .addr dd { margin: 0; overflow-wrap: anywhere; }
-  pre { background: var(--deep); color: var(--water); border-radius: 3px; padding: 18px 20px; overflow: auto; font-size: 0.86rem; line-height: 1.55; margin: 0 0 1.2em; }
+  pre { background: var(--deep); color: #e8eef6; border-radius: 8px; padding: 18px 20px; overflow: auto; font-size: 0.86rem; line-height: 1.55; margin: 0 0 1.2em; }
   footer { border-top: 1px solid var(--line); padding: 28px 0 48px; color: var(--muted); font-size: 0.9rem; }
   footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: space-between; }
 
@@ -313,8 +317,8 @@
       <p class="intro" id="ledger-note">Every harvest, read from the harvester contract. Newest first.</p>
       <div class="chart" id="chart" hidden>
         <svg viewBox="0 0 800 170" preserveAspectRatio="none" aria-hidden="true">
-          <path id="chart-area" d="" fill="rgba(16,59,44,0.07)"></path>
-          <path id="chart-line" d="" fill="none" stroke="#103b2c" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+          <path id="chart-area" d="" fill="rgba(31,95,255,0.08)"></path>
+          <path id="chart-line" d="" fill="none" stroke="#1f5fff" stroke-width="2" vector-effect="non-scaling-stroke"></path>
         </svg>
         <div class="axis"><span id="chart-from"></span><span id="chart-label"></span><b id="chart-to"></b></div>
       </div>

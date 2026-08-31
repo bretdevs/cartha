@@ -123,4 +123,6 @@ Every tick it reads `pending()`, quotes the buy (curve maths before graduation, 
 
 ## Design notes
 
-Water, not paper. Background `#e6ede8`, deep water `#103b2c`, ink `#0e1f18`, muted `#56695f`, line `#c9d6ce`. Instrument Serif for the ratio, headlines and wordmark; Instrument Sans for everything else. The one signature element is the ratio sitting on the water line with its reflection beneath it; the reflection ripples once when a harvest lands. Everything else is quiet on purpose. No dashes in copy anywhere.
+Finance blue, not paper. Background `#f4f7fb`, deep water `#0a2540`, ink `#0f1f33`, muted `#5b6b80`, line `#d3dbe6`, surface `#ffffff`, accent `#1f5fff` for the primary button, focus ring and chart. IBM Plex Sans for everything, Plex Mono for addresses and code. The one signature element is the ratio sitting on the water line with its reflection beneath it; the reflection ripples once when a harvest lands. Everything else is quiet on purpose. No dashes in copy anywhere.
+
+The site has three review states while the contracts are not wired: `?demo=launch`, `?demo=live` (default) and `?demo=months`.
