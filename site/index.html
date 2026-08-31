@@ -49,12 +49,12 @@
 
   /* dreamy background light, slow drift */
   .sky { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
-  .sky i { position: absolute; border-radius: 50%; filter: blur(70px); opacity: 0.55; will-change: transform; }
-  .sky .a { width: 60vw; height: 60vw; left: -18vw; top: -22vw; background: radial-gradient(circle, rgba(106,166,255,0.55), rgba(106,166,255,0) 65%); animation: driftA 26s ease-in-out infinite alternate; }
-  .sky .b { width: 46vw; height: 46vw; right: -14vw; top: 18vh; background: radial-gradient(circle, rgba(31,95,255,0.28), rgba(31,95,255,0) 65%); animation: driftB 32s ease-in-out infinite alternate; }
-  .sky .c { width: 40vw; height: 40vw; left: 30vw; top: 70vh; background: radial-gradient(circle, rgba(150,196,255,0.35), rgba(150,196,255,0) 65%); animation: driftA 38s ease-in-out infinite alternate-reverse; }
-  @keyframes driftA { from { transform: translate(0, 0) scale(1); } to { transform: translate(8vw, 6vh) scale(1.12); } }
-  @keyframes driftB { from { transform: translate(0, 0) scale(1.05); } to { transform: translate(-7vw, 9vh) scale(0.95); } }
+  .sky i { position: absolute; border-radius: 50%; opacity: 0.5; will-change: transform; transform: translate3d(0, 0, 0); }
+  .sky .a { width: 70vw; height: 70vw; left: -22vw; top: -26vw; background: radial-gradient(circle, rgba(106,166,255,0.42) 0%, rgba(106,166,255,0.18) 30%, rgba(106,166,255,0) 62%); animation: driftA 28s ease-in-out infinite alternate; }
+  .sky .b { width: 56vw; height: 56vw; right: -18vw; top: 16vh; background: radial-gradient(circle, rgba(31,95,255,0.22) 0%, rgba(31,95,255,0.09) 32%, rgba(31,95,255,0) 62%); animation: driftB 34s ease-in-out infinite alternate; }
+  .sky .c { display: none; }
+  @keyframes driftA { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(8vw, 6vh, 0); } }
+  @keyframes driftB { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-7vw, 9vh, 0); } }
 
   /* announce + header */
   .announce { background: var(--accent); color: #fff; font-size: 0.85rem; font-weight: 500; text-align: center; padding: 9px 44px; position: relative; }
@@ -66,7 +66,7 @@
   .cta.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
   .cta.ghost:hover { background: #fff; }
   header { position: sticky; top: 0; z-index: 40; padding: 14px 0; transition: background 0.3s, box-shadow 0.3s; }
-  header.stuck { background: rgba(244,247,251,0.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 1px 0 rgba(15,31,51,0.06); }
+  header.stuck { background: rgba(244,247,251,0.9); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: 0 1px 0 rgba(15,31,51,0.06); }
   header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
   .progress { position: absolute; left: 0; bottom: 0; height: 2px; width: 0; background: var(--accent); opacity: 0; transition: opacity 0.3s; }
   header.stuck .progress { opacity: 1; }
@@ -96,17 +96,17 @@
   .water { background: var(--deep); color: #e8eef6; position: relative; overflow: hidden; }
   .water::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: rgba(232,238,246,0.45); z-index: 3; }
   .caustics { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-  .caustics i { position: absolute; border-radius: 50%; filter: blur(60px); will-change: transform; }
-  .caustics .l1 { width: 55vw; height: 30vw; left: -10vw; top: -8vw; background: radial-gradient(ellipse, rgba(106,166,255,0.42), rgba(106,166,255,0) 60%); animation: sway1 18s ease-in-out infinite alternate; }
-  .caustics .l2 { width: 60vw; height: 34vw; right: -18vw; top: 4vw; background: radial-gradient(ellipse, rgba(31,95,255,0.35), rgba(31,95,255,0) 60%); animation: sway2 24s ease-in-out infinite alternate; }
-  .caustics .l3 { width: 40vw; height: 22vw; left: 30vw; bottom: -8vw; background: radial-gradient(ellipse, rgba(150,196,255,0.22), rgba(150,196,255,0) 60%); animation: sway1 30s ease-in-out infinite alternate-reverse; }
-  .caustics .shine { position: absolute; left: 0; right: 0; top: 0; height: 140px; background: linear-gradient(to bottom, rgba(232,238,246,0.12), rgba(232,238,246,0)); filter: none; border-radius: 0; animation: none; }
-  @keyframes sway1 { from { transform: translate(0, 0) scale(1); } to { transform: translate(6vw, 3vw) scale(1.15); } }
-  @keyframes sway2 { from { transform: translate(0, 0) scale(1.05); } to { transform: translate(-8vw, 2vw) scale(0.92); } }
+  .caustics i { position: absolute; border-radius: 50%; will-change: transform; transform: translate3d(0, 0, 0); }
+  .caustics .l1 { width: 64vw; height: 36vw; left: -14vw; top: -12vw; background: radial-gradient(ellipse, rgba(106,166,255,0.34) 0%, rgba(106,166,255,0.14) 32%, rgba(106,166,255,0) 62%); animation: sway1 20s ease-in-out infinite alternate; }
+  .caustics .l2 { width: 70vw; height: 40vw; right: -22vw; top: 0; background: radial-gradient(ellipse, rgba(31,95,255,0.3) 0%, rgba(31,95,255,0.12) 32%, rgba(31,95,255,0) 62%); animation: sway2 26s ease-in-out infinite alternate; }
+  .caustics .l3 { display: none; }
+  .caustics .shine { position: absolute; left: 0; right: 0; top: 0; height: 140px; background: linear-gradient(to bottom, rgba(232,238,246,0.12), rgba(232,238,246,0)); border-radius: 0; animation: none; }
+  @keyframes sway1 { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(6vw, 3vw, 0); } }
+  @keyframes sway2 { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-8vw, 2vw, 0); } }
   .water .wrap { position: relative; z-index: 2; padding-bottom: clamp(56px, 8vw, 96px); }
-  .reflect-wrap { font-size: var(--ratio-size); height: 0.58em; overflow: hidden; user-select: none; pointer-events: none;
+  .reflect-wrap { font-size: var(--ratio-size); height: 0.58em; overflow: hidden; user-select: none; pointer-events: none; contain: paint;
     -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.35) 45%, rgba(0,0,0,0) 92%); mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.35) 45%, rgba(0,0,0,0) 92%); }
-  .reflection { font-weight: 500; font-size: 1em; line-height: 0.8; letter-spacing: -0.06em; white-space: nowrap; transform-origin: center; color: #e8eef6; opacity: 0.32; filter: blur(0.8px);
+  .reflection { font-weight: 500; font-size: 1em; line-height: 0.8; letter-spacing: -0.06em; white-space: nowrap; transform-origin: center; color: #e8eef6; opacity: 0.28; will-change: transform;
     transform: scaleY(-1) translateY(0.06em); animation: idle 11s ease-in-out infinite; }
   .reflection .tail { opacity: 0.55; }
   @keyframes idle { 0%, 100% { transform: scaleY(-1) translateY(0.06em); } 50% { transform: scaleY(-1.025) translateY(0.06em) skewX(0.5deg); } }
@@ -190,7 +190,7 @@
   /* statement */
   .statement { background: var(--deep); color: #fff; padding: clamp(72px, 10vw, 130px) 0; margin-top: clamp(64px, 9vw, 112px); }
   .statement p { font-family: var(--display); font-weight: 500; font-size: clamp(1.7rem, 3.6vw, 3.2rem); line-height: 1.18; letter-spacing: -0.03em; max-width: 24em; margin: 0 auto; text-align: center; }
-  .statement .w { opacity: 0.22; transition: opacity 0.2s; }
+  .statement .w { opacity: 0.22; will-change: opacity; }
   html:not(.motion) .statement .w { opacity: 1; }
 
   /* story */
@@ -343,7 +343,7 @@
     .check li { grid-template-columns: 1fr; gap: 2px; }
     .cmp { font-size: 0.82rem; }
     .cmp th, .cmp td { padding: 10px 8px 10px 0; }
-    .sky i { filter: blur(40px); }
+    .sky { display: none; }
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
@@ -391,14 +391,14 @@
         <a class="cta ghost" href="#read">Read the contracts</a>
       </div>
       <p class="ratio-label rv" id="ratio-label">CARTHA per vCARTHA, read from the vault</p>
-      <div class="ratio" id="ratio" aria-live="polite" aria-atomic="true">1.0000<span class="tail">000</span></div>
+      <div class="ratio" id="ratio" aria-live="polite" aria-atomic="true"><span id="ratio-main">1.0000</span><span class="tail" id="ratio-tail">000</span></div>
     </div>
   </div>
 
   <div class="water" id="water">
     <div class="caustics" aria-hidden="true"><i class="l1"></i><i class="l2"></i><i class="l3"></i><i class="shine"></i></div>
     <div class="wrap">
-      <div class="reflect-wrap" aria-hidden="true"><div class="reflection" id="reflection">1.0000<span class="tail">000</span></div></div>
+      <div class="reflect-wrap" aria-hidden="true"><div class="reflection" id="reflection"><span id="refl-main">1.0000</span><span class="tail" id="refl-tail">000</span></div></div>
       <div class="stats">
         <span id="s-up">Nothing harvested yet</span>
         <span>Last harvest <strong id="s-last">none yet</strong></span>
@@ -801,10 +801,10 @@ const fmtBig = (n) => n >= 1e6 ? (n / 1e6).toFixed(2) + "M" : n >= 1e3 ? (n / 1e
 /* ------------------------------------------------------------ rendering */
 let shownRatio = null;
 function paintRatioText(s) {
-  const html = `${s.slice(0, 6)}<span class="tail">${s.slice(6, 9)}</span>`;
-  $("ratio").innerHTML = html;
-  $("reflection").innerHTML = html;
-  $("mcta-ratio").innerHTML = `${s.slice(0, 6)}<small>CARTHA per vCARTHA</small>`;
+  const a = s.slice(0, 6), b = s.slice(6, 9);
+  $("ratio-main").textContent = a; $("ratio-tail").textContent = b;
+  $("refl-main").textContent = a; $("refl-tail").textContent = b;
+  $("mcta-ratio").innerHTML = `${a}<small>CARTHA per vCARTHA</small>`;
 }
 function renderRatio(ratioWei) {
   const target = ratioStr(ratioWei);
@@ -816,7 +816,7 @@ function renderRatio(ratioWei) {
   if (shownRatio === null) {
     if (motion) {
       const o = { v: 1 };
-      gsap.to(o, { v: Number(target), duration: 1.6, ease: "power3.out", onUpdate: () => paintRatioText(o.v.toFixed(7)), onComplete: () => paintRatioText(target) });
+      gsap.to(o, { v: Number(target), duration: 1.2, ease: "power3.out", onUpdate: () => paintRatioText(o.v.toFixed(7)), onComplete: () => paintRatioText(target) });
     } else paintRatioText(target);
   } else {
     paintRatioText(target);
@@ -995,7 +995,7 @@ for (const id of ["in-vol", "in-cap", "in-dep"]) $(id).addEventListener("input",
 /* ------------------------------------------------------------ water lines */
 (() => {
   const c = $("waterlines"), hero = $("hero"); if (!c) return;
-  const ctx = c.getContext("2d"); let w = 0, h = 0, t = 0, raf = 0, visible = true, dpr = Math.min(2, window.devicePixelRatio || 1);
+  const ctx = c.getContext("2d", { alpha: true }); let w = 0, h = 0, t = 0, raf = 0, visible = true, last = 0, dpr = Math.min(1.25, window.devicePixelRatio || 1);
   const size = () => { w = hero.clientWidth; h = hero.clientHeight; c.width = w * dpr; c.height = h * dpr; c.style.width = w + "px"; c.style.height = h + "px"; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); };
   const draw = () => {
     ctx.clearRect(0, 0, w, h);
@@ -1005,14 +1005,14 @@ for (const id of ["in-vol", "in-cap", "in-dep"]) $(id).addEventListener("input",
       const y0 = h * (0.12 + Math.pow(p, 1.6) * 0.95);          // lines bunch near the top, spread toward the water
       const amp = 4 + p * 26, k = 0.0045 + p * 0.002, sp = 0.35 + p * 0.5;
       ctx.beginPath();
-      for (let x = -20; x <= w + 20; x += 6) {
+      for (let x = -20; x <= w + 20; x += 10) {
         const y = y0 + Math.sin(x * k + t * sp + i * 0.9) * amp + Math.sin(x * k * 2.3 - t * 0.7 + i) * amp * 0.25;
         x === -20 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
       }
       ctx.strokeStyle = `rgba(10,37,64,${(0.08 + p * 0.2).toFixed(3)})`; ctx.lineWidth = 1; ctx.stroke();
     }
   };
-  const loop = () => { if (visible) { t += 0.012; draw(); } raf = requestAnimationFrame(loop); };
+  const loop = (now) => { if (visible && now - last > 32) { last = now; t += 0.02; draw(); } raf = requestAnimationFrame(loop); };
   size(); draw();
   window.addEventListener("resize", () => { size(); draw(); });
   if (motion) { new IntersectionObserver((es) => { visible = es[0].isIntersecting; }).observe(hero); loop(); }
