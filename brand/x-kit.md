@@ -124,3 +124,17 @@ Colors: navy #0a2540 on #f4f7fb, accent #1f5fff. Type: IBM Plex Sans.
 Do not say: APY, yield farm, guaranteed, only goes up (without "in CARTHA terms"), staking rewards, passive income.
 
 No dashes of any kind in copy. Sentence case. Numbers with four decimals for the ratio.
+
+Collateral + vault set (also under 160):
+
+E1: Turn $CARTHA into collateral that compounds. Deposit for vCARTHA, a vault share trading fees keep buying into. No claim step, no owner. Robinhood Chain.
+
+E2: An ERC-4626 vault where fees buy $CARTHA and vCARTHA just redeems for more. Fungible, priced by one view call, collateral-ready by design. No rebase, no owner.
+
+E3: One deposit, two jobs: vCARTHA earns from every $CARTHA trade and stays a plain ERC-20 you can post as collateral. Nothing to claim. Robinhood Chain.
+
+E4: The vault that makes launchpad fees compound. $CARTHA in, vCARTHA out, a collateral-ready share whose value only steps up. No claim, no rebase, no admin keys.
+
+E5: Deposit $CARTHA, hold vCARTHA, a vault share fees keep buying into that any market can price and take as collateral. One number, one direction. Robinhood Chain.
+
+Note: "collateral-ready" describes the design (fungible ERC-20, priced by convertToAssets); nothing lists vCARTHA as collateral yet, so keep the wording to what the share can be, not a live integration.
