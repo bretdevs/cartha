@@ -127,7 +127,7 @@ Finance blue, not paper. Background `#f4f7fb`, deep water `#0a2540`, ink `#0f1f3
 
 The site has three review states while the contracts are not wired: `?demo=launch`, `?demo=live` (default) and `?demo=months`. `?motion=0` switches the scroll motion off, which is useful for screenshots.
 
-Motion: GSAP with ScrollTrigger from cdnjs. Sections reveal once as they enter, the ratio counts up on first load, the reflection lags the number on scroll and ripples on a harvest, both charts draw themselves when they come into view, and the header blurs with a progress line. Two layers of slow drifting light sit behind the page and inside the water block. All of it is off under `prefers-reduced-motion`.
+Motion: GSAP with ScrollTrigger from cdnjs. A canvas of slow water lines under the hero, a typewriter on the headline, the ratio and the stat tiles count up, the reflection lags the number on scroll and ripples on a harvest, the statement paragraph brightens word by word as you scroll through it, the "What happens to a fee" section pins a device mock that changes scene with each step, sections reveal once as they enter, both charts draw themselves, and the header blurs with a progress line. Two layers of slow drifting light sit behind the page and inside the water block. All of it is off under `prefers-reduced-motion`. The announcement bar at the top reads from the audit slot.
 
 Sections beyond the vault itself: a position card and a vault card next to the deposit panel, an illustrative projection driven by volume, market value and deposit share, a comparison of the yield shapes launchpad tokens use, a status board that reads the audit slot, a questions list and a listing checklist for integrators.
 

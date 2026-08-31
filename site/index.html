@@ -15,12 +15,13 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='27' fill='none' stroke='%230a2540' stroke-width='5'/%3E%3Cpath d='M5 32h54v0a27 27 0 0 1-54 0z' fill='%230a2540'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --water: #f4f7fb; --deep: #0a2540; --deeper: #071a30; --ink: #0f1f33; --muted: #5b6b80; --line: #d3dbe6;
     --surface: #ffffff; --accent: #1f5fff; --accent-dark: #174ad1; --glow: #6aa6ff;
-    --sans: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif; --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    --sans: "Inter", "Helvetica Neue", Arial, sans-serif; --display: "Inter Tight", "Inter", "Helvetica Neue", Arial, sans-serif; --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    --black: #0b0f16;
     --wrap: min(1120px, calc(100% - 44px)); --ratio-size: clamp(5.6rem, 18vw, 16.5rem);
   }
   * { box-sizing: border-box; }
@@ -31,8 +32,8 @@
   a:hover { text-decoration-color: var(--muted); }
   :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   ::selection { background: var(--accent); color: #fff; }
-  h1, h2, h3 { font-weight: 600; margin: 0; letter-spacing: -0.022em; }
-  h2 { font-size: clamp(1.55rem, 2.5vw, 2.05rem); line-height: 1.15; margin-bottom: 0.6em; }
+  h1, h2, h3 { font-family: var(--display); font-weight: 500; margin: 0; letter-spacing: -0.03em; }
+  h2 { font-size: clamp(1.9rem, 3.4vw, 2.9rem); line-height: 1.08; margin-bottom: 0.5em; }
   h3 { font-size: 1.05rem; line-height: 1.3; margin-bottom: 0.4em; }
   p { margin: 0 0 1em; max-width: 62ch; }
   code, .mono { font-family: var(--mono); font-size: 0.9em; }
@@ -55,8 +56,16 @@
   @keyframes driftA { from { transform: translate(0, 0) scale(1); } to { transform: translate(8vw, 6vh) scale(1.12); } }
   @keyframes driftB { from { transform: translate(0, 0) scale(1.05); } to { transform: translate(-7vw, 9vh) scale(0.95); } }
 
-  /* header */
-  header { position: sticky; top: 0; z-index: 40; padding: 16px 0; transition: background 0.3s, box-shadow 0.3s; }
+  /* announce + header */
+  .announce { background: var(--accent); color: #fff; font-size: 0.85rem; font-weight: 500; text-align: center; padding: 9px 44px; position: relative; }
+  .announce a { color: #fff; text-decoration-color: rgba(255,255,255,0.5); }
+  .announce button { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: 0; color: #fff; font-size: 1.1rem; cursor: pointer; line-height: 1; }
+  .cta { display: inline-flex; align-items: center; gap: 10px; background: var(--black); color: #fff; text-decoration: none; padding: 12px 18px; border-radius: 8px; font-weight: 500; font-size: 0.92rem; transition: transform 0.15s, background 0.15s; }
+  .cta:hover { background: #1a2230; transform: translateY(-1px); }
+  .cta svg { width: 14px; height: 14px; }
+  .cta.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+  .cta.ghost:hover { background: #fff; }
+  header { position: sticky; top: 0; z-index: 40; padding: 14px 0; transition: background 0.3s, box-shadow 0.3s; }
   header.stuck { background: rgba(244,247,251,0.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 1px 0 rgba(15,31,51,0.06); }
   header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
   .progress { position: absolute; left: 0; bottom: 0; height: 2px; width: 0; background: var(--accent); opacity: 0; transition: opacity 0.3s; }
@@ -69,9 +78,15 @@
   nav a:hover, nav a.cur { color: var(--ink); border-bottom-color: var(--ink); }
 
   /* hero */
-  .hero { padding: clamp(48px, 8vw, 104px) 0 0; }
-  .hero h1 { font-size: clamp(2.5rem, 5.4vw, 4.4rem); line-height: 1.02; letter-spacing: -0.035em; }
-  .hero .lede { font-size: clamp(1.05rem, 1.35vw, 1.2rem); max-width: 58ch; margin: 22px 0 0; }
+  .hero { position: relative; padding: clamp(56px, 8vw, 110px) 0 0; overflow: hidden; }
+  .hero .bg { position: absolute; inset: 0; z-index: -1; background: linear-gradient(115deg, #ffffff 0%, #f4f7fb 40%, #dfe9ff 100%); }
+  .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.9; }
+  .hero h1 { font-size: clamp(3rem, 7.2vw, 6.2rem); line-height: 0.98; letter-spacing: -0.045em; min-height: 1em; }
+  .hero h1 .cur { display: inline-block; width: 0.06em; height: 0.82em; background: var(--ink); margin-left: 0.06em; vertical-align: -0.06em; animation: blink 0.9s steps(2) infinite; }
+  .hero h1 .cur.off { display: none; }
+  @keyframes blink { to { opacity: 0; } }
+  .hero .lede { font-size: clamp(1.05rem, 1.35vw, 1.22rem); max-width: 56ch; margin: 24px 0 0; }
+  .hero .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
   .ratio-label { margin: clamp(40px, 6vw, 76px) 0 0; color: var(--muted); font-size: 0.9rem; }
   .ratio { font-weight: 500; font-size: var(--ratio-size); line-height: 0.8; letter-spacing: -0.06em; margin: 12px 0 0; white-space: nowrap; position: relative; z-index: 2; transform: translateY(0.06em); }
   .ratio .tail, .reflection .tail { font-size: 0.34em; font-weight: 400; letter-spacing: -0.02em; margin-left: 0.1em; }
@@ -161,6 +176,80 @@
   .callout li b { font-weight: 500; color: #fff; display: block; }
   .callout li span { color: rgba(232,238,246,0.7); font-size: 0.9rem; }
 
+  /* stats strip */
+  .strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin-top: clamp(40px, 6vw, 72px); }
+  .stile { background: var(--black); color: #fff; border-radius: 12px; padding: 22px 22px 20px; min-height: 150px; display: flex; flex-direction: column; justify-content: space-between; }
+  .stile h3 { font-family: var(--sans); font-size: 0.78rem; font-weight: 500; color: rgba(255,255,255,0.7); letter-spacing: 0; margin: 0; }
+  .stile b { font-family: var(--display); font-weight: 500; font-size: clamp(1.9rem, 3vw, 2.6rem); letter-spacing: -0.04em; line-height: 1;
+    background: linear-gradient(90deg, #9cc2ff, #e8f0ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .stile small { font-size: 0.78rem; color: rgba(255,255,255,0.55); margin-top: 6px; display: block; }
+  .stile.link { background: transparent; color: var(--ink); border: 1px solid var(--ink); text-decoration: none; justify-content: space-between; }
+  .stile.link svg { width: 20px; height: 20px; }
+  .stile.link b { background: none; color: var(--ink); font-size: 1rem; font-family: var(--sans); letter-spacing: 0; }
+
+  /* statement */
+  .statement { background: var(--deep); color: #fff; padding: clamp(72px, 10vw, 130px) 0; margin-top: clamp(64px, 9vw, 112px); }
+  .statement p { font-family: var(--display); font-weight: 500; font-size: clamp(1.7rem, 3.6vw, 3.2rem); line-height: 1.18; letter-spacing: -0.03em; max-width: 24em; margin: 0 auto; text-align: center; }
+  .statement .w { opacity: 0.22; transition: opacity 0.2s; }
+  html:not(.motion) .statement .w { opacity: 1; }
+
+  /* story */
+  .story { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 72px); align-items: start; }
+  .story .visual { position: sticky; top: 92px; }
+  .device { background: var(--black); color: #fff; border-radius: 16px; padding: 22px; min-height: 420px; position: relative; overflow: hidden; box-shadow: 0 30px 60px rgba(10,37,64,0.25); }
+  .device::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 0%, rgba(31,95,255,0.35), transparent 55%); pointer-events: none; }
+  .device .dh { display: flex; align-items: center; justify-content: space-between; font-size: 0.8rem; color: rgba(255,255,255,0.6); position: relative; }
+  .device .dh span { display: inline-flex; align-items: center; gap: 8px; color: #fff; font-weight: 500; }
+  .device .dh svg { width: 16px; height: 16px; }
+  .scene { position: absolute; left: 22px; right: 22px; top: 64px; opacity: 0; transform: translateY(14px); transition: opacity 0.45s ease, transform 0.45s ease; pointer-events: none; }
+  .scene.on { opacity: 1; transform: none; }
+  .scene .big { font-family: var(--display); font-weight: 500; font-size: 2.4rem; letter-spacing: -0.04em; line-height: 1; margin: 6px 0 4px; }
+  .scene .row { display: flex; justify-content: space-between; padding: 9px 0; border-top: 1px solid rgba(255,255,255,0.12); font-size: 0.86rem; }
+  .scene .row:first-of-type { border-top: 0; }
+  .scene .row span:first-child { color: rgba(255,255,255,0.6); }
+  .scene .pill { display: inline-block; background: rgba(31,95,255,0.25); color: #bcd3ff; border-radius: 999px; padding: 3px 10px; font-size: 0.75rem; font-weight: 500; margin-bottom: 10px; }
+  .scene .fill { height: 6px; background: rgba(255,255,255,0.12); border-radius: 3px; overflow: hidden; margin: 8px 0 4px; }
+  .scene .fill i { display: block; height: 100%; width: 0; background: var(--accent); transition: width 1.2s ease; }
+  .scene.on .fill i { width: var(--w, 60%); }
+  .scene .trade { display: flex; justify-content: space-between; font-size: 0.82rem; padding: 7px 0; border-top: 1px solid rgba(255,255,255,0.1); opacity: 0; transform: translateX(8px); transition: opacity 0.4s, transform 0.4s; }
+  .scene.on .trade { opacity: 1; transform: none; }
+  .scene.on .trade:nth-child(3) { transition-delay: 0.15s; } .scene.on .trade:nth-child(4) { transition-delay: 0.3s; } .scene.on .trade:nth-child(5) { transition-delay: 0.45s; } .scene.on .trade:nth-child(6) { transition-delay: 0.6s; }
+  .scene .trade b { color: #9cc2ff; font-weight: 500; }
+  .bars { position: absolute; left: 22px; right: 22px; bottom: 18px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+  .bars i { display: block; height: 3px; background: rgba(255,255,255,0.14); border-radius: 2px; overflow: hidden; }
+  .bars i::after { content: ""; display: block; height: 100%; width: 0; background: linear-gradient(90deg, #1f5fff, #9cc2ff); transition: width 0.5s ease; }
+  .bars i.done::after { width: 100%; }
+  .stepz { list-style: none; margin: 0; padding: 0; }
+  .stepz li { padding: clamp(56px, 12vh, 120px) 0; border-top: 1px solid var(--line); opacity: 0.35; transition: opacity 0.4s; }
+  .stepz li:first-child { padding-top: 0; border-top: 0; }
+  .stepz li.on { opacity: 1; }
+  .stepz .n { font-family: var(--mono); font-size: 0.8rem; color: var(--muted); margin-bottom: 12px; display: block; }
+  .stepz h3 { font-size: clamp(1.35rem, 2.2vw, 1.8rem); margin-bottom: 10px; }
+  .stepz p { margin: 0; color: var(--muted); }
+
+  /* dark cards */
+  .dark { background: var(--black); color: #fff; padding: clamp(64px, 9vw, 112px) 0; margin-top: clamp(64px, 9vw, 112px); }
+  .dark h2 { color: #fff; }
+  .dark .intro { color: rgba(255,255,255,0.65); }
+  .ncards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+  .ncard { position: relative; border: 1px solid rgba(255,255,255,0.14); border-radius: 12px; padding: 26px 22px 22px; min-height: 190px; display: flex; flex-direction: column; justify-content: flex-end; transition: border-color 0.2s, transform 0.2s, background 0.2s; background: rgba(255,255,255,0.02); }
+  .ncard:hover { border-color: rgba(156,194,255,0.7); transform: translateY(-3px); background: rgba(31,95,255,0.08); }
+  .ncard svg { position: absolute; right: 20px; top: 20px; width: 22px; height: 22px; color: rgba(255,255,255,0.55); }
+  .ncard b { display: block; font-family: var(--display); font-weight: 500; font-size: 1.3rem; letter-spacing: -0.02em; margin-bottom: 8px; }
+  .ncard p { margin: 0; font-size: 0.92rem; color: rgba(255,255,255,0.65); }
+
+  /* footer */
+  .foot { background: var(--deep); color: rgba(232,238,246,0.75); padding: clamp(56px, 8vw, 88px) 0 40px; }
+  .foot .cols { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 32px; }
+  .foot .wordmark { color: #fff; }
+  .foot h4 { margin: 0 0 12px; font-size: 0.8rem; font-weight: 500; color: rgba(232,238,246,0.55); }
+  .foot ul { list-style: none; margin: 0; padding: 0; font-size: 0.92rem; }
+  .foot li { margin: 0 0 8px; }
+  .foot a { text-decoration: none; color: #fff; }
+  .foot a:hover { text-decoration: underline; }
+  .foot .base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 32px; margin-top: 48px; padding-top: 22px; border-top: 1px solid rgba(232,238,246,0.14); font-size: 0.85rem; }
+  .foot .base a { text-decoration: underline; text-decoration-color: rgba(232,238,246,0.35); }
+
   /* projection */
   .proj { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(28px, 4vw, 56px); align-items: start; }
   .inputs { display: grid; gap: 14px; }
@@ -235,15 +324,13 @@
   .check li { display: grid; grid-template-columns: 9em 1fr; gap: 12px; padding: 9px 0; border-top: 1px solid var(--line); }
   .check li:last-child { border-bottom: 1px solid var(--line); }
   .check li span:first-child { color: var(--muted); }
-  footer { border-top: 1px solid var(--line); padding: 28px 0 48px; color: var(--muted); font-size: 0.9rem; }
-  footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: space-between; }
 
   /* reveal, driven by GSAP; falls back to visible */
   .rv { opacity: 1; }
   html.motion .rv { opacity: 0; transform: translateY(26px); }
   html.motion .rv.in { opacity: 1; transform: none; transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1); }
 
-  @media (max-width: 960px) { .app { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .app .card:first-child { grid-column: 1 / -1; } .proj, .two { grid-template-columns: 1fr; } }
+  @media (max-width: 960px) { .app { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .app .card:first-child { grid-column: 1 / -1; } .proj, .two { grid-template-columns: 1fr; } .story { grid-template-columns: 1fr; } .story .visual { position: relative; top: auto; } .stepz li { padding: 32px 0; opacity: 1; } .foot .cols { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 720px) {
     :root { --ratio-size: clamp(4.8rem, 23vw, 17rem); }
     nav a.opt { display: none; }
@@ -270,6 +357,8 @@
 <div class="sky" aria-hidden="true"><i class="a"></i><i class="b"></i><i class="c"></i></div>
 <a class="skip" href="#deposit">Skip to deposit</a>
 
+<div class="announce" id="announce"><span id="announce-text">Unaudited until the Hashlock report is published.</span> <a href="#status">See where it stands</a><button type="button" aria-label="Dismiss" id="announce-x">&times;</button></div>
+
 <header id="hdr">
   <div class="wrap">
     <a class="wordmark" href="#top" aria-label="STILL, top of page">
@@ -277,7 +366,7 @@
       <span>still</span>
     </a>
     <nav aria-label="Sections">
-      <a href="#deposit">Deposit</a>
+      <a href="#deposit" class="opt">Deposit</a>
       <a href="#how" class="opt">How it works</a>
       <a href="#projection" class="opt">Projection</a>
       <a href="#ledger" class="opt">Ledger</a>
@@ -285,15 +374,22 @@
       <a href="#read" class="opt">Contracts</a>
       <a href="#" id="xlink" rel="noopener">X</a>
     </nav>
+    <a class="cta" href="#deposit">Deposit <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 13 13 3M5 3h8v8"/></svg></a>
   </div>
   <div class="progress" id="progress"></div>
 </header>
 
 <main id="top">
-  <div class="hero">
+  <div class="hero" id="hero">
+    <div class="bg" aria-hidden="true"></div>
+    <canvas id="waterlines" aria-hidden="true"></canvas>
     <div class="wrap">
-      <h1 class="rv">Hold still.</h1>
+      <h1 id="h1"><span id="h1-text">Hold still.</span><span class="cur off" id="h1-cur" aria-hidden="true"></span></h1>
       <p class="lede rv">A vault on Robinhood Chain whose share is a plain ERC-20. Every STILL trade pays a fee, the fee buys STILL, and the STILL goes into the vault. Your balance of vSTILL never changes. What each unit redeems for does.</p>
+      <div class="actions rv">
+        <a class="cta" href="#deposit">Deposit STILL <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 13 13 3M5 3h8v8"/></svg></a>
+        <a class="cta ghost" href="#read">Read the contracts</a>
+      </div>
       <p class="ratio-label rv" id="ratio-label">STILL per vSTILL, read from the vault</p>
       <div class="ratio" id="ratio" aria-live="polite" aria-atomic="true">1.0000<span class="tail">000</span></div>
     </div>
@@ -357,17 +453,46 @@
     </div>
   </div>
 
+  <div class="wrap">
+    <div class="strip">
+      <div class="stile rv"><h3>STILL in the vault</h3><div><b id="st-assets" data-n="0">0</b><small>held for vSTILL holders</small></div></div>
+      <div class="stile rv"><h3>ETH harvested</h3><div><b id="st-eth" data-n="0">0</b><small>bought into the vault so far</small></div></div>
+      <div class="stile rv"><h3>Harvests</h3><div><b id="st-count" data-n="0">0</b><small>each one a step up</small></div></div>
+      <div class="stile rv"><h3>STILL per vSTILL</h3><div><b id="st-ratio" data-n="1">1.0000</b><small>from 1.0000 at launch</small></div></div>
+      <a class="stile link rv" href="#deposit"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 13 13 3M5 3h8v8"/></svg><b>Open the vault</b></a>
+    </div>
+  </div>
+
+  <div class="statement" id="statement">
+    <div class="wrap">
+      <p id="statement-text">Every STILL trade pays a fee. The fee buys STILL. The STILL goes into the vault. No vSTILL is minted for it, so each unit redeems for more than it did a block ago. Your balance never moves. What it redeems for does.</p>
+    </div>
+  </div>
+
   <section id="how">
     <div class="wrap">
       <h2 class="rv">What happens to a fee</h2>
       <p class="intro rv">Nothing here is new. It is an ERC-4626 vault, the standard every lending market and aggregator already knows, pointed at a token that earns its own yield from trading.</p>
-      <ol class="steps">
-        <li class="rv"><span>1</span><p class="lead"><strong>Buy STILL on pons.</strong> <span>It is an ordinary fixed-supply token. Nothing about the token itself is special, and that is the point.</span></p></li>
-        <li class="rv"><span>2</span><p class="lead"><strong>Deposit it here for vSTILL.</strong> <span>vSTILL is an ordinary ERC-20 too. Send it, pool it, post it somewhere else. Nothing about it is special either.</span></p></li>
-        <li class="rv"><span>3</span><p class="lead"><strong>Every trade on pons pays a fee in ETH.</strong> <span id="fee-copy">Buys and sells, on the curve and in the pool. pons keeps a cut of it. The rest is owed to a contract with no owner. Anyone can call its harvest function. It claims the ETH, buys STILL and sends the STILL to the vault.</span></p></li>
-        <li class="rv"><span>4</span><p class="lead"><strong>No vSTILL is minted for it.</strong> <span>So each unit of vSTILL now redeems for more STILL than it did a block ago. That is the whole mechanism.</span></p></li>
-        <li class="rv"><span>5</span><p class="lead"><strong>Redeem when you like.</strong> <span>Burn vSTILL, take STILL at that block's ratio. Same block, no queue, no exit fee.</span></p></li>
-      </ol>
+      <div class="story">
+        <div class="visual rv">
+          <div class="device" id="device">
+            <div class="dh"><span><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="27" fill="none" stroke="currentColor" stroke-width="5"/><path d="M5 32h54a27 27 0 0 1-54 0z" fill="currentColor"/></svg>still</span><span id="device-tag" style="font-weight:400;color:rgba(255,255,255,.6)">Robinhood Chain</span></div>
+            <div class="scene on" data-s="0"><span class="pill">pons launchpad</span><div class="big">Buy STILL</div><div class="row"><span>Paid</span><span>0.50 ETH</span></div><div class="row"><span>Received</span><span>1,000,000 STILL</span></div><div class="row"><span>Fee on the trade</span><span>4%, in ETH</span></div><div class="fill" style="--w:38%"><i></i></div><div class="row" style="border:0;padding-top:2px"><span>Curve progress</span><span>38%</span></div></div>
+            <div class="scene" data-s="1"><span class="pill">STILL vault</span><div class="big">Deposit</div><div class="row"><span>You deposit</span><span>1,000,000 STILL</span></div><div class="row"><span>You receive</span><span>1,000,000 vSTILL</span></div><div class="row"><span>Ratio</span><span>1.0000000</span></div><div class="row"><span>Settles</span><span>Same block</span></div></div>
+            <div class="scene" data-s="2"><span class="pill">Every trade, buys and sells</span><div class="big">Fees, in ETH</div><div class="trade"><span>Buy 0.31 ETH</span><b>+0.0124 ETH</b></div><div class="trade"><span>Sell 0.12 ETH</span><b>+0.0048 ETH</b></div><div class="trade"><span>Buy 1.02 ETH</span><b>+0.0408 ETH</b></div><div class="trade"><span>Sell 0.44 ETH</span><b>+0.0176 ETH</b></div><div class="row" style="margin-top:8px"><span>Owed to the harvester</span><span>0.0756 ETH</span></div></div>
+            <div class="scene" data-s="3"><span class="pill">harvest(), anyone can call it</span><div class="big">Harvest</div><div class="row"><span>ETH spent</span><span>0.0756 ETH</span></div><div class="row"><span>STILL bought</span><span>71,120 STILL</span></div><div class="row"><span>Sent to</span><span>the vault</span></div><div class="row"><span>vSTILL minted</span><span>0</span></div><div class="row"><span>Ratio</span><span id="scene-ratio">1.0000000</span></div></div>
+            <div class="scene" data-s="4"><span class="pill">STILL vault</span><div class="big">Redeem</div><div class="row"><span>You burn</span><span>1,000,000 vSTILL</span></div><div class="row"><span>You receive</span><span>1,004,731 STILL</span></div><div class="row"><span>Queue</span><span>None</span></div><div class="row"><span>Exit fee</span><span>None</span></div></div>
+            <div class="bars" id="bars"><i class="done"></i><i></i><i></i><i></i><i></i></div>
+          </div>
+        </div>
+        <ol class="stepz" id="stepz">
+          <li class="on"><span class="n">01</span><h3>Buy STILL on pons.</h3><p>It is an ordinary fixed-supply token. Nothing about the token itself is special, and that is the point.</p></li>
+          <li><span class="n">02</span><h3>Deposit it here for vSTILL.</h3><p>vSTILL is an ordinary ERC-20 too. Send it, pool it, post it somewhere else. Nothing about it is special either.</p></li>
+          <li><span class="n">03</span><h3>Every trade on pons pays a fee in ETH.</h3><p id="fee-copy">Buys and sells, on the curve and in the pool. pons keeps a cut of it. The rest is owed to a contract with no owner. Anyone can call its harvest function. It claims the ETH, buys STILL and sends the STILL to the vault.</p></li>
+          <li><span class="n">04</span><h3>No vSTILL is minted for it.</h3><p>So each unit of vSTILL now redeems for more STILL than it did a block ago. That is the whole mechanism.</p></li>
+          <li><span class="n">05</span><h3>Redeem when you like.</h3><p>Burn vSTILL, take STILL at that block's ratio. Same block, no queue, no exit fee.</p></li>
+        </ol>
+      </div>
     </div>
   </section>
 
@@ -400,17 +525,17 @@
     </div>
   </section>
 
-  <section id="never">
+  <section id="never" class="dark">
     <div class="wrap">
       <h2 class="rv">What never happens</h2>
       <p class="intro rv">When a market declines a yield-bearing token, it is rarely because of the yield. It is because the token does something unusual, and unusual means custom code and an untested liquidation path. So the list that matters is the list of things vSTILL does not do.</p>
-      <div class="grid">
-        <p class="lead rv"><strong>No claim step.</strong> <span>There is nothing to collect and nothing to forget. The yield is already inside the number.</span></p>
-        <p class="lead rv"><strong>No rebase.</strong> <span>Your wallet shows the same vSTILL balance a year from now. Every cached balance stays correct.</span></p>
-        <p class="lead rv"><strong>No epochs, no queue, no cooldown, no exit fee.</strong> <span>Deposit and redeem settle in the block they are sent.</span></p>
-        <p class="lead rv"><strong>No receipt NFT.</strong> <span>vSTILL is fungible, so it can be priced, pooled and moved like anything else.</span></p>
-        <p class="lead rv"><strong>No transfer hooks.</strong> <span>Nothing fires when a contract takes custody of it.</span></p>
-        <p class="lead rv"><strong>No owner.</strong> <span>The vault has no pause, no upgrade, no fee switch and no admin key. Neither does the contract that receives the fees. The functions are not there to find.</span></p>
+      <div class="ncards">
+        <div class="ncard rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg><b>No claim step</b><p>There is nothing to collect and nothing to forget. The yield is already inside the number.</p></div>
+        <div class="ncard rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16"/></svg><b>No rebase</b><p>Your wallet shows the same vSTILL balance a year from now. Every cached balance stays correct.</p></div>
+        <div class="ncard rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg><b>No epochs, no queue, no exit fee</b><p>Deposit and redeem settle in the block they are sent.</p></div>
+        <div class="ncard rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2"/></svg><b>No receipt NFT</b><p>vSTILL is fungible, so it can be priced, pooled and moved like anything else.</p></div>
+        <div class="ncard rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 18 18 6M8 6h10v10"/></svg><b>No transfer hooks</b><p>Nothing fires when a contract takes custody of it.</p></div>
+        <div class="ncard rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3v18M3 12h18"/></svg><b>No owner</b><p>No pause, no upgrade, no fee switch, no admin key. Neither on the vault nor on the contract that receives the fees.</p></div>
       </div>
     </div>
   </section>
@@ -546,10 +671,21 @@ return stillPerShare * stillPriceInEth / 1e18;</code></pre>
   </section>
 </main>
 
-<footer>
+<footer class="foot">
   <div class="wrap">
-    <div id="audit-footer">Not investment advice. The contracts are unaudited.</div>
-    <div>Robinhood Chain, chain id 4663</div>
+    <div class="cols">
+      <div>
+        <a class="wordmark" href="#top"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="27" fill="none" stroke="currentColor" stroke-width="5"/><path d="M5 32h54a27 27 0 0 1-54 0z" fill="currentColor"/></svg><span>still</span></a>
+        <p style="max-width:34ch;margin:14px 0 0;font-size:0.92rem">A vault on Robinhood Chain whose share is a plain ERC-20. Fees buy STILL into the vault. vSTILL just gets worth more.</p>
+      </div>
+      <div><h4>Vault</h4><ul><li><a href="#deposit">Deposit</a></li><li><a href="#ledger">Harvest ledger</a></li><li><a href="#status">Status</a></li><li><a href="#risks">Risks</a></li></ul></div>
+      <div><h4>Integrators</h4><ul><li><a href="#read">Contracts</a></li><li><a href="#compare">Yield shapes</a></li><li><a href="#questions">Questions</a></li><li><a href="https://github.com/bretdevs/still" rel="noopener">Source</a></li></ul></div>
+      <div><h4>Elsewhere</h4><ul><li><a href="#" id="xlink2" rel="noopener">X</a></li><li><a href="#" id="ponslink" rel="noopener">pons</a></li><li><a href="https://robinhoodchain.blockscout.com" rel="noopener">Blockscout</a></li></ul></div>
+    </div>
+    <div class="base">
+      <div id="audit-footer">Not investment advice. The contracts are unaudited.</div>
+      <div>Robinhood Chain, chain id 4663</div>
+    </div>
   </div>
 </footer>
 
@@ -609,6 +745,7 @@ const ABI = {
     "function totalStillBought() view returns (uint256)",
     "function lastBuyAt() view returns (uint256)",
     "function phase() view returns (uint8)",
+    "function ledgerLength() view returns (uint256)",
   ],
   curve: [
     "function realQuoteReserve() view returns (uint256)",
@@ -641,9 +778,25 @@ const ago = (ts) => {
 const when = (ts) => new Date(Number(ts) * 1000).toLocaleString();
 const pct = (n) => (n >= 0 && n < 0.1 ? n.toFixed(4) : n.toFixed(2)) + "%";
 
-$("xlink").href = CONFIG.x;
+$("xlink").href = CONFIG.x; $("xlink2").href = CONFIG.x;
 $("talk").href = CONFIG.x;
-$("buy").href = CONFIG.buyUrl;
+$("buy").href = CONFIG.buyUrl; $("ponslink").href = CONFIG.buyUrl;
+$("announce-x").onclick = () => { $("announce").remove(); };
+
+/* ------------------------------------------------------------ stats strip */
+const statSeen = {};
+function setStat(id, value, fmt) {
+  const el = $(id); const from = Number(el.dataset.n || 0); el.dataset.n = value;
+  if (!motion || statSeen[id] === "done") { el.textContent = fmt(value); return; }
+  if (!statSeen[id]) {
+    statSeen[id] = "wait";
+    ScrollTrigger.create({ trigger: el, start: "top 90%", once: true, onEnter: () => {
+      const o = { v: from }; const target = Number(el.dataset.n);
+      gsap.to(o, { v: target, duration: 1.4, ease: "power3.out", onUpdate: () => (el.textContent = fmt(o.v)), onComplete: () => { statSeen[id] = "done"; el.textContent = fmt(Number(el.dataset.n)); } });
+    } });
+  }
+}
+const fmtBig = (n) => n >= 1e6 ? (n / 1e6).toFixed(2) + "M" : n >= 1e3 ? (n / 1e3).toFixed(1) + "K" : Math.round(n).toString();
 
 /* ------------------------------------------------------------ rendering */
 let shownRatio = null;
@@ -659,6 +812,7 @@ function renderRatio(ratioWei) {
   $("s-up").innerHTML = up <= 0 ? "Nothing harvested yet" : `Up <strong>${pct(up)}</strong> since launch`;
   for (const id of ["s-last", "s-eth"]) $(id).parentElement.hidden = up <= 0;
   $("v-ratio").textContent = target;
+  setStat("st-ratio", Number(target), (v) => v.toFixed(4));
   if (shownRatio === null) {
     if (motion) {
       const o = { v: 1 };
@@ -670,7 +824,9 @@ function renderRatio(ratioWei) {
   }
   shownRatio = ratioWei;
 }
-function renderStats(eth, still, last) {
+function renderStats(eth, still, last, count) {
+  setStat("st-eth", wei(eth), (v) => v >= 100 ? fmt2.format(v) : v.toFixed(3));
+  if (count !== undefined) setStat("st-count", Number(count), (v) => Math.round(v).toString());
   $("s-eth").textContent = fmtEth(eth);
   $("s-still").textContent = fmtStill(still);
   $("s-last").textContent = !last ? "none yet" : ago(last);
@@ -683,6 +839,7 @@ function renderPhase(text, fraction) {
   $("bar-fill").style.width = `${Math.min(100, Math.max(0, fraction * 100)).toFixed(1)}%`;
 }
 function renderVault(assets, supply) {
+  setStat("st-assets", wei(assets), fmtBig);
   $("v-assets").textContent = fmtStill(assets) + " STILL";
   $("v-supply").textContent = fmtStill(supply) + " vSTILL";
 }
@@ -755,6 +912,8 @@ function renderAudit() {
     tile = ["none", "Not started", "No third party has reviewed the code."];
   }
   $("audit-risk").innerHTML = risk; $("audit-line").innerHTML = line; $("audit-footer").innerHTML = foot; $("faq-audit").textContent = faq;
+  const ann = $("announce-text");
+  if (ann) ann.textContent = a.status === "complete" && a.reportUrl ? `Audited by ${a.firm}.` : a.status === "review" ? `Under review by ${a.firm}. Unaudited until the report is published.` : a.status === "scheduled" ? `Unaudited until the ${a.firm} report is published.` : "Unaudited.";
   return tile;
 }
 function renderBoard() {
@@ -833,11 +992,58 @@ for (const id of ["in-vol", "in-cap", "in-dep"]) $(id).addEventListener("input",
   }
 })();
 
+/* ------------------------------------------------------------ water lines */
+(() => {
+  const c = $("waterlines"), hero = $("hero"); if (!c) return;
+  const ctx = c.getContext("2d"); let w = 0, h = 0, t = 0, raf = 0, visible = true, dpr = Math.min(2, window.devicePixelRatio || 1);
+  const size = () => { w = hero.clientWidth; h = hero.clientHeight; c.width = w * dpr; c.height = h * dpr; c.style.width = w + "px"; c.style.height = h + "px"; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); };
+  const draw = () => {
+    ctx.clearRect(0, 0, w, h);
+    const n = 26;
+    for (let i = 0; i < n; i++) {
+      const p = i / (n - 1);                                   // 0 top, 1 bottom
+      const y0 = h * (0.12 + Math.pow(p, 1.6) * 0.95);          // lines bunch near the top, spread toward the water
+      const amp = 4 + p * 26, k = 0.0045 + p * 0.002, sp = 0.35 + p * 0.5;
+      ctx.beginPath();
+      for (let x = -20; x <= w + 20; x += 6) {
+        const y = y0 + Math.sin(x * k + t * sp + i * 0.9) * amp + Math.sin(x * k * 2.3 - t * 0.7 + i) * amp * 0.25;
+        x === -20 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = `rgba(10,37,64,${(0.08 + p * 0.2).toFixed(3)})`; ctx.lineWidth = 1; ctx.stroke();
+    }
+  };
+  const loop = () => { if (visible) { t += 0.012; draw(); } raf = requestAnimationFrame(loop); };
+  size(); draw();
+  window.addEventListener("resize", () => { size(); draw(); });
+  if (motion) { new IntersectionObserver((es) => { visible = es[0].isIntersecting; }).observe(hero); loop(); }
+})();
+
+/* ------------------------------------------------------------- typewriter */
+(() => {
+  const el = $("h1-text"), cur = $("h1-cur"); if (!el || !motion) return;
+  const full = el.textContent; el.textContent = ""; cur.classList.remove("off");
+  let i = 0; const tick = () => { i++; el.textContent = full.slice(0, i); if (i < full.length) setTimeout(tick, 70 + Math.random() * 60); else setTimeout(() => cur.classList.add("off"), 1800); };
+  setTimeout(tick, 250);
+})();
+
 /* ------------------------------------------------------------------ motion */
 function setupMotion() {
   if (!motion) return;
   gsap.registerPlugin(ScrollTrigger);
+  // statement: words brighten as you scroll through it
+  const st = $("statement-text");
+  st.innerHTML = st.textContent.split(" ").map((w) => `<span class="w">${w}</span>`).join(" ");
+  gsap.to("#statement-text .w", { opacity: 1, stagger: 0.04, ease: "none", scrollTrigger: { trigger: "#statement", start: "top 70%", end: "bottom 60%", scrub: 0.5 } });
+  // story: pinned device follows the steps
+  const steps = [...document.querySelectorAll("#stepz li")], scenes = [...document.querySelectorAll("#device .scene")], bars = [...document.querySelectorAll("#bars i")];
+  const setScene = (i) => {
+    steps.forEach((s, j) => s.classList.toggle("on", j === i)); scenes.forEach((s, j) => s.classList.toggle("on", j === i)); bars.forEach((b, j) => b.classList.toggle("done", j <= i));
+    $("device-tag").textContent = ["pons", "vault", "harvester", "harvester", "vault"][i];
+    if (i === 3) { const o = { v: 1 }; gsap.to(o, { v: 1.0047312, duration: 1.2, ease: "power2.out", onUpdate: () => ($("scene-ratio").textContent = o.v.toFixed(7)) }); } else $("scene-ratio").textContent = "1.0000000";
+  };
+  steps.forEach((s, i) => ScrollTrigger.create({ trigger: s, start: "top 55%", end: "bottom 55%", onEnter: () => setScene(i), onEnterBack: () => setScene(i) }));
   document.querySelectorAll(".rv").forEach((el) => {
+    if (el.closest(".story .visual")) { el.classList.add("in"); return; }
     ScrollTrigger.create({ trigger: el, start: "top 88%", once: true, onEnter: () => el.classList.add("in") });
   });
   // the reflection lags the number a little on scroll, like water under a bridge
@@ -877,7 +1083,7 @@ function runDemo() {
   }
   if (entries.length) last = entries[entries.length - 1].timestamp;
   const paint = () => {
-    renderRatio(ratio); renderStats(eth, still, last); renderVault(assets, supply);
+    renderRatio(ratio); renderStats(eth, still, last, entries.length); renderVault(assets, supply);
     renderLedger([...entries].reverse(), "Demo data until the contracts are wired. Newest first.");
   };
   paint();
@@ -915,8 +1121,8 @@ async function refresh() {
     const [ratio, assets, supply] = await Promise.all([vaultR.convertToAssets(ONE), vaultR.totalAssets(), vaultR.totalSupply()]);
     vaultSupply = supply; renderRatio(ratio); renderVault(assets, supply);
     if (!harvR) return;
-    const [entries, eth, still, last, phase] = await Promise.all([harvR.recent(24), harvR.totalEthSpent(), harvR.totalStillBought(), harvR.lastBuyAt(), harvR.phase()]);
-    lastHarvestTs = last; renderStats(eth, still, last === 0n ? 0 : last);
+    const [entries, eth, still, last, phase, count] = await Promise.all([harvR.recent(24), harvR.totalEthSpent(), harvR.totalStillBought(), harvR.lastBuyAt(), harvR.phase(), harvR.ledgerLength()]);
+    lastHarvestTs = last; renderStats(eth, still, last === 0n ? 0 : last, count);
     renderLedger(entries.map((e) => ({ timestamp: e.timestamp, ethSpent: e.ethSpent, stillBought: e.stillBought, ratioAfter: e.ratioAfter, blockNumber: e.blockNumber })));
     if (phase === 0n && curveR) {
       const [raised, threshold] = await Promise.all([curveR.realQuoteReserve(), curveR.graduationThreshold()]);
