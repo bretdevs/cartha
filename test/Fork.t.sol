@@ -3,8 +3,8 @@ pragma solidity ^0.8.24;
 
 import {Test, console} from "forge-std/Test.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import {StillVault} from "../src/StillVault.sol";
-import {StillHarvester} from "../src/StillHarvester.sol";
+import {CarthaVault} from "../src/CarthaVault.sol";
+import {CarthaHarvester} from "../src/CarthaHarvester.sol";
 import {IPonsFactory, IPonsCurve, IPonsFeeEscrow, IPonsMemeHook} from "../src/interfaces/IPons.sol";
 import {IPoolManager} from "../src/interfaces/IUniswapV4.sol";
 
@@ -32,9 +32,9 @@ contract ForkTest is Test {
         poolManager = IPonsMemeHook(HOOK).poolManager();
     }
 
-    function _deploy(address token) internal returns (StillVault vault, StillHarvester harvester) {
-        vault = new StillVault(IERC20(token));
-        harvester = new StillHarvester(token, address(vault), FACTORY, ESCROW, HOOK, poolManager, 0.05 ether, 5 minutes);
+    function _deploy(address token) internal returns (CarthaVault vault, CarthaHarvester harvester) {
+        vault = new CarthaVault(IERC20(token));
+        harvester = new CarthaHarvester(token, address(vault), FACTORY, ESCROW, HOOK, poolManager, 0.05 ether, 5 minutes);
     }
 
     // ------------------------------------------------------------ surface
@@ -91,7 +91,7 @@ contract ForkTest is Test {
         // Either it worked (nothing to sweep) or it reverted with a custom error. Empty data means no such function.
         if (!ok) assertGt(data.length, 0, "sweepFees(uint256) missing on curve");
 
-        (StillVault v, StillHarvester h) = _deploy(poolToken);
+        (CarthaVault v, CarthaHarvester h) = _deploy(poolToken);
         v;
         vm.prank(address(0xBEEF));
         (ok, data) = HOOK.call(abi.encodeWithSelector(IPonsMemeHook.sweepPoolFees.selector, h.poolId(), uint256(0), uint256(0)));
@@ -101,7 +101,7 @@ contract ForkTest is Test {
     // --------------------------------------------------------- the paths
 
     function test_fork_harvestBuysOnLivePool() public {
-        (StillVault vault, StillHarvester harvester) = _deploy(poolToken);
+        (CarthaVault vault, CarthaHarvester harvester) = _deploy(poolToken);
 
         // Seed like the deploy script, so the ratio is meaningful.
         deal(poolToken, address(this), 1_000e18);
@@ -138,7 +138,7 @@ contract ForkTest is Test {
         IPonsCurve curve = IPonsCurve(c.curve);
         if (curve.sellableTokens() == 0) vm.skip(true);
 
-        (StillVault vault, StillHarvester harvester) = _deploy(curveToken);
+        (CarthaVault vault, CarthaHarvester harvester) = _deploy(curveToken);
         vm.deal(address(harvester), 0.01 ether);
         assertEq(harvester.phase(), 0);
 
@@ -161,7 +161,7 @@ contract ForkTest is Test {
     }
 
     function test_fork_cooldownAndCapHoldOnLivePool() public {
-        (, StillHarvester harvester) = _deploy(poolToken);
+        (, CarthaHarvester harvester) = _deploy(poolToken);
         vm.deal(address(harvester), 0.3 ether);
         (uint256 spent1,) = harvester.harvest(0);
         assertEq(spent1, 0.05 ether, "capped at maxBuyPerHarvest");

@@ -1,22 +1,22 @@
-# STILL
+# Cartha
 
-A vault on Robinhood Chain (chain id 4663) launched through pons v2. The share token, vSTILL, is a plain ERC-20. Trading fees on STILL buy STILL into the vault, no shares are minted for it, and STILL per vSTILL rises. No claim step, no rebase, no epochs, no queue, no owner.
+A vault on Robinhood Chain (chain id 4663) launched through pons v2. The share token, vCARTHA, is a plain ERC-20. Trading fees on CARTHA buy CARTHA into the vault, no shares are minted for it, and CARTHA per vCARTHA rises. No claim step, no rebase, no epochs, no queue, no owner.
 
 ```
-buy STILL on pons  ->  deposit  ->  vSTILL
+buy CARTHA on pons  ->  deposit  ->  vCARTHA
       |
       v  every trade pays a fee in ETH (pons standard fee share + creator tax)
-StillHarvester (no owner)  ->  claims ETH from the pons escrow  ->  buys STILL  ->  sends it to StillVault
+CarthaHarvester (no owner)  ->  claims ETH from the pons escrow  ->  buys CARTHA  ->  sends it to CarthaVault
                                                                                        |
                                                                      totalAssets up, totalSupply unchanged
                                                                                        |
-                                                                       STILL per vSTILL only turns one way
+                                                                       CARTHA per vCARTHA only turns one way
 ```
 
 ## What is in here
 
-- `src/StillVault.sol`: OpenZeppelin ERC-4626 over STILL, plus ERC20Permit. No other code.
-- `src/StillHarvester.sol`: the creator fee recipient. Permissionless `harvest(minStillOut)`. Capped per call, cooldown between buys. Buys on the pons curve before graduation, on the Uniswap v4 pool after. Keeps a small on-chain ledger for the site.
+- `src/CarthaVault.sol`: OpenZeppelin ERC-4626 over CARTHA, plus ERC20Permit. No other code.
+- `src/CarthaHarvester.sol`: the creator fee recipient. Permissionless `harvest(minCarthaOut)`. Capped per call, cooldown between buys. Buys on the pons curve before graduation, on the Uniswap v4 pool after. Keeps a small on-chain ledger for the site.
 - `src/interfaces/`: the slice of pons v2 and Uniswap v4 this touches.
 - `test/`: 30 unit tests plus 8 fork tests. `testFuzz_ratioNeverDecreases` is the one the site quotes. `test_inflationAttackIsUnprofitableAfterSeed` shows why the deploy script seeds the vault. `Fork.t.sol` runs the harvester against the real pons v2 stack on a fork of Robinhood Chain.
 - `script/Deploy.s.sol`: launch, deploy, redirect fees, seed. One broadcast.
@@ -29,9 +29,9 @@ StillHarvester (no owner)  ->  claims ETH from the pons escrow  ->  buys STILL  
 
 Kynix is an ETH-USDC LP vault with nothing to buy and, by their own account, no fees flowing. Same skeleton here, different feed:
 
-- The yield source is STILL's own trading on pons, both directions, curve and pool, from the first block.
-- The vault holds only STILL, so STILL per vSTILL is monotonic. Kynix's share price moves with its LP position.
-- Deposits are isolated from anything that touches a DEX. The vault talks only to the STILL token. The harvester holds fee ETH in transit and nothing else.
+- The yield source is CARTHA's own trading on pons, both directions, curve and pool, from the first block.
+- The vault holds only CARTHA, so CARTHA per vCARTHA is monotonic. Kynix's share price moves with its LP position.
+- Deposits are isolated from anything that touches a DEX. The vault talks only to the CARTHA token. The harvester holds fee ETH in transit and nothing else.
 - The fee destination is verifiable on the pons factory record and the harvester cannot point fees anywhere else.
 
 ## Verified on chain, 31 Aug 2026
@@ -76,7 +76,7 @@ forge script script/Deploy.s.sol --rpc-url $RPC_URL --broadcast \
   --verify --verifier blockscout --verifier-url https://robinhoodchain.blockscout.com/api
 ```
 
-The script does, in order: launch STILL with your wallet as fee recipient, deploy `StillVault`, deploy `StillHarvester`, move the fee recipient to the harvester, buy `SEED_ETH_WEI` of STILL on the curve, deposit `SEED_STILL_WEI` of it and park the vSTILL at `0x...dEaD`.
+The script does, in order: launch CARTHA with your wallet as fee recipient, deploy `CarthaVault`, deploy `CarthaHarvester`, move the fee recipient to the harvester, buy `SEED_ETH_WEI` of CARTHA on the curve, deposit `SEED_CARTHA_WEI` of it and park the vCARTHA at `0x...dEaD`.
 
 If it reverts after the launch step, nothing is lost. The token exists and fees go to your wallet until you move them. Deploy the vault and harvester by hand and call `transferCreatorFeeRecipient` yourself. Claim any fees already credited to your wallet first, then forward that ETH to the harvester; the next harvest picks it up.
 
@@ -84,8 +84,8 @@ The vault and harvester deploy without `--verify` too. Verify later on Blockscou
 
 ## Where it is deployed
 
-- Site: https://holdstill-plum.vercel.app (Vercel project `holdstill`, same account as ponspot and betonpons). Demo mode until `CONFIG` is filled. To redeploy from your machine: `cd site && vercel link --project holdstill && vercel deploy --prod`. Point a real domain at it the way you did for betonpons.com.
-- Keeper: Railway service `still-keeper` inside the existing `ponsbid-keeper` project (the free plan refused a new project). It is running and idling. It starts on its own once `HARVESTER` and `PRIVATE_KEY` are set in the service variables; `RPC_URL`, `INTERVAL_SEC` and `SLIPPAGE_BPS` are already set. To push a new version: `cd keeper && railway link --project ponsbid-keeper --service still-keeper && railway up`.
+- Site: https://cartha-phi.vercel.app (Vercel project `cartha`, same account as ponspot and betonpons; the earlier `holdstill` project still exists and can be deleted). Demo mode until `CONFIG` is filled. To redeploy from your machine: `cd site && vercel link --project cartha && vercel deploy --prod`. Point a real domain at it the way you did for betonpons.com.
+- Keeper: Railway service `cartha-keeper` inside the existing `ponsbid-keeper` project (the free plan refused a new project). It is running and idling. It starts on its own once `HARVESTER` and `PRIVATE_KEY` are set in the service variables; `RPC_URL`, `INTERVAL_SEC` and `SLIPPAGE_BPS` are already set. To push a new version: `cd keeper && railway link --project ponsbid-keeper --service cartha-keeper && railway up`.
 
 ## Wire the site
 
@@ -104,7 +104,7 @@ npm start
 
 The keeper wallet only needs gas; harvest is permissionless. Use a dedicated RPC for anything past light use, the public one rate limits.
 
-Every tick it reads `pending()`, quotes the buy (curve maths before graduation, pool slot0 after), applies `SLIPPAGE_BPS`, simulates, then sends. If the quote fails it still harvests with `minStillOut = 0`, which is safe because of the per-call cap. Without `HARVESTER` and `PRIVATE_KEY` it stays up and logs that it is waiting, so it can be deployed before the contracts exist.
+Every tick it reads `pending()`, quotes the buy (curve maths before graduation, pool slot0 after), applies `SLIPPAGE_BPS`, simulates, then sends. If the quote fails it still harvests with `minCarthaOut = 0`, which is safe because of the per-call cap. Without `HARVESTER` and `PRIVATE_KEY` it stays up and logs that it is waiting, so it can be deployed before the contracts exist.
 
 ## What to publish, in this order
 

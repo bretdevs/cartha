@@ -3,21 +3,21 @@ pragma solidity ^0.8.24;
 
 import {Test} from "forge-std/Test.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import {StillVault} from "../src/StillVault.sol";
-import {StillHarvester} from "../src/StillHarvester.sol";
+import {CarthaVault} from "../src/CarthaVault.sol";
+import {CarthaHarvester} from "../src/CarthaHarvester.sol";
 import {IPonsFactory} from "../src/interfaces/IPons.sol";
 import {PoolKey} from "../src/interfaces/IUniswapV4.sol";
-import {MockSTILL, MockEscrow, MockCurve, MockFactory, MockHook, MockPoolManager} from "./mocks/Mocks.sol";
+import {MockCARTHA, MockEscrow, MockCurve, MockFactory, MockHook, MockPoolManager} from "./mocks/Mocks.sol";
 
-contract StillHarvesterTest is Test {
-    MockSTILL still;
-    StillVault vault;
+contract CarthaHarvesterTest is Test {
+    MockCARTHA still;
+    CarthaVault vault;
     MockEscrow escrow;
     MockCurve curve;
     MockFactory factory;
     MockHook hook;
     MockPoolManager pm;
-    StillHarvester harvester;
+    CarthaHarvester harvester;
 
     uint256 constant MAX_BUY = 0.1 ether;
     uint256 constant COOLDOWN = 5 minutes;
@@ -27,8 +27,8 @@ contract StillHarvesterTest is Test {
     address depositor = makeAddr("depositor");
 
     function setUp() public {
-        still = new MockSTILL();
-        vault = new StillVault(IERC20(address(still)));
+        still = new MockCARTHA();
+        vault = new CarthaVault(IERC20(address(still)));
         escrow = new MockEscrow();
         factory = new MockFactory();
         pm = new MockPoolManager(still);
@@ -56,7 +56,7 @@ contract StillHarvesterTest is Test {
             })
         );
 
-        harvester = new StillHarvester(
+        harvester = new CarthaHarvester(
             address(still), address(vault), address(factory), address(escrow), address(hook), address(pm), MAX_BUY, COOLDOWN
         );
         // Mirror the deploy script: the launch is created first, then fees are pointed at the harvester.
@@ -89,14 +89,14 @@ contract StillHarvesterTest is Test {
         l.pairToken = address(0xBEEF);
         MockFactory other = new MockFactory();
         other.set(l);
-        vm.expectRevert(StillHarvester.NativePairOnly.selector);
-        new StillHarvester(address(still), address(vault), address(other), address(escrow), address(hook), address(pm), MAX_BUY, COOLDOWN);
+        vm.expectRevert(CarthaHarvester.NativePairOnly.selector);
+        new CarthaHarvester(address(still), address(vault), address(other), address(escrow), address(hook), address(pm), MAX_BUY, COOLDOWN);
     }
 
     function test_constructorRejectsUnknownLaunch() public {
         MockFactory empty = new MockFactory();
-        vm.expectRevert(StillHarvester.UnknownLaunch.selector);
-        new StillHarvester(address(still), address(vault), address(empty), address(escrow), address(hook), address(pm), MAX_BUY, COOLDOWN);
+        vm.expectRevert(CarthaHarvester.UnknownLaunch.selector);
+        new CarthaHarvester(address(still), address(vault), address(empty), address(escrow), address(hook), address(pm), MAX_BUY, COOLDOWN);
     }
 
     function test_poolKeyAndId() public view {
@@ -120,27 +120,27 @@ contract StillHarvesterTest is Test {
         (uint256 ethSpent, uint256 bought) = harvester.harvest(0);
 
         assertEq(ethSpent, 0.05 ether);
-        assertEq(bought, 50_000e18); // 1 ETH -> 1,000,000 STILL on the mock curve
+        assertEq(bought, 50_000e18); // 1 ETH -> 1,000,000 CARTHA on the mock curve
         assertEq(still.balanceOf(address(vault)), 2_000e18 + 50_000e18);
         assertEq(address(harvester).balance, 0);
         assertGt(ratio(), before, "ratio must rise");
         assertEq(vault.balanceOf(depositor), depositorShares, "depositor balance must not move");
         assertEq(harvester.totalEthSpent(), 0.05 ether);
-        assertEq(harvester.totalStillBought(), 50_000e18);
+        assertEq(harvester.totalCarthaBought(), 50_000e18);
         assertEq(harvester.lastBuyAt(), block.timestamp);
         assertEq(harvester.ledgerLength(), 1);
 
-        StillHarvester.Entry[] memory entries = harvester.recent(5);
+        CarthaHarvester.Entry[] memory entries = harvester.recent(5);
         assertEq(entries.length, 1);
         assertEq(entries[0].ethSpent, 0.05 ether);
-        assertEq(entries[0].stillBought, 50_000e18);
+        assertEq(entries[0].carthaBought, 50_000e18);
         assertEq(entries[0].ratioAfter, ratio());
     }
 
     function test_harvestEmitsEvent() public {
         escrow.credit{value: 0.02 ether}(address(harvester));
         vm.expectEmit(true, false, false, false);
-        emit StillHarvester.Harvest(keeper, 0.02 ether, 20_000e18, 0);
+        emit CarthaHarvester.Harvest(keeper, 0.02 ether, 20_000e18, 0);
         vm.prank(keeper);
         harvester.harvest(0);
     }
@@ -207,7 +207,7 @@ contract StillHarvesterTest is Test {
         escrow.setClaimReverts(true);
         vm.deal(address(harvester), 0.01 ether); // something already held
         vm.expectEmit(false, false, false, true);
-        emit StillHarvester.ClaimFailed(0.02 ether);
+        emit CarthaHarvester.ClaimFailed(0.02 ether);
         (uint256 ethSpent,) = harvester.harvest(0);
         assertEq(ethSpent, 0.01 ether);
     }
@@ -249,7 +249,7 @@ contract StillHarvesterTest is Test {
         (uint256 ethSpent, uint256 bought) = harvester.harvest(0);
 
         assertEq(ethSpent, 0.05 ether);
-        assertEq(bought, 40_000e18); // 1 ETH -> 800,000 STILL on the mock pool
+        assertEq(bought, 40_000e18); // 1 ETH -> 800,000 CARTHA on the mock pool
         assertEq(still.balanceOf(address(vault)), 2_000e18 + 40_000e18);
         assertEq(address(harvester).balance, 0);
         assertGt(ratio(), before);
@@ -270,7 +270,7 @@ contract StillHarvesterTest is Test {
     function test_poolSlippageReverts() public {
         factory.setPhase(2);
         escrow.credit{value: 0.05 ether}(address(harvester));
-        vm.expectRevert(abi.encodeWithSelector(StillHarvester.Slippage.selector, 40_000e18, 40_001e18));
+        vm.expectRevert(abi.encodeWithSelector(CarthaHarvester.Slippage.selector, 40_000e18, 40_001e18));
         harvester.harvest(40_001e18);
     }
 
@@ -284,7 +284,7 @@ contract StillHarvesterTest is Test {
     }
 
     function test_unlockCallbackOnlyFromPoolManager() public {
-        vm.expectRevert(StillHarvester.NotPoolManager.selector);
+        vm.expectRevert(CarthaHarvester.NotPoolManager.selector);
         harvester.unlockCallback(abi.encode(uint256(1), uint256(0)));
     }
 
@@ -302,7 +302,7 @@ contract StillHarvesterTest is Test {
             last = r;
         }
         assertEq(harvester.ledgerLength(), 40);
-        StillHarvester.Entry[] memory entries = harvester.recent(3);
+        CarthaHarvester.Entry[] memory entries = harvester.recent(3);
         assertEq(entries.length, 3);
         assertGe(entries[0].ratioAfter, entries[1].ratioAfter);
         assertGe(entries[1].ratioAfter, entries[2].ratioAfter);

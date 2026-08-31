@@ -2,13 +2,13 @@
 pragma solidity ^0.8.24;
 
 import {Test} from "forge-std/Test.sol";
-import {StillVault} from "../src/StillVault.sol";
-import {MockSTILL} from "./mocks/Mocks.sol";
+import {CarthaVault} from "../src/CarthaVault.sol";
+import {MockCARTHA} from "./mocks/Mocks.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-contract StillVaultTest is Test {
-    MockSTILL still;
-    StillVault vault;
+contract CarthaVaultTest is Test {
+    MockCARTHA still;
+    CarthaVault vault;
 
     address constant DEAD = 0x000000000000000000000000000000000000dEaD;
     uint256 constant SEED = 1_000e18;
@@ -18,8 +18,8 @@ contract StillVaultTest is Test {
     address harvester = makeAddr("harvester");
 
     function setUp() public {
-        still = new MockSTILL();
-        vault = new StillVault(IERC20(address(still)));
+        still = new MockCARTHA();
+        vault = new CarthaVault(IERC20(address(still)));
 
         // Deploy-time seed: deposit and park the shares at the dead address.
         still.mint(address(this), SEED);
@@ -34,8 +34,8 @@ contract StillVaultTest is Test {
     // ---------------------------------------------------------------- shape
 
     function test_metadata() public view {
-        assertEq(vault.name(), "Still Vault Share");
-        assertEq(vault.symbol(), "vSTILL");
+        assertEq(vault.name(), "Cartha Vault Share");
+        assertEq(vault.symbol(), "vCARTHA");
         assertEq(vault.decimals(), 18);
         assertEq(vault.asset(), address(still));
         assertEq(vault.totalAssets(), SEED);
@@ -66,7 +66,7 @@ contract StillVaultTest is Test {
         uint256 supplyBefore = vault.totalSupply();
         still.mint(address(vault), 100e18); // what a harvest does
         assertEq(vault.totalSupply(), supplyBefore);
-        // 1,100 STILL over 1,000 vSTILL
+        // 1,100 CARTHA over 1,000 vCARTHA
         assertApproxEqRel(ratio(), 1.1e18, 1e12);
     }
 
@@ -81,7 +81,7 @@ contract StillVaultTest is Test {
         still.mint(address(vault), 200e18); // harvest
 
         assertEq(vault.balanceOf(alice), aliceShares, "share balance must not move");
-        // 2,200 STILL over 2,000 vSTILL: alice's 1,000 shares redeem for ~1,100
+        // 2,200 CARTHA over 2,000 vCARTHA: alice's 1,000 shares redeem for ~1,100
         assertApproxEqRel(vault.previewRedeem(aliceShares), 1_100e18, 1e12);
     }
 
@@ -97,7 +97,7 @@ contract StillVaultTest is Test {
 
     // ------------------------------------------------------ the invariant
 
-    /// @dev STILL per vSTILL never decreases across any interleaving of deposits, mints,
+    /// @dev CARTHA per vCARTHA never decreases across any interleaving of deposits, mints,
     ///      withdrawals, redemptions and harvests. This is the property the whole site rests on.
     function testFuzz_ratioNeverDecreases(uint8[16] memory ops, uint96[16] memory amounts) public {
         still.mint(alice, type(uint128).max);
@@ -167,7 +167,7 @@ contract StillVaultTest is Test {
         uint256 attackerOut = vault.redeem(attackerShares, attacker, attacker);
 
         assertGt(victimShares, 0, "victim must receive shares");
-        assertGe(victimOut, victimIn - 1e6, "victim loss must be dust"); // at most ~1e6 wei on 10 STILL
+        assertGe(victimOut, victimIn - 1e6, "victim loss must be dust"); // at most ~1e6 wei on 10 CARTHA
         assertLt(attackerOut, donation / 2, "attacker must lose most of the donation to the dead seed");
     }
 

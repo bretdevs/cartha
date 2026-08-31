@@ -5,26 +5,26 @@ import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {IPonsFactory, IPonsCurve, IPonsFeeEscrow, IPonsMemeHook} from "./interfaces/IPons.sol";
 import {IPoolManager, IUnlockCallback, PoolKey, SwapParams, V4Constants} from "./interfaces/IUniswapV4.sol";
 
-interface IStillVaultView {
+interface ICarthaVaultView {
     function convertToAssets(uint256 shares) external view returns (uint256);
 }
 
-/// @title StillHarvester
-/// @notice The creator fee recipient for the STILL launch on pons v2. It has no owner.
+/// @title CarthaHarvester
+/// @notice The creator fee recipient for the CARTHA launch on pons v2. It has no owner.
 ///
-///         Every STILL trade on pons pays a fee in ETH. That fee is credited to this contract in the
-///         pons fee escrow. `harvest()` is permissionless: it claims the ETH, buys STILL (on the curve
-///         before graduation, on the Uniswap v4 pool after) and sends the STILL straight to the vault.
-///         The vault mints nothing for it, so STILL per vSTILL rises.
+///         Every CARTHA trade on pons pays a fee in ETH. That fee is credited to this contract in the
+///         pons fee escrow. `harvest()` is permissionless: it claims the ETH, buys CARTHA (on the curve
+///         before graduation, on the Uniswap v4 pool after) and sends the CARTHA straight to the vault.
+///         The vault mints nothing for it, so CARTHA per vCARTHA rises.
 ///
-///         Two constants bound what a hostile caller can do with a bad `minStillOut`:
+///         Two constants bound what a hostile caller can do with a bad `minCarthaOut`:
 ///         - maxBuyPerHarvest caps the ETH spent in one call, so a sandwich can only ever act on that much.
 ///         - cooldown spaces buys out, so the cap is a rate, not a one-off.
 ///         Anything above the cap simply waits here for the next harvest.
 ///
 ///         This contract never holds user deposits. The only value that passes through it is fee ETH
 ///         in transit. The vault is a separate contract and does not know this one exists.
-contract StillHarvester is IUnlockCallback {
+contract CarthaHarvester is IUnlockCallback {
     IERC20 public immutable still;
     address public immutable vault;
     IPonsFactory public immutable factory;
@@ -41,17 +41,17 @@ contract StillHarvester is IUnlockCallback {
         uint40 blockNumber;
         uint40 timestamp;
         uint112 ethSpent;
-        uint112 stillBought;
-        uint112 ratioAfter; // STILL per 1e18 vSTILL, after this harvest
+        uint112 carthaBought;
+        uint112 ratioAfter; // CARTHA per 1e18 vCARTHA, after this harvest
     }
 
     Entry[] private _ledger;
     uint256 public lastBuyAt;
     uint256 public totalEthSpent;
-    uint256 public totalStillBought;
+    uint256 public totalCarthaBought;
     uint256 private _entered;
 
-    event Harvest(address indexed caller, uint256 ethSpent, uint256 stillBought, uint256 ratioAfter);
+    event Harvest(address indexed caller, uint256 ethSpent, uint256 carthaBought, uint256 ratioAfter);
     event ClaimFailed(uint256 claimable);
 
     error NotPoolManager();
@@ -102,7 +102,7 @@ contract StillHarvester is IUnlockCallback {
         return block.timestamp >= lastBuyAt + cooldown;
     }
 
-    /// @notice Current pons phase for STILL: 0 curve, 1 swept, 2 pool, 3 rescued.
+    /// @notice Current pons phase for CARTHA: 0 curve, 1 swept, 2 pool, 3 rescued.
     function phase() public view returns (uint8) {
         return factory.getLaunchedToken(address(still)).phase;
     }
@@ -132,11 +132,11 @@ contract StillHarvester is IUnlockCallback {
 
     // -------------------------------------------------------------- harvest
 
-    /// @notice Sweep and claim what is owed, then buy up to `maxBuyPerHarvest` of STILL into the vault.
-    /// @param minStillOut Minimum STILL the buy must return. Keepers compute this from a quote.
+    /// @notice Sweep and claim what is owed, then buy up to `maxBuyPerHarvest` of CARTHA into the vault.
+    /// @param minCarthaOut Minimum CARTHA the buy must return. Keepers compute this from a quote.
     /// @return ethSpent ETH actually spent on the buy (0 if the cooldown has not passed or nothing is held).
-    /// @return stillBought STILL delivered to the vault.
-    function harvest(uint256 minStillOut) external returns (uint256 ethSpent, uint256 stillBought) {
+    /// @return carthaBought CARTHA delivered to the vault.
+    function harvest(uint256 minCarthaOut) external returns (uint256 ethSpent, uint256 carthaBought) {
         if (_entered == 1) revert Reentrant();
         _entered = 1;
 
@@ -147,27 +147,27 @@ contract StillHarvester is IUnlockCallback {
             uint256 budget = held > maxBuyPerHarvest ? maxBuyPerHarvest : held;
             uint8 p = phase();
             if (p == 0) {
-                (ethSpent, stillBought) = _buyOnCurve(budget, minStillOut);
+                (ethSpent, carthaBought) = _buyOnCurve(budget, minCarthaOut);
             } else if (p == 2) {
-                (ethSpent, stillBought) = _buyOnPool(budget, minStillOut);
+                (ethSpent, carthaBought) = _buyOnPool(budget, minCarthaOut);
             }
             // phase 1 (swept, pool not yet created) and 3 (rescued): nothing to buy from. ETH waits.
 
-            if (stillBought > 0) {
+            if (carthaBought > 0) {
                 lastBuyAt = block.timestamp;
                 totalEthSpent += ethSpent;
-                totalStillBought += stillBought;
-                uint256 ratio = IStillVaultView(vault).convertToAssets(1e18);
+                totalCarthaBought += carthaBought;
+                uint256 ratio = ICarthaVaultView(vault).convertToAssets(1e18);
                 _ledger.push(
                     Entry({
                         blockNumber: uint40(block.number),
                         timestamp: uint40(block.timestamp),
                         ethSpent: uint112(ethSpent),
-                        stillBought: uint112(stillBought),
+                        carthaBought: uint112(carthaBought),
                         ratioAfter: uint112(ratio)
                     })
                 );
-                emit Harvest(msg.sender, ethSpent, stillBought, ratio);
+                emit Harvest(msg.sender, ethSpent, carthaBought, ratio);
             }
         }
 
@@ -194,23 +194,23 @@ contract StillHarvester is IUnlockCallback {
         }
     }
 
-    function _buyOnCurve(uint256 budget, uint256 minStillOut) internal returns (uint256 ethSpent, uint256 stillBought) {
+    function _buyOnCurve(uint256 budget, uint256 minCarthaOut) internal returns (uint256 ethSpent, uint256 carthaBought) {
         uint256 before = address(this).balance;
-        stillBought = curve.buy{value: budget}(budget, minStillOut, vault);
+        carthaBought = curve.buy{value: budget}(budget, minCarthaOut, vault);
         // A buy that crosses the curve's reserved allocation is clamped and the difference refunded.
         ethSpent = before - address(this).balance;
     }
 
-    function _buyOnPool(uint256 budget, uint256 minStillOut) internal returns (uint256 ethSpent, uint256 stillBought) {
-        bytes memory result = poolManager.unlock(abi.encode(budget, minStillOut));
-        (ethSpent, stillBought) = abi.decode(result, (uint256, uint256));
+    function _buyOnPool(uint256 budget, uint256 minCarthaOut) internal returns (uint256 ethSpent, uint256 carthaBought) {
+        bytes memory result = poolManager.unlock(abi.encode(budget, minCarthaOut));
+        (ethSpent, carthaBought) = abi.decode(result, (uint256, uint256));
     }
 
-    /// @dev Called back by the PoolManager inside `unlock`. Exact-input swap, ETH in, STILL out,
-    ///      STILL taken directly to the vault.
+    /// @dev Called back by the PoolManager inside `unlock`. Exact-input swap, ETH in, CARTHA out,
+    ///      CARTHA taken directly to the vault.
     function unlockCallback(bytes calldata data) external returns (bytes memory) {
         if (msg.sender != address(poolManager)) revert NotPoolManager();
-        (uint256 budget, uint256 minStillOut) = abi.decode(data, (uint256, uint256));
+        (uint256 budget, uint256 minCarthaOut) = abi.decode(data, (uint256, uint256));
 
         int256 delta = poolManager.swap(
             poolKey(),
@@ -223,7 +223,7 @@ contract StillHarvester is IUnlockCallback {
         int128 amount1 = int128(delta);
         uint256 owed = amount0 < 0 ? uint256(uint128(-amount0)) : 0;
         uint256 received = amount1 > 0 ? uint256(uint128(amount1)) : 0;
-        if (received < minStillOut) revert Slippage(received, minStillOut);
+        if (received < minCarthaOut) revert Slippage(received, minCarthaOut);
 
         poolManager.settle{value: owed}();
         poolManager.take(address(still), vault, received);

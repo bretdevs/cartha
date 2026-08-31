@@ -6,8 +6,8 @@ import {IPonsFactory} from "../../src/interfaces/IPons.sol";
 import {IUnlockCallback, PoolKey, SwapParams} from "../../src/interfaces/IUniswapV4.sol";
 
 /// @dev A fixed-supply-shaped launch token stand-in with an open mint for tests.
-contract MockSTILL is ERC20 {
-    constructor() ERC20("STILL", "STILL") {}
+contract MockCARTHA is ERC20 {
+    constructor() ERC20("CARTHA", "CARTHA") {}
 
     function mint(address to, uint256 amount) external {
         _mint(to, amount);
@@ -39,15 +39,15 @@ contract MockEscrow {
 /// @dev pons bonding curve: mints tokens at a fixed rate, can refund part of the input,
 ///      and can hold unswept fees that `sweepFees` moves into the escrow.
 contract MockCurve {
-    MockSTILL public immutable token;
+    MockCARTHA public immutable token;
     MockEscrow public immutable escrow;
     address public feeRecipient;
-    uint256 public tokensPerEth = 1_000_000e18; // 1 ETH -> 1,000,000 STILL
+    uint256 public tokensPerEth = 1_000_000e18; // 1 ETH -> 1,000,000 CARTHA
     uint256 public refundBps; // portion of quoteIn handed back, simulating a clamped final buy
     uint256 public unsweptFees;
     bool public sweepReverts;
 
-    constructor(MockSTILL token_, MockEscrow escrow_, address feeRecipient_) {
+    constructor(MockCARTHA token_, MockEscrow escrow_, address feeRecipient_) {
         token = token_;
         escrow = escrow_;
         feeRecipient = feeRecipient_;
@@ -144,7 +144,7 @@ contract MockHook {
 /// @dev Enough of the Uniswap v4 PoolManager to exercise the unlock/swap/settle/take cycle:
 ///      exact-input ETH in, tokens out at a fixed rate, packed BalanceDelta, settlement check.
 contract MockPoolManager {
-    MockSTILL public immutable token;
+    MockCARTHA public immutable token;
     uint256 public tokensPerEth = 800_000e18; // post-graduation price, a bit worse than the curve
     uint256 private _owed;
     uint256 private _settled;
@@ -152,7 +152,7 @@ contract MockPoolManager {
     PoolKey public lastKey;
     SwapParams public lastParams;
 
-    constructor(MockSTILL token_) {
+    constructor(MockCARTHA token_) {
         token = token_;
     }
 

@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>STILL. Hold still.</title>
-<meta name="description" content="A vault on Robinhood Chain. Trading fees buy STILL into the vault and vSTILL just gets worth more. No claim step, no rebase, no owner.">
-<meta property="og:title" content="STILL. Hold still.">
+<title>Cartha. Nothing to claim.</title>
+<meta name="description" content="A vault on Robinhood Chain. Trading fees buy CARTHA into the vault and vCARTHA just gets worth more. No claim step, no rebase, no owner.">
+<meta property="og:title" content="Cartha. Nothing to claim.">
 <meta property="og:description" content="Your balance never moves. What it redeems for does. A vault on Robinhood Chain with no claim step and no owner.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://holdstill-plum.vercel.app/og.png">
+<meta property="og:image" content="https://cartha-phi.vercel.app/og.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://holdstill-plum.vercel.app/og.png">
+<meta name="twitter:image" content="https://cartha-phi.vercel.app/og.png">
 <meta name="theme-color" content="#0a2540">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='27' fill='none' stroke='%230a2540' stroke-width='5'/%3E%3Cpath d='M5 32h54v0a27 27 0 0 1-54 0z' fill='%230a2540'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -361,9 +361,9 @@
 
 <header id="hdr">
   <div class="wrap">
-    <a class="wordmark" href="#top" aria-label="STILL, top of page">
+    <a class="wordmark" href="#top" aria-label="Cartha, top of page">
       <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="27" fill="none" stroke="currentColor" stroke-width="5"/><path d="M5 32h54a27 27 0 0 1-54 0z" fill="currentColor"/></svg>
-      <span>still</span>
+      <span>cartha</span>
     </a>
     <nav aria-label="Sections">
       <a href="#deposit" class="opt">Deposit</a>
@@ -384,13 +384,13 @@
     <div class="bg" aria-hidden="true"></div>
     <canvas id="waterlines" aria-hidden="true"></canvas>
     <div class="wrap">
-      <h1 id="h1"><span id="h1-text">Hold still.</span><span class="cur off" id="h1-cur" aria-hidden="true"></span></h1>
-      <p class="lede rv">A vault on Robinhood Chain whose share is a plain ERC-20. Every STILL trade pays a fee, the fee buys STILL, and the STILL goes into the vault. Your balance of vSTILL never changes. What each unit redeems for does.</p>
+      <h1 id="h1"><span id="h1-text">Nothing to claim.</span><span class="cur off" id="h1-cur" aria-hidden="true"></span></h1>
+      <p class="lede rv">A vault on Robinhood Chain whose share is a plain ERC-20. Every CARTHA trade pays a fee, the fee buys CARTHA, and the CARTHA goes into the vault. Your balance of vCARTHA never changes. What each unit redeems for does.</p>
       <div class="actions rv">
-        <a class="cta" href="#deposit">Deposit STILL <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 13 13 3M5 3h8v8"/></svg></a>
+        <a class="cta" href="#deposit">Deposit CARTHA <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 13 13 3M5 3h8v8"/></svg></a>
         <a class="cta ghost" href="#read">Read the contracts</a>
       </div>
-      <p class="ratio-label rv" id="ratio-label">STILL per vSTILL, read from the vault</p>
+      <p class="ratio-label rv" id="ratio-label">CARTHA per vCARTHA, read from the vault</p>
       <div class="ratio" id="ratio" aria-live="polite" aria-atomic="true">1.0000<span class="tail">000</span></div>
     </div>
   </div>
@@ -402,7 +402,7 @@
       <div class="stats">
         <span id="s-up">Nothing harvested yet</span>
         <span>Last harvest <strong id="s-last">none yet</strong></span>
-        <span><strong id="s-eth">0</strong> ETH harvested into <strong id="s-still">0</strong> STILL so far</span>
+        <span><strong id="s-eth">0</strong> ETH harvested into <strong id="s-still">0</strong> CARTHA so far</span>
       </div>
       <div class="phase">
         <span id="s-phase">Reading the chain</span>
@@ -412,38 +412,38 @@
       <div class="app" id="deposit">
         <div class="card">
           <div class="tabs" role="tablist" aria-label="Deposit or redeem">
-            <button type="button" role="tab" aria-selected="true" id="tab-dep" aria-controls="panel-body">Deposit STILL</button>
-            <button type="button" role="tab" aria-selected="false" id="tab-red" aria-controls="panel-body">Redeem vSTILL</button>
+            <button type="button" role="tab" aria-selected="true" id="tab-dep" aria-controls="panel-body">Deposit CARTHA</button>
+            <button type="button" role="tab" aria-selected="false" id="tab-red" aria-controls="panel-body">Redeem vCARTHA</button>
           </div>
           <div id="panel-body" role="tabpanel">
             <div class="field">
               <input id="amount" inputmode="decimal" placeholder="0" aria-label="Amount" autocomplete="off">
-              <span class="unit" id="unit">STILL</span>
+              <span class="unit" id="unit">CARTHA</span>
               <button type="button" id="max" disabled>Max</button>
             </div>
             <button type="button" class="btn" id="act">Connect wallet</button>
             <p class="status-line" id="status" aria-live="polite"></p>
             <p class="holdings" id="holdings">Connect a wallet to see what you hold.</p>
-            <p class="note">Deposits mint vSTILL at the current ratio. Redemptions burn vSTILL for STILL at that block's ratio. Both settle in the block they are sent. There is no fee on either side and nothing to claim in between.</p>
-            <p class="links"><a href="#" id="buy" rel="noopener">No STILL yet? Buy it on pons</a><a href="#risks">Read this before you deposit</a></p>
+            <p class="note">Deposits mint vCARTHA at the current ratio. Redemptions burn vCARTHA for CARTHA at that block's ratio. Both settle in the block they are sent. There is no fee on either side and nothing to claim in between.</p>
+            <p class="links"><a href="#" id="buy" rel="noopener">No CARTHA yet? Buy it on pons</a><a href="#risks">Read this before you deposit</a></p>
           </div>
         </div>
         <div class="card">
           <h3>Your position</h3>
           <ul class="kv">
-            <li><span>vSTILL held</span><b id="p-shares">Connect a wallet</b></li>
+            <li><span>vCARTHA held</span><b id="p-shares">Connect a wallet</b></li>
             <li><span>Redeems for</span><b id="p-worth"></b></li>
             <li><span>Share of the vault</span><b id="p-share"></b></li>
-            <li><span>STILL in wallet</span><b id="p-wallet"></b></li>
+            <li><span>CARTHA in wallet</span><b id="p-wallet"></b></li>
             <li><span>Network</span><b>Robinhood Chain</b></li>
           </ul>
         </div>
         <div class="card">
           <h3>The vault</h3>
           <ul class="kv">
-            <li><span>STILL in the vault</span><b id="v-assets">Reading</b></li>
-            <li><span>vSTILL in circulation</span><b id="v-supply"></b></li>
-            <li><span>STILL per vSTILL</span><b id="v-ratio"></b></li>
+            <li><span>CARTHA in the vault</span><b id="v-assets">Reading</b></li>
+            <li><span>vCARTHA in circulation</span><b id="v-supply"></b></li>
+            <li><span>CARTHA per vCARTHA</span><b id="v-ratio"></b></li>
             <li><span>Exit</span><b>Redeem, same block</b></li>
             <li><span>Queue</span><b>None</b></li>
             <li><span>Contract</span><b class="mono" id="v-addr">Not deployed yet</b></li>
@@ -455,17 +455,17 @@
 
   <div class="wrap">
     <div class="strip">
-      <div class="stile rv"><h3>STILL in the vault</h3><div><b id="st-assets" data-n="0">0</b><small>held for vSTILL holders</small></div></div>
+      <div class="stile rv"><h3>CARTHA in the vault</h3><div><b id="st-assets" data-n="0">0</b><small>held for vCARTHA holders</small></div></div>
       <div class="stile rv"><h3>ETH harvested</h3><div><b id="st-eth" data-n="0">0</b><small>bought into the vault so far</small></div></div>
       <div class="stile rv"><h3>Harvests</h3><div><b id="st-count" data-n="0">0</b><small>each one a step up</small></div></div>
-      <div class="stile rv"><h3>STILL per vSTILL</h3><div><b id="st-ratio" data-n="1">1.0000</b><small>from 1.0000 at launch</small></div></div>
+      <div class="stile rv"><h3>CARTHA per vCARTHA</h3><div><b id="st-ratio" data-n="1">1.0000</b><small>from 1.0000 at launch</small></div></div>
       <a class="stile link rv" href="#deposit"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 13 13 3M5 3h8v8"/></svg><b>Open the vault</b></a>
     </div>
   </div>
 
   <div class="statement" id="statement">
     <div class="wrap">
-      <p id="statement-text">Every STILL trade pays a fee. The fee buys STILL. The STILL goes into the vault. No vSTILL is minted for it, so each unit redeems for more than it did a block ago. Your balance never moves. What it redeems for does.</p>
+      <p id="statement-text">Every CARTHA trade pays a fee. The fee buys CARTHA. The CARTHA goes into the vault. No vCARTHA is minted for it, so each unit redeems for more than it did a block ago. Your balance never moves. What it redeems for does.</p>
     </div>
   </div>
 
@@ -476,21 +476,21 @@
       <div class="story">
         <div class="visual rv">
           <div class="device" id="device">
-            <div class="dh"><span><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="27" fill="none" stroke="currentColor" stroke-width="5"/><path d="M5 32h54a27 27 0 0 1-54 0z" fill="currentColor"/></svg>still</span><span id="device-tag" style="font-weight:400;color:rgba(255,255,255,.6)">Robinhood Chain</span></div>
-            <div class="scene on" data-s="0"><span class="pill">pons launchpad</span><div class="big">Buy STILL</div><div class="row"><span>Paid</span><span>0.50 ETH</span></div><div class="row"><span>Received</span><span>1,000,000 STILL</span></div><div class="row"><span>Fee on the trade</span><span>4%, in ETH</span></div><div class="fill" style="--w:38%"><i></i></div><div class="row" style="border:0;padding-top:2px"><span>Curve progress</span><span>38%</span></div></div>
-            <div class="scene" data-s="1"><span class="pill">STILL vault</span><div class="big">Deposit</div><div class="row"><span>You deposit</span><span>1,000,000 STILL</span></div><div class="row"><span>You receive</span><span>1,000,000 vSTILL</span></div><div class="row"><span>Ratio</span><span>1.0000000</span></div><div class="row"><span>Settles</span><span>Same block</span></div></div>
+            <div class="dh"><span><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="27" fill="none" stroke="currentColor" stroke-width="5"/><path d="M5 32h54a27 27 0 0 1-54 0z" fill="currentColor"/></svg>cartha</span><span id="device-tag" style="font-weight:400;color:rgba(255,255,255,.6)">Robinhood Chain</span></div>
+            <div class="scene on" data-s="0"><span class="pill">pons launchpad</span><div class="big">Buy CARTHA</div><div class="row"><span>Paid</span><span>0.50 ETH</span></div><div class="row"><span>Received</span><span>1,000,000 CARTHA</span></div><div class="row"><span>Fee on the trade</span><span>4%, in ETH</span></div><div class="fill" style="--w:38%"><i></i></div><div class="row" style="border:0;padding-top:2px"><span>Curve progress</span><span>38%</span></div></div>
+            <div class="scene" data-s="1"><span class="pill">CARTHA vault</span><div class="big">Deposit</div><div class="row"><span>You deposit</span><span>1,000,000 CARTHA</span></div><div class="row"><span>You receive</span><span>1,000,000 vCARTHA</span></div><div class="row"><span>Ratio</span><span>1.0000000</span></div><div class="row"><span>Settles</span><span>Same block</span></div></div>
             <div class="scene" data-s="2"><span class="pill">Every trade, buys and sells</span><div class="big">Fees, in ETH</div><div class="trade"><span>Buy 0.31 ETH</span><b>+0.0124 ETH</b></div><div class="trade"><span>Sell 0.12 ETH</span><b>+0.0048 ETH</b></div><div class="trade"><span>Buy 1.02 ETH</span><b>+0.0408 ETH</b></div><div class="trade"><span>Sell 0.44 ETH</span><b>+0.0176 ETH</b></div><div class="row" style="margin-top:8px"><span>Owed to the harvester</span><span>0.0756 ETH</span></div></div>
-            <div class="scene" data-s="3"><span class="pill">harvest(), anyone can call it</span><div class="big">Harvest</div><div class="row"><span>ETH spent</span><span>0.0756 ETH</span></div><div class="row"><span>STILL bought</span><span>71,120 STILL</span></div><div class="row"><span>Sent to</span><span>the vault</span></div><div class="row"><span>vSTILL minted</span><span>0</span></div><div class="row"><span>Ratio</span><span id="scene-ratio">1.0000000</span></div></div>
-            <div class="scene" data-s="4"><span class="pill">STILL vault</span><div class="big">Redeem</div><div class="row"><span>You burn</span><span>1,000,000 vSTILL</span></div><div class="row"><span>You receive</span><span>1,004,731 STILL</span></div><div class="row"><span>Queue</span><span>None</span></div><div class="row"><span>Exit fee</span><span>None</span></div></div>
+            <div class="scene" data-s="3"><span class="pill">harvest(), anyone can call it</span><div class="big">Harvest</div><div class="row"><span>ETH spent</span><span>0.0756 ETH</span></div><div class="row"><span>CARTHA bought</span><span>71,120 CARTHA</span></div><div class="row"><span>Sent to</span><span>the vault</span></div><div class="row"><span>vCARTHA minted</span><span>0</span></div><div class="row"><span>Ratio</span><span id="scene-ratio">1.0000000</span></div></div>
+            <div class="scene" data-s="4"><span class="pill">CARTHA vault</span><div class="big">Redeem</div><div class="row"><span>You burn</span><span>1,000,000 vCARTHA</span></div><div class="row"><span>You receive</span><span>1,004,731 CARTHA</span></div><div class="row"><span>Queue</span><span>None</span></div><div class="row"><span>Exit fee</span><span>None</span></div></div>
             <div class="bars" id="bars"><i class="done"></i><i></i><i></i><i></i><i></i></div>
           </div>
         </div>
         <ol class="stepz" id="stepz">
-          <li class="on"><span class="n">01</span><h3>Buy STILL on pons.</h3><p>It is an ordinary fixed-supply token. Nothing about the token itself is special, and that is the point.</p></li>
-          <li><span class="n">02</span><h3>Deposit it here for vSTILL.</h3><p>vSTILL is an ordinary ERC-20 too. Send it, pool it, post it somewhere else. Nothing about it is special either.</p></li>
-          <li><span class="n">03</span><h3>Every trade on pons pays a fee in ETH.</h3><p id="fee-copy">Buys and sells, on the curve and in the pool. pons keeps a cut of it. The rest is owed to a contract with no owner. Anyone can call its harvest function. It claims the ETH, buys STILL and sends the STILL to the vault.</p></li>
-          <li><span class="n">04</span><h3>No vSTILL is minted for it.</h3><p>So each unit of vSTILL now redeems for more STILL than it did a block ago. That is the whole mechanism.</p></li>
-          <li><span class="n">05</span><h3>Redeem when you like.</h3><p>Burn vSTILL, take STILL at that block's ratio. Same block, no queue, no exit fee.</p></li>
+          <li class="on"><span class="n">01</span><h3>Buy CARTHA on pons.</h3><p>It is an ordinary fixed-supply token. Nothing about the token itself is special, and that is the point.</p></li>
+          <li><span class="n">02</span><h3>Deposit it here for vCARTHA.</h3><p>vCARTHA is an ordinary ERC-20 too. Send it, pool it, post it somewhere else. Nothing about it is special either.</p></li>
+          <li><span class="n">03</span><h3>Every trade on pons pays a fee in ETH.</h3><p id="fee-copy">Buys and sells, on the curve and in the pool. pons keeps a cut of it. The rest is owed to a contract with no owner. Anyone can call its harvest function. It claims the ETH, buys CARTHA and sends the CARTHA to the vault.</p></li>
+          <li><span class="n">04</span><h3>No vCARTHA is minted for it.</h3><p>So each unit of vCARTHA now redeems for more CARTHA than it did a block ago. That is the whole mechanism.</p></li>
+          <li><span class="n">05</span><h3>Redeem when you like.</h3><p>Burn vCARTHA, take CARTHA at that block's ratio. Same block, no queue, no exit fee.</p></li>
         </ol>
       </div>
     </div>
@@ -499,14 +499,14 @@
   <section id="projection">
     <div class="wrap">
       <h2 class="rv">What trading does to the ratio</h2>
-      <p class="intro rv">The ratio is set by volume, not by us. Move the sliders to see the mechanism at a size you find plausible. Buybacks are shared among vSTILL holders only, so the fewer people deposit, the faster the ratio moves for those who do.</p>
+      <p class="intro rv">The ratio is set by volume, not by us. Move the sliders to see the mechanism at a size you find plausible. Buybacks are shared among vCARTHA holders only, so the fewer people deposit, the faster the ratio moves for those who do.</p>
       <div class="proj rv">
         <div class="inputs">
-          <div class="inp"><label for="in-vol">STILL traded per day, in ETH</label><div class="row"><input type="range" id="in-vol" min="0.5" max="60" step="0.5" value="3"><output id="out-vol">3 ETH</output></div></div>
-          <div class="inp"><label for="in-cap">STILL market value, in ETH</label><div class="row"><input type="range" id="in-cap" min="5" max="600" step="5" value="80"><output id="out-cap">80 ETH</output></div></div>
+          <div class="inp"><label for="in-vol">CARTHA traded per day, in ETH</label><div class="row"><input type="range" id="in-vol" min="0.5" max="60" step="0.5" value="3"><output id="out-vol">3 ETH</output></div></div>
+          <div class="inp"><label for="in-cap">CARTHA market value, in ETH</label><div class="row"><input type="range" id="in-cap" min="5" max="600" step="5" value="80"><output id="out-cap">80 ETH</output></div></div>
           <div class="inp"><label for="in-dep">Share of supply sitting in the vault</label><div class="row"><input type="range" id="in-dep" min="5" max="90" step="1" value="40"><output id="out-dep">40%</output></div></div>
           <div class="out">
-            <b id="out-ratio">1.0000</b><span>STILL per vSTILL after 180 days, from 1.0000</span>
+            <b id="out-ratio">1.0000</b><span>CARTHA per vCARTHA after 180 days, from 1.0000</span>
             <p class="muted" style="margin:10px 0 0;font-size:0.85rem" id="out-eth">0 ETH a day into the vault</p>
           </div>
         </div>
@@ -528,12 +528,12 @@
   <section id="never" class="dark">
     <div class="wrap">
       <h2 class="rv">What never happens</h2>
-      <p class="intro rv">When a market declines a yield-bearing token, it is rarely because of the yield. It is because the token does something unusual, and unusual means custom code and an untested liquidation path. So the list that matters is the list of things vSTILL does not do.</p>
+      <p class="intro rv">When a market declines a yield-bearing token, it is rarely because of the yield. It is because the token does something unusual, and unusual means custom code and an untested liquidation path. So the list that matters is the list of things vCARTHA does not do.</p>
       <div class="ncards">
         <div class="ncard rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg><b>No claim step</b><p>There is nothing to collect and nothing to forget. The yield is already inside the number.</p></div>
-        <div class="ncard rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16"/></svg><b>No rebase</b><p>Your wallet shows the same vSTILL balance a year from now. Every cached balance stays correct.</p></div>
+        <div class="ncard rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12h16"/></svg><b>No rebase</b><p>Your wallet shows the same vCARTHA balance a year from now. Every cached balance stays correct.</p></div>
         <div class="ncard rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg><b>No epochs, no queue, no exit fee</b><p>Deposit and redeem settle in the block they are sent.</p></div>
-        <div class="ncard rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2"/></svg><b>No receipt NFT</b><p>vSTILL is fungible, so it can be priced, pooled and moved like anything else.</p></div>
+        <div class="ncard rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2"/></svg><b>No receipt NFT</b><p>vCARTHA is fungible, so it can be priced, pooled and moved like anything else.</p></div>
         <div class="ncard rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 18 18 6M8 6h10v10"/></svg><b>No transfer hooks</b><p>Nothing fires when a contract takes custody of it.</p></div>
         <div class="ncard rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3v18M3 12h18"/></svg><b>No owner</b><p>No pause, no upgrade, no fee switch, no admin key. Neither on the vault nor on the contract that receives the fees.</p></div>
       </div>
@@ -544,21 +544,21 @@
     <div class="caustics" aria-hidden="true"><i class="l2" style="top:-10vw"></i></div>
     <div class="wrap" style="position:relative;z-index:2">
       <h2 class="rv">The ratio only turns one way</h2>
-      <p class="rv">The vault holds STILL and nothing else. It never provides liquidity, never lends, never sells. Harvest can only add STILL. Redeem can only remove STILL in exact proportion to the vSTILL it burns, and rounding always favours the vault. So STILL per vSTILL cannot go down, in any block, for any reason. It is a property of the code, checked by a fuzz test in the repository, not a promise.</p>
+      <p class="rv">The vault holds CARTHA and nothing else. It never provides liquidity, never lends, never sells. Harvest can only add CARTHA. Redeem can only remove CARTHA in exact proportion to the vCARTHA it burns, and rounding always favours the vault. So CARTHA per vCARTHA cannot go down, in any block, for any reason. It is a property of the code, checked by a fuzz test in the repository, not a promise.</p>
       <div class="cols">
         <div class="rv">
           <h3>What moves it</h3>
           <ul>
-            <li><b>A harvest</b><span>STILL enters the vault, no vSTILL is minted, the ratio steps up.</span></li>
+            <li><b>A harvest</b><span>CARTHA enters the vault, no vCARTHA is minted, the ratio steps up.</span></li>
             <li><b>Nothing else</b><span>That is the entire list.</span></li>
           </ul>
         </div>
         <div class="rv">
           <h3>What cannot move it</h3>
           <ul>
-            <li><b>Deposits and redemptions</b><span>Both move STILL and vSTILL together. A whale entering does not dilute you.</span></li>
+            <li><b>Deposits and redemptions</b><span>Both move CARTHA and vCARTHA together. A whale entering does not dilute you.</span></li>
             <li><b>An admin call</b><span>There is no setter, because there is no admin.</span></li>
-            <li><b>The STILL price</b><span>The ratio is STILL per vSTILL. What STILL is worth in ETH is a separate question, and the market answers it.</span></li>
+            <li><b>The CARTHA price</b><span>The ratio is CARTHA per vCARTHA. What CARTHA is worth in ETH is a separate question, and the market answers it.</span></li>
           </ul>
         </div>
       </div>
@@ -576,7 +576,7 @@
             <tr><td>Reflection tax<small>A cut of every trade is pushed to holders</small></td><td class="no">Sometimes</td><td>Changes</td><td class="no">No, transfers carry logic</td><td class="no">No</td><td class="no">No</td></tr>
             <tr><td>Stake to claim ETH<small>Lock the token, collect fees by hand</small></td><td class="no">Yes</td><td>Fixed</td><td class="no">The receipt usually cannot move</td><td class="no">No</td><td class="no">No</td></tr>
             <tr><td>Rebasing share<small>The balance itself grows</small></td><td>None</td><td>Changes</td><td class="no">Cached balances break</td><td class="no">Partly</td><td>Yes</td></tr>
-            <tr class="us"><td>vSTILL<small>Price-accruing vault share</small></td><td>None</td><td>Never changes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+            <tr class="us"><td>vCARTHA<small>Price-accruing vault share</small></td><td>None</td><td>Never changes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
           </tbody>
         </table>
       </div>
@@ -598,7 +598,7 @@
       <div class="scroll rv">
         <table class="ledger">
           <caption class="vh">Harvests, newest first</caption>
-          <thead><tr><th>When</th><th class="num">ETH spent</th><th class="num">STILL bought</th><th class="num">STILL per vSTILL after</th><th class="num">Block</th></tr></thead>
+          <thead><tr><th>When</th><th class="num">ETH spent</th><th class="num">CARTHA bought</th><th class="num">CARTHA per vCARTHA after</th><th class="num">Block</th></tr></thead>
           <tbody id="ledger-body"><tr><td colspan="5" class="empty">Reading the chain</td></tr></tbody>
         </table>
       </div>
@@ -617,12 +617,12 @@
     <div class="wrap">
       <h2 class="rv">Read this before you deposit</h2>
       <ul class="ruled">
-        <li class="rv"><p class="lead" id="audit-risk"><strong>The contracts are not audited.</strong> <span>Neither the vault nor the harvester has been reviewed by a third party. Size any deposit as if the code could be wrong. pons v2, which STILL trades on, publishes its own audit status in its documentation.</span></p></li>
-        <li class="rv"><p class="lead"><strong>pons can redirect creator fees.</strong> <span>pons v2 has a community takeover mechanism, behind a three day timelock, that can point a launch's creator fees at a new address. It exists for abandoned tokens. We cannot switch it off. If it were ever used on STILL, fees would stop reaching the vault and the ratio would stop rising. It would be public for three days before it took effect.</span></p></li>
-        <li class="rv"><p class="lead"><strong>Some fees wait on pons.</strong> <span>After graduation, fees that need converting from STILL back to ETH are swept by pons' operator, not by us. Until a sweep happens that ETH is earned but not yet harvestable.</span></p></li>
-        <li class="rv"><p class="lead"><strong>Each harvest is itself a trade.</strong> <span>Buying STILL on pons pays the same fee as any other buy. Part of every harvest goes back to pons and, through the creator tax, back into the next harvest.</span></p></li>
-        <li class="rv"><p class="lead"><strong>Nothing accepts vSTILL as collateral today.</strong> <span>Every integration claim on this page describes what a plain ERC-20 with a view-function price makes possible, not a market you can open.</span></p></li>
-        <li class="rv"><p class="lead"><strong>Ratio up is not value up.</strong> <span>STILL per vSTILL rises. STILL per ETH does whatever the market decides.</span></p></li>
+        <li class="rv"><p class="lead" id="audit-risk"><strong>The contracts are not audited.</strong> <span>Neither the vault nor the harvester has been reviewed by a third party. Size any deposit as if the code could be wrong. pons v2, which CARTHA trades on, publishes its own audit status in its documentation.</span></p></li>
+        <li class="rv"><p class="lead"><strong>pons can redirect creator fees.</strong> <span>pons v2 has a community takeover mechanism, behind a three day timelock, that can point a launch's creator fees at a new address. It exists for abandoned tokens. We cannot switch it off. If it were ever used on CARTHA, fees would stop reaching the vault and the ratio would stop rising. It would be public for three days before it took effect.</span></p></li>
+        <li class="rv"><p class="lead"><strong>Some fees wait on pons.</strong> <span>After graduation, fees that need converting from CARTHA back to ETH are swept by pons' operator, not by us. Until a sweep happens that ETH is earned but not yet harvestable.</span></p></li>
+        <li class="rv"><p class="lead"><strong>Each harvest is itself a trade.</strong> <span>Buying CARTHA on pons pays the same fee as any other buy. Part of every harvest goes back to pons and, through the creator tax, back into the next harvest.</span></p></li>
+        <li class="rv"><p class="lead"><strong>Nothing accepts vCARTHA as collateral today.</strong> <span>Every integration claim on this page describes what a plain ERC-20 with a view-function price makes possible, not a market you can open.</span></p></li>
+        <li class="rv"><p class="lead"><strong>Ratio up is not value up.</strong> <span>CARTHA per vCARTHA rises. CARTHA per ETH does whatever the market decides.</span></p></li>
       </ul>
     </div>
   </section>
@@ -631,10 +631,10 @@
     <div class="wrap">
       <h2 class="rv">Questions</h2>
       <div class="rv">
-        <details><summary>Where does the yield come from?</summary><p>From STILL's own trading on pons. Every buy and sell pays a fee in ETH. That fee is owed to a contract with no owner, which buys STILL and sends it to the vault.</p></details>
-        <details><summary>What is the rate?</summary><p>There is no rate to quote. The number that matters is STILL per vSTILL, and it is at the top of this page, read from the vault. It rises when people trade and stops when they do not. If you want a realised figure, read the ratio at two blocks and divide.</p></details>
-        <details><summary>Why deposit instead of just holding STILL?</summary><p>Holding STILL gives you the token. Holding vSTILL gives you the token plus every harvest since you deposited, and it is still a token you can move. The buybacks happen either way; only vSTILL holders receive them.</p></details>
-        <details><summary>Can the ratio go down?</summary><p>Not in STILL terms. The vault never sells, never lends, never provides liquidity. In ETH terms, STILL does whatever the market decides.</p></details>
+        <details><summary>Where does the yield come from?</summary><p>From CARTHA's own trading on pons. Every buy and sell pays a fee in ETH. That fee is owed to a contract with no owner, which buys CARTHA and sends it to the vault.</p></details>
+        <details><summary>What is the rate?</summary><p>There is no rate to quote. The number that matters is CARTHA per vCARTHA, and it is at the top of this page, read from the vault. It rises when people trade and stops when they do not. If you want a realised figure, read the ratio at two blocks and divide.</p></details>
+        <details><summary>Why deposit instead of just holding CARTHA?</summary><p>Holding CARTHA gives you the token. Holding vCARTHA gives you the token plus every harvest since you deposited, and it is still a token you can move. The buybacks happen either way; only vCARTHA holders receive them.</p></details>
+        <details><summary>Can the ratio go down?</summary><p>Not in CARTHA terms. The vault never sells, never lends, never provides liquidity. In ETH terms, CARTHA does whatever the market decides.</p></details>
         <details><summary>Who can pause it?</summary><p>Nobody. There is no pause, no owner, no upgrade path. The vault is stock OpenZeppelin ERC-4626 with a name; the harvester has no privileged role either. Check the verified source.</p></details>
         <details><summary>Is it audited?</summary><p id="faq-audit">Not yet. The status board above says exactly where that stands. Size any deposit as if the code could be wrong.</p></details>
       </div>
@@ -648,17 +648,17 @@
         <p>Everything on this page is a view call. There is no API, no indexer and no backend in the trust path. If the site goes away the vault does not notice.</p>
         <dl class="addr" id="addrs"></dl>
         <p id="audit-line"></p>
-        <p>Source, tests and the deploy script: <a href="https://github.com/bretdevs/still" rel="noopener">github.com/bretdevs/still</a></p>
+        <p>Source, tests and the deploy script: <a href="https://github.com/bretdevs/cartha" rel="noopener">github.com/bretdevs/cartha</a></p>
       </div>
       <div class="rv">
         <h3>Price it like this</h3>
-        <p>The share price is a pure view function on the vault. Multiply by whatever STILL price your risk team already trusts.</p>
-<pre><code>uint256 stillPerShare = vault.convertToAssets(1e18);
-return stillPerShare * stillPriceInEth / 1e18;</code></pre>
+        <p>The share price is a pure view function on the vault. Multiply by whatever CARTHA price your risk team already trusts.</p>
+<pre><code>uint256 carthaPerShare = vault.convertToAssets(1e18);
+return carthaPerShare * carthaPriceInEth / 1e18;</code></pre>
         <h3>Listing checklist</h3>
         <ul class="check">
-          <li><span>Price source</span><span>convertToAssets(1e18) times your STILL price. No new feed to commission.</span></li>
-          <li><span>Liquidation path</span><span>redeem() to STILL in the same transaction, then STILL to ETH on pons.</span></li>
+          <li><span>Price source</span><span>convertToAssets(1e18) times your CARTHA price. No new feed to commission.</span></li>
+          <li><span>Liquidation path</span><span>redeem() to CARTHA in the same transaction, then CARTHA to ETH on pons.</span></li>
           <li><span>Supply cap</span><span>Set one. Conservative beats not at all.</span></li>
           <li><span>Reward handling</span><span>None. There is no second token to route.</span></li>
           <li><span>Upgradeability</span><span>None. See the status board rather than taking our word.</span></li>
@@ -675,11 +675,11 @@ return stillPerShare * stillPriceInEth / 1e18;</code></pre>
   <div class="wrap">
     <div class="cols">
       <div>
-        <a class="wordmark" href="#top"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="27" fill="none" stroke="currentColor" stroke-width="5"/><path d="M5 32h54a27 27 0 0 1-54 0z" fill="currentColor"/></svg><span>still</span></a>
-        <p style="max-width:34ch;margin:14px 0 0;font-size:0.92rem">A vault on Robinhood Chain whose share is a plain ERC-20. Fees buy STILL into the vault. vSTILL just gets worth more.</p>
+        <a class="wordmark" href="#top"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="27" fill="none" stroke="currentColor" stroke-width="5"/><path d="M5 32h54a27 27 0 0 1-54 0z" fill="currentColor"/></svg><span>cartha</span></a>
+        <p style="max-width:34ch;margin:14px 0 0;font-size:0.92rem">A vault on Robinhood Chain whose share is a plain ERC-20. Fees buy CARTHA into the vault. vCARTHA just gets worth more.</p>
       </div>
       <div><h4>Vault</h4><ul><li><a href="#deposit">Deposit</a></li><li><a href="#ledger">Harvest ledger</a></li><li><a href="#status">Status</a></li><li><a href="#risks">Risks</a></li></ul></div>
-      <div><h4>Integrators</h4><ul><li><a href="#read">Contracts</a></li><li><a href="#compare">Yield shapes</a></li><li><a href="#questions">Questions</a></li><li><a href="https://github.com/bretdevs/still" rel="noopener">Source</a></li></ul></div>
+      <div><h4>Integrators</h4><ul><li><a href="#read">Contracts</a></li><li><a href="#compare">Yield shapes</a></li><li><a href="#questions">Questions</a></li><li><a href="https://github.com/bretdevs/cartha" rel="noopener">Source</a></li></ul></div>
       <div><h4>Elsewhere</h4><ul><li><a href="#" id="xlink2" rel="noopener">X</a></li><li><a href="#" id="ponslink" rel="noopener">pons</a></li><li><a href="https://robinhoodchain.blockscout.com" rel="noopener">Blockscout</a></li></ul></div>
     </div>
     <div class="base">
@@ -690,7 +690,7 @@ return stillPerShare * stillPriceInEth / 1e18;</code></pre>
 </footer>
 
 <div class="mcta" id="mcta" aria-hidden="true">
-  <div class="r" id="mcta-ratio">1.0000<small>STILL per vSTILL</small></div>
+  <div class="r" id="mcta-ratio">1.0000<small>CARTHA per vCARTHA</small></div>
   <a href="#deposit">Deposit</a>
 </div>
 
@@ -710,7 +710,7 @@ const CONFIG = {
   vault: "",
   harvester: "",
   curve: "",
-  buyUrl: "https://www.ponsfamily.com/launchpad",   // the STILL page on pons once it exists
+  buyUrl: "https://www.ponsfamily.com/launchpad",   // the CARTHA page on pons once it exists
   ponsFactory: "0x7eD598BcEf8bd9Edd8C97A195C6d13f40801EC7e",
   ponsEscrow: "0xd3AFEB2a57f70eF218Aa82451c51B2fb0416Ac9e",
   ponsHook: "0xE5e702641Ea86F4ae6cC3cDaeD2B886f976Be044",
@@ -740,9 +740,9 @@ const ABI = {
     "function approve(address, uint256) returns (bool)",
   ],
   harvester: [
-    "function recent(uint256) view returns (tuple(uint40 blockNumber, uint40 timestamp, uint112 ethSpent, uint112 stillBought, uint112 ratioAfter)[])",
+    "function recent(uint256) view returns (tuple(uint40 blockNumber, uint40 timestamp, uint112 ethSpent, uint112 carthaBought, uint112 ratioAfter)[])",
     "function totalEthSpent() view returns (uint256)",
-    "function totalStillBought() view returns (uint256)",
+    "function totalCarthaBought() view returns (uint256)",
     "function lastBuyAt() view returns (uint256)",
     "function phase() view returns (uint8)",
     "function ledgerLength() view returns (uint256)",
@@ -764,7 +764,7 @@ const fmt0 = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
 const fmt2 = new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 });
 const wei = (v) => Number(v) / 1e18;
 const fmtEth = (w) => { const v = wei(w); return v >= 100 ? fmt2.format(v) : v.toFixed(3); };
-const fmtStill = (w) => fmt0.format(Math.floor(wei(w)));
+const fmtCartha = (w) => fmt0.format(Math.floor(wei(w)));
 const ratioStr = (w) => wei(w).toFixed(7);
 const short = (a) => a ? a.slice(0, 6) + "\u2026" + a.slice(-4) : "";
 const ago = (ts) => {
@@ -804,7 +804,7 @@ function paintRatioText(s) {
   const html = `${s.slice(0, 6)}<span class="tail">${s.slice(6, 9)}</span>`;
   $("ratio").innerHTML = html;
   $("reflection").innerHTML = html;
-  $("mcta-ratio").innerHTML = `${s.slice(0, 6)}<small>STILL per vSTILL</small>`;
+  $("mcta-ratio").innerHTML = `${s.slice(0, 6)}<small>CARTHA per vCARTHA</small>`;
 }
 function renderRatio(ratioWei) {
   const target = ratioStr(ratioWei);
@@ -828,7 +828,7 @@ function renderStats(eth, still, last, count) {
   setStat("st-eth", wei(eth), (v) => v >= 100 ? fmt2.format(v) : v.toFixed(3));
   if (count !== undefined) setStat("st-count", Number(count), (v) => Math.round(v).toString());
   $("s-eth").textContent = fmtEth(eth);
-  $("s-still").textContent = fmtStill(still);
+  $("s-still").textContent = fmtCartha(still);
   $("s-last").textContent = !last ? "none yet" : ago(last);
 }
 function renderPhase(text, fraction) {
@@ -840,13 +840,13 @@ function renderPhase(text, fraction) {
 }
 function renderVault(assets, supply) {
   setStat("st-assets", wei(assets), fmtBig);
-  $("v-assets").textContent = fmtStill(assets) + " STILL";
-  $("v-supply").textContent = fmtStill(supply) + " vSTILL";
+  $("v-assets").textContent = fmtCartha(assets) + " CARTHA";
+  $("v-supply").textContent = fmtCartha(supply) + " vCARTHA";
 }
 function renderFees(feeBps, taxBps) {
   const fee = (Number(feeBps) / 100).toFixed(Number(feeBps) % 100 ? 2 : 0);
   const tax = (Number(taxBps) / 100).toFixed(Number(taxBps) % 100 ? 2 : 0);
-  $("fee-copy").textContent = `Buys and sells, on the curve and in the pool: a ${fee}% pons fee plus a ${tax}% creator tax that was fixed at launch and cannot be raised. pons keeps a cut of the fee. The rest is owed to a contract with no owner. Anyone can call its harvest function. It claims the ETH, buys STILL and sends the STILL to the vault.`;
+  $("fee-copy").textContent = `Buys and sells, on the curve and in the pool: a ${fee}% pons fee plus a ${tax}% creator tax that was fixed at launch and cannot be raised. pons keeps a cut of the fee. The rest is owed to a contract with no owner. Anyone can call its harvest function. It claims the ETH, buys CARTHA and sends the CARTHA to the vault.`;
   CONFIG.feeToVaultBps = Number(taxBps) + Math.round(Number(feeBps) / 2);
   renderProjection();
 }
@@ -862,7 +862,7 @@ function renderChart(entriesNewestFirst) {
   $("chart-area").setAttribute("d", d + " V170 H0 Z");
   $("chart-from").textContent = pts[0].toFixed(7);
   $("chart-to").textContent = pts[pts.length - 1].toFixed(7);
-  $("chart-label").textContent = `STILL per vSTILL, last ${pts.length} harvests`;
+  $("chart-label").textContent = `CARTHA per vCARTHA, last ${pts.length} harvests`;
   box.hidden = false;
 }
 function renderLedger(entries, note) {
@@ -873,7 +873,7 @@ function renderLedger(entries, note) {
   body.innerHTML = entries.slice(0, 12).map((e) => `<tr>
     <td><span title="${when(e.timestamp)}">${ago(e.timestamp)}</span></td>
     <td class="num">${fmtEth(e.ethSpent)}</td>
-    <td class="num">${fmtStill(e.stillBought)}</td>
+    <td class="num">${fmtCartha(e.carthaBought)}</td>
     <td class="num">${ratioStr(e.ratioAfter)}</td>
     <td class="num"><a href="${CONFIG.explorer}/block/${e.blockNumber}" rel="noopener">${fmt0.format(Number(e.blockNumber))}</a></td>
   </tr>`).join("");
@@ -889,7 +889,7 @@ function renderAudit() {
   const a = CONFIG.audit || { status: "none" };
   const firm = a.firmUrl ? `<a href="${a.firmUrl}" rel="noopener">${a.firm}</a>` : a.firm;
   const report = a.reportUrl ? `<a href="${a.reportUrl}" rel="noopener">Read the report</a>` : "";
-  const pons = "pons v2, which STILL trades on, publishes its own audit status in its documentation.";
+  const pons = "pons v2, which CARTHA trades on, publishes its own audit status in its documentation.";
   let risk, line, foot, faq, tile;
   if (a.status === "complete" && a.reportUrl) {
     risk = `<strong>Audited by ${a.firm}.</strong> <span>${report}. An audit lowers the odds of a bug in the vault and the harvester; it does not remove them. Size any deposit accordingly. ${pons}</span>`;
@@ -924,9 +924,9 @@ function renderBoard() {
     ["Audit", audit],
     ["Vault code", ["good", "Stock OpenZeppelin ERC-4626", "With a name. No custom logic, no override beyond decimals."]],
     ["Admin surface", ["good", "None", "No owner, no pause, no upgrade path, no fee switch. On the harvester either."]],
-    ["Ratio invariant", ["good", "Fuzz tested", "STILL per vSTILL never decreases across any sequence of deposits, redemptions and harvests."]],
+    ["Ratio invariant", ["good", "Fuzz tested", "CARTHA per vCARTHA never decreases across any sequence of deposits, redemptions and harvests."]],
     ["Harvest", ["good", "Permissionless", "Anyone can call it. A scheduled keeper does, every few minutes, capped per call."]],
-    ["Secondary liquidity", ["none", "vSTILL has no pool", "STILL trades on pons. Redemption through the vault is the only exit for vSTILL."]],
+    ["Secondary liquidity", ["none", "vCARTHA has no pool", "CARTHA trades on pons. Redemption through the vault is the only exit for vCARTHA."]],
     ["Collateral listings", ["none", "None", "Every capital efficiency claim describes what the design permits, not a market you can open."]],
   ];
   $("board").innerHTML = tiles.map(([k, [cls, b, p]]) => `<div class="tile ${cls} rv"><h3>${k}</h3><b>${b}</b><p>${p}</p></div>`).join("");
@@ -937,7 +937,7 @@ function renderProjection() {
   const vol = Number($("in-vol").value), cap = Number($("in-cap").value), dep = Number($("in-dep").value) / 100;
   $("out-vol").textContent = `${vol} ETH`; $("out-cap").textContent = `${cap} ETH`; $("out-dep").textContent = `${Math.round(dep * 100)}%`;
   const supply = 1e9;                                   // pons launch supply
-  const price = cap / supply;                           // ETH per STILL
+  const price = cap / supply;                           // ETH per CARTHA
   const ethPerDay = vol * CONFIG.feeToVaultBps / 10000; // ETH reaching the harvester
   const tokensPerDay = ethPerDay / price;
   const shares = supply * dep;
@@ -951,7 +951,7 @@ function renderProjection() {
   $("proj-area").setAttribute("d", d + " V260 H0 Z");
   $("proj-dot").setAttribute("cy", Y(pts[days]).toFixed(1));
   $("out-ratio").textContent = mx.toFixed(4);
-  $("out-eth").textContent = `${ethPerDay.toFixed(3)} ETH a day into the vault, about ${fmt0.format(tokensPerDay)} STILL at this price`;
+  $("out-eth").textContent = `${ethPerDay.toFixed(3)} ETH a day into the vault, about ${fmt0.format(tokensPerDay)} CARTHA at this price`;
   $("proj-svg")._pts = pts; $("proj-svg")._Y = Y;
 }
 for (const id of ["in-vol", "in-cap", "in-dep"]) $(id).addEventListener("input", renderProjection);
@@ -961,7 +961,7 @@ for (const id of ["in-vol", "in-cap", "in-dep"]) $(id).addEventListener("input",
     const r = svg.getBoundingClientRect(); const x = Math.min(Math.max(0, (e.clientX ?? e.touches?.[0]?.clientX ?? 0) - r.left), r.width);
     const day = Math.round((x / r.width) * 180); const pts = svg._pts; if (!pts) return;
     cur.setAttribute("x1", (day / 180) * 800); cur.setAttribute("x2", (day / 180) * 800); cur.setAttribute("opacity", "0.5");
-    read.textContent = `Day ${day}: 1 vSTILL redeems for ${pts[day].toFixed(4)} STILL.`;
+    read.textContent = `Day ${day}: 1 vCARTHA redeems for ${pts[day].toFixed(4)} CARTHA.`;
   };
   svg.addEventListener("mousemove", move); svg.addEventListener("touchmove", move, { passive: true });
   svg.addEventListener("mouseleave", () => { cur.setAttribute("opacity", "0"); read.textContent = "Move over the line to read a day."; });
@@ -1073,12 +1073,12 @@ function runDemo() {
   } else if (state === "months") {
     eth = 41700n * 10n ** 15n; still = 30118442n * ONE; block = 62488210;
     let r = 1230000000n * 10n ** 9n;
-    for (let i = 12; i >= 1; i--) { const j = BigInt(Math.floor(Math.random() * 400)); r += (180n + j) * 10n ** 12n; entries.push({ timestamp: now - i * 5400 - 120 - Math.floor(Math.random() * 1800), ethSpent: (230n + j) * 10n ** 15n, stillBought: (15000n + j * 60n) * ONE, ratioAfter: r, blockNumber: block - i * 6200 - Math.floor(Math.random() * 900) }); }
+    for (let i = 12; i >= 1; i--) { const j = BigInt(Math.floor(Math.random() * 400)); r += (180n + j) * 10n ** 12n; entries.push({ timestamp: now - i * 5400 - 120 - Math.floor(Math.random() * 1800), ethSpent: (230n + j) * 10n ** 15n, carthaBought: (15000n + j * 60n) * ONE, ratioAfter: r, blockNumber: block - i * 6200 - Math.floor(Math.random() * 900) }); }
     ratio = r; supply = 212000000n * ONE; assets = supply * ratio / ONE;
   } else {
     eth = 1230n * 10n ** 15n; still = 1204113n * ONE; block = 50906455;
     let r = ONE;
-    for (let i = 12; i >= 1; i--) { const j = BigInt(Math.floor(Math.random() * 500)); r += (200n + j) * 10n ** 12n; entries.push({ timestamp: now - i * 7200 - 240 - Math.floor(Math.random() * 3000), ethSpent: (45n + j / 6n) * 10n ** 15n, stillBought: (40000n + j * 110n) * ONE, ratioAfter: r, blockNumber: block - i * 14400 - Math.floor(Math.random() * 2000) }); }
+    for (let i = 12; i >= 1; i--) { const j = BigInt(Math.floor(Math.random() * 500)); r += (200n + j) * 10n ** 12n; entries.push({ timestamp: now - i * 7200 - 240 - Math.floor(Math.random() * 3000), ethSpent: (45n + j / 6n) * 10n ** 15n, carthaBought: (40000n + j * 110n) * ONE, ratioAfter: r, blockNumber: block - i * 14400 - Math.floor(Math.random() * 2000) }); }
     ratio = r; supply = 254000000n * ONE; assets = supply * ratio / ONE;
   }
   if (entries.length) last = entries[entries.length - 1].timestamp;
@@ -1087,9 +1087,9 @@ function runDemo() {
     renderLedger([...entries].reverse(), "Demo data until the contracts are wired. Newest first.");
   };
   paint();
-  renderPhase(state === "months" ? "STILL trades in a permanently locked Uniswap v4 pool. Demo mode, numbers are simulated." : "STILL is on the pons curve, 38.2% of the way to its Uniswap v4 pool. Demo mode, numbers are simulated.", state === "months" ? null : 0.382);
+  renderPhase(state === "months" ? "CARTHA trades in a permanently locked Uniswap v4 pool. Demo mode, numbers are simulated." : "CARTHA is on the pons curve, 38.2% of the way to its Uniswap v4 pool. Demo mode, numbers are simulated.", state === "months" ? null : 0.382);
   renderFees(100, 300);
-  renderAddrs([["STILL token", ""], ["Vault (vSTILL)", ""], ["Harvester", ""], ["pons curve", ""], ["pons factory", CONFIG.ponsFactory], ["pons fee escrow", CONFIG.ponsEscrow], ["pons hook", CONFIG.ponsHook]]);
+  renderAddrs([["CARTHA token", ""], ["Vault (vCARTHA)", ""], ["Harvester", ""], ["pons curve", ""], ["pons factory", CONFIG.ponsFactory], ["pons fee escrow", CONFIG.ponsEscrow], ["pons hook", CONFIG.ponsHook]]);
   if (state !== "launch") {
     setInterval(() => {
       const spent = 40n * 10n ** 15n + BigInt(Math.floor(Math.random() * 60)) * 10n ** 15n;
@@ -1097,7 +1097,7 @@ function runDemo() {
       ratio += BigInt(Math.floor(Math.random() * 60) + 20) * 10n ** 12n;
       eth += spent; still += bought; block += 1200 + Math.floor(Math.random() * 800); assets += bought;
       last = Math.floor(Date.now() / 1000);
-      entries.push({ timestamp: last, ethSpent: spent, stillBought: bought, ratioAfter: ratio, blockNumber: block });
+      entries.push({ timestamp: last, ethSpent: spent, carthaBought: bought, ratioAfter: ratio, blockNumber: block });
       paint();
     }, 45000);
   }
@@ -1121,15 +1121,15 @@ async function refresh() {
     const [ratio, assets, supply] = await Promise.all([vaultR.convertToAssets(ONE), vaultR.totalAssets(), vaultR.totalSupply()]);
     vaultSupply = supply; renderRatio(ratio); renderVault(assets, supply);
     if (!harvR) return;
-    const [entries, eth, still, last, phase, count] = await Promise.all([harvR.recent(24), harvR.totalEthSpent(), harvR.totalStillBought(), harvR.lastBuyAt(), harvR.phase(), harvR.ledgerLength()]);
+    const [entries, eth, still, last, phase, count] = await Promise.all([harvR.recent(24), harvR.totalEthSpent(), harvR.totalCarthaBought(), harvR.lastBuyAt(), harvR.phase(), harvR.ledgerLength()]);
     lastHarvestTs = last; renderStats(eth, still, last === 0n ? 0 : last, count);
-    renderLedger(entries.map((e) => ({ timestamp: e.timestamp, ethSpent: e.ethSpent, stillBought: e.stillBought, ratioAfter: e.ratioAfter, blockNumber: e.blockNumber })));
+    renderLedger(entries.map((e) => ({ timestamp: e.timestamp, ethSpent: e.ethSpent, carthaBought: e.carthaBought, ratioAfter: e.ratioAfter, blockNumber: e.blockNumber })));
     if (phase === 0n && curveR) {
       const [raised, threshold] = await Promise.all([curveR.realQuoteReserve(), curveR.graduationThreshold()]);
       const f = threshold === 0n ? 0 : Number((raised * 1000n) / threshold) / 1000;
-      renderPhase(`STILL is on the pons curve, ${(f * 100).toFixed(1)}% of the way to its Uniswap v4 pool.`, f);
-    } else if (phase === 2n) renderPhase("STILL trades in a permanently locked Uniswap v4 pool.", null);
-    else if (phase === 1n) renderPhase("STILL has sold out its curve and is waiting for its pool to be created.", null);
+      renderPhase(`CARTHA is on the pons curve, ${(f * 100).toFixed(1)}% of the way to its Uniswap v4 pool.`, f);
+    } else if (phase === 2n) renderPhase("CARTHA trades in a permanently locked Uniswap v4 pool.", null);
+    else if (phase === 1n) renderPhase("CARTHA has sold out its curve and is waiting for its pool to be created.", null);
     else if (phase === 3n) renderPhase("The pons launch was rescued. Harvests are paused because there is no pool to buy from.", null);
     if (!feesRendered && curveR) { const [feeBps, taxBps] = await Promise.all([curveR.feeBps(), curveR.creatorTaxBps()]); renderFees(feeBps, taxBps); feesRendered = true; }
   } catch (e) { console.error(e); renderPhase("Could not reach the chain. Retrying.", null); }
@@ -1140,13 +1140,13 @@ let signer = null, me = null, mode = "dep", bal = { still: 0n, shares: 0n };
 function setStatus(msg, err) { $("status").textContent = msg; $("status").classList.toggle("err", !!err); }
 function primaryLabel() {
   if (!me) return "Connect wallet";
-  if (mode === "dep" && bal.still === 0n) return "Buy STILL on pons";
+  if (mode === "dep" && bal.still === 0n) return "Buy CARTHA on pons";
   if (mode === "red" && bal.shares === 0n) return "Nothing to redeem";
   return mode === "dep" ? "Deposit" : "Redeem";
 }
 function paintPanel() {
   $("tab-dep").setAttribute("aria-selected", mode === "dep"); $("tab-red").setAttribute("aria-selected", mode === "red");
-  $("unit").textContent = mode === "dep" ? "STILL" : "vSTILL";
+  $("unit").textContent = mode === "dep" ? "CARTHA" : "vCARTHA";
   $("act").textContent = primaryLabel();
   $("act").disabled = !!me && mode === "red" && bal.shares === 0n;
   $("max").disabled = !me || (mode === "dep" ? bal.still === 0n : bal.shares === 0n);
@@ -1176,10 +1176,10 @@ async function refreshHoldings() {
   const [s, v] = await Promise.all([still.balanceOf(me), vaultR.balanceOf(me)]);
   const worth = v === 0n ? 0n : await vaultR.previewRedeem(v);
   bal = { still: s, shares: v };
-  $("holdings").textContent = s === 0n && v === 0n ? "This wallet holds no STILL yet. Buy some on pons, then deposit it here." : `You hold ${fmtStill(s)} STILL and ${fmtStill(v)} vSTILL, which redeems for ${fmtStill(worth)} STILL right now.`;
-  $("p-shares").textContent = fmtStill(v) + " vSTILL"; $("p-worth").textContent = fmtStill(worth) + " STILL";
+  $("holdings").textContent = s === 0n && v === 0n ? "This wallet holds no CARTHA yet. Buy some on pons, then deposit it here." : `You hold ${fmtCartha(s)} CARTHA and ${fmtCartha(v)} vCARTHA, which redeems for ${fmtCartha(worth)} CARTHA right now.`;
+  $("p-shares").textContent = fmtCartha(v) + " vCARTHA"; $("p-worth").textContent = fmtCartha(worth) + " CARTHA";
   $("p-share").textContent = vaultSupply > 0n ? (Number((v * 1000000n) / vaultSupply) / 10000).toFixed(4) + "%" : "0%";
-  $("p-wallet").textContent = fmtStill(s) + " STILL";
+  $("p-wallet").textContent = fmtCartha(s) + " CARTHA";
 }
 $("max").onclick = () => { if (me) $("amount").value = ethers.formatUnits(mode === "dep" ? bal.still : bal.shares, 18); };
 $("act").onclick = async () => {
@@ -1190,16 +1190,16 @@ $("act").onclick = async () => {
     const amount = ethers.parseUnits(raw, 18); const vault = new ethers.Contract(CONFIG.vault, ABI.vault, signer);
     $("act").disabled = true;
     if (mode === "dep") {
-      if (amount > bal.still) { setStatus("That is more STILL than you hold.", true); $("act").disabled = false; return; }
+      if (amount > bal.still) { setStatus("That is more CARTHA than you hold.", true); $("act").disabled = false; return; }
       const still = new ethers.Contract(CONFIG.token, ABI.token, signer);
       const allowance = await still.allowance(me, CONFIG.vault);
-      if (allowance < amount) { setStatus("Approve STILL in your wallet."); await (await still.approve(CONFIG.vault, amount)).wait(); }
+      if (allowance < amount) { setStatus("Approve CARTHA in your wallet."); await (await still.approve(CONFIG.vault, amount)).wait(); }
       setStatus("Sent. Waiting for the block."); const rc = await (await vault.deposit(amount, me)).wait();
-      setStatus(`Deposited ${fmtStill(amount)} STILL in block ${fmt0.format(rc.blockNumber)}.`);
+      setStatus(`Deposited ${fmtCartha(amount)} CARTHA in block ${fmt0.format(rc.blockNumber)}.`);
     } else {
-      if (amount > bal.shares) { setStatus("That is more vSTILL than you hold.", true); $("act").disabled = false; return; }
+      if (amount > bal.shares) { setStatus("That is more vCARTHA than you hold.", true); $("act").disabled = false; return; }
       setStatus("Sent. Waiting for the block."); const rc = await (await vault.redeem(amount, me, me)).wait();
-      setStatus(`Redeemed ${fmtStill(amount)} vSTILL in block ${fmt0.format(rc.blockNumber)}.`);
+      setStatus(`Redeemed ${fmtCartha(amount)} vCARTHA in block ${fmt0.format(rc.blockNumber)}.`);
     }
     $("amount").value = ""; await Promise.all([refreshHoldings(), refresh()]);
   } catch (e) { console.error(e); setStatus(e.shortMessage || e.reason || e.message || "The transaction did not go through.", true); }
@@ -1210,7 +1210,7 @@ $("act").onclick = async () => {
 paintPanel(); renderBoard(); renderProjection();
 if (demo) runDemo();
 else {
-  renderAddrs([["STILL token", CONFIG.token], ["Vault (vSTILL)", CONFIG.vault], ["Harvester", CONFIG.harvester], ["pons curve", CONFIG.curve], ["pons factory", CONFIG.ponsFactory], ["pons fee escrow", CONFIG.ponsEscrow], ["pons hook", CONFIG.ponsHook]]);
+  renderAddrs([["CARTHA token", CONFIG.token], ["Vault (vCARTHA)", CONFIG.vault], ["Harvester", CONFIG.harvester], ["pons curve", CONFIG.curve], ["pons factory", CONFIG.ponsFactory], ["pons fee escrow", CONFIG.ponsEscrow], ["pons hook", CONFIG.ponsHook]]);
   refresh(); setInterval(refresh, CONFIG.pollMs);
   setInterval(() => { if (lastHarvestTs > 0n) $("s-last").textContent = ago(lastHarvestTs); }, 20000);
   if (window.ethereum) {

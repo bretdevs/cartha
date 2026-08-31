@@ -1,5 +1,5 @@
-// STILL keeper. Runs harvest() on the StillHarvester every INTERVAL_SEC when there is ETH to spend.
-// Anyone can call harvest(); this just does it on a schedule with a sane minStillOut.
+// CARTHA keeper. Runs harvest() on the CarthaHarvester every INTERVAL_SEC when there is ETH to spend.
+// Anyone can call harvest(); this just does it on a schedule with a sane minCarthaOut.
 //
 // Env: RPC_URL, PRIVATE_KEY, HARVESTER, INTERVAL_SEC (default 300), SLIPPAGE_BPS (default 300), DRY_RUN (optional)
 
@@ -60,7 +60,7 @@ const harvesterAbi = parseAbi([
   "function canBuy() view returns (bool)",
   "function phase() view returns (uint8)",
   "function poolId() view returns (bytes32)",
-  "function harvest(uint256 minStillOut) returns (uint256 ethSpent, uint256 stillBought)",
+  "function harvest(uint256 minCarthaOut) returns (uint256 ethSpent, uint256 carthaBought)",
 ]);
 const curveAbi = parseAbi([
   "function getReserves() view returns (uint256 quoteReserve, uint256 tokenReserve)",
@@ -106,7 +106,7 @@ async function quoteCurve(curve, quoteIn, recipient) {
 }
 
 // Spot from the pool's slot0 via extsload. StateLibrary: pools mapping at slot 6,
-// Slot0 packs sqrtPriceX96 in the low 160 bits. ETH is currency0, so STILL per ETH = price^2 / 2^192.
+// Slot0 packs sqrtPriceX96 in the low 160 bits. ETH is currency0, so CARTHA per ETH = price^2 / 2^192.
 async function quotePool(poolManager, poolId, token, factory, quoteIn) {
   const stateSlot = keccak256(encodePacked(["bytes32", "bytes32"], [poolId, `0x${(6).toString(16).padStart(64, "0")}`]));
   const raw = await read(poolManager, pmAbi, "extsload", [stateSlot]);
@@ -145,7 +145,7 @@ async function tick(ctx) {
     }
     minOut = (minOut * (BPS - SLIPPAGE_BPS)) / BPS;
   } catch (e) {
-    log(`quote failed, harvesting with minStillOut=0 (bounded by maxBuyPerHarvest): ${e.message}`);
+    log(`quote failed, harvesting with minCarthaOut=0 (bounded by maxBuyPerHarvest): ${e.message}`);
     minOut = 0n;
   }
   if (!canBuy) minOut = 0n; // this call only claims
@@ -159,13 +159,13 @@ async function tick(ctx) {
     account: account ?? "0x0000000000000000000000000000000000000001",
   });
   const [ethSpent, bought] = sim.result;
-  log(`simulated harvest: spend=${formatEther(ethSpent)} ETH buy=${formatUnits(bought, 18)} STILL minOut=${formatUnits(minOut, 18)}`);
+  log(`simulated harvest: spend=${formatEther(ethSpent)} ETH buy=${formatUnits(bought, 18)} CARTHA minOut=${formatUnits(minOut, 18)}`);
   if (DRY_RUN) return;
 
   const hash = await wallet.writeContract(sim.request);
   const receipt = await pub.waitForTransactionReceipt({ hash });
   const ratio = await read(ctx.vault, vaultAbi, "convertToAssets", [10n ** 18n]);
-  log(`harvest ${receipt.status} ${hash} ratio=${formatUnits(ratio, 18)} STILL per vSTILL`);
+  log(`harvest ${receipt.status} ${hash} ratio=${formatUnits(ratio, 18)} CARTHA per vCARTHA`);
 }
 
 async function main() {
