@@ -15,7 +15,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='27' fill='none' stroke='%23103b2c' stroke-width='5'/%3E%3Cpath d='M5 32h54v0a27 27 0 0 1-54 0z' fill='%23103b2c'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
 <style>
   :root {
     --water: #e6ede8;
@@ -27,83 +27,68 @@
     --surface: #f4f7f5;
     --serif: "Instrument Serif", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
     --sans: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
-    --max: 1120px;
-    --gutter: clamp(20px, 4vw, 48px);
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --wrap: min(1060px, calc(100% - 44px));
+    --ratio-size: clamp(5.6rem, 19vw, 17rem);
   }
   * { box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
   body {
-    margin: 0;
-    background: var(--water);
-    color: var(--ink);
-    font-family: var(--sans);
-    font-size: 17px;
-    line-height: 1.55;
-    font-feature-settings: "tnum" 1;
+    margin: 0; background: var(--water); color: var(--ink);
+    font-family: var(--sans); font-size: 16.5px; line-height: 1.6;
+    font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased;
   }
-  a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
-  a:hover { text-decoration-thickness: 2px; }
+  body.mcta-on { padding-bottom: 76px; }
+  a { color: inherit; text-decoration: underline; text-decoration-color: var(--line); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:hover { text-decoration-color: var(--muted); }
   :focus-visible { outline: 2px solid var(--deep); outline-offset: 3px; }
-  h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; letter-spacing: -0.01em; }
-  h2 { font-size: clamp(2rem, 3.4vw, 2.75rem); line-height: 1.05; margin-bottom: 0.7em; }
-  h3 { font-size: 1.45rem; line-height: 1.15; margin-bottom: 0.35em; }
+  ::selection { background: var(--deep); color: var(--surface); }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; letter-spacing: -0.012em; }
+  h2 { font-size: clamp(1.9rem, 3.3vw, 2.65rem); line-height: 1.08; margin-bottom: 0.55em; }
+  h3 { font-size: 1.4rem; line-height: 1.15; margin-bottom: 0.4em; }
   p { margin: 0 0 1em; max-width: 62ch; }
-  code, .mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.92em; }
-  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+  code, .mono { font-family: var(--mono); font-size: 0.9em; }
+  button { font: inherit; }
+  .wrap { width: var(--wrap); margin: 0 auto; }
+  .skip { position: absolute; left: -999px; top: 8px; background: var(--surface); padding: 8px 12px; border-radius: 3px; z-index: 100; }
+  .skip:focus { left: 12px; }
+  .vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
   /* header */
   header { padding: 22px 0 0; }
-  header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
   .wordmark { display: inline-flex; align-items: baseline; gap: 10px; text-decoration: none; }
   .wordmark svg { width: 22px; height: 22px; transform: translateY(2px); }
-  .wordmark span { font-family: var(--serif); font-size: 1.85rem; line-height: 1; letter-spacing: -0.02em; }
-  nav { display: flex; gap: clamp(14px, 2.5vw, 30px); font-size: 0.98rem; }
-  nav a { text-decoration: none; padding-bottom: 2px; border-bottom: 1px solid transparent; }
+  .wordmark span { font-family: var(--serif); font-size: 1.8rem; line-height: 1; letter-spacing: -0.02em; }
+  nav { display: flex; gap: clamp(14px, 2.4vw, 28px); font-size: 0.95rem; }
+  nav a { text-decoration: none; padding-bottom: 2px; border-bottom: 1px solid transparent; white-space: nowrap; }
   nav a:hover { border-bottom-color: var(--ink); }
 
   /* hero */
-  .hero { padding: clamp(56px, 9vw, 120px) 0 0; }
-  .hero h1 { font-size: clamp(3.2rem, 8.5vw, 7.2rem); line-height: 0.95; letter-spacing: -0.025em; }
-  .hero .lede { font-size: clamp(1.1rem, 1.6vw, 1.3rem); max-width: 34em; margin: 26px 0 0; }
-  .ratio-label { margin: clamp(48px, 7vw, 96px) 0 0; color: var(--muted); font-size: 0.98rem; }
+  .hero { padding: clamp(56px, 9vw, 116px) 0 0; }
+  .hero h1 { font-size: clamp(2.9rem, 6.2vw, 5.4rem); line-height: 1; letter-spacing: -0.022em; }
+  .hero .lede { font-size: clamp(1.05rem, 1.35vw, 1.2rem); max-width: 58ch; margin: 22px 0 0; }
+  .ratio-label { margin: clamp(44px, 7vw, 84px) 0 0; color: var(--muted); font-size: 0.9rem; }
   .ratio {
-    font-family: var(--serif);
-    font-size: clamp(6rem, 21vw, 19rem);
-    line-height: 0.8;
-    letter-spacing: -0.04em;
-    margin: 12px 0 0;
-    white-space: nowrap;
-    position: relative;
-    z-index: 2;
-    transform: translateY(0.06em);
+    font-family: var(--serif); font-size: var(--ratio-size); line-height: 0.8; letter-spacing: -0.04em;
+    margin: 12px 0 0; white-space: nowrap; position: relative; z-index: 2; transform: translateY(0.06em);
   }
-  .ratio .tail { font-size: 0.34em; letter-spacing: 0; vertical-align: baseline; margin-left: 0.08em; color: var(--muted); }
+  .ratio .tail, .reflection .tail { font-size: 0.34em; letter-spacing: 0; margin-left: 0.08em; }
+  .ratio .tail { color: var(--muted); }
 
   /* the water */
   .water { background: var(--deep); color: var(--water); position: relative; }
-  .water::before {
-    content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: rgba(230,237,232,0.55);
-  }
+  .water::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: rgba(230,237,232,0.5); }
   .reflect-wrap {
-    font-size: clamp(6rem, 21vw, 19rem);
-    height: 0.58em; overflow: hidden;
+    font-size: var(--ratio-size); height: 0.58em; overflow: hidden; user-select: none; pointer-events: none;
     -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.35) 45%, rgba(0,0,0,0) 92%);
             mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.35) 45%, rgba(0,0,0,0) 92%);
-    user-select: none; pointer-events: none;
   }
   .reflection {
-    font-family: var(--serif);
-    font-size: 1em;
-    line-height: 0.8;
-    letter-spacing: -0.04em;
-    white-space: nowrap;
-    transform: scaleY(-1) translateY(0.06em);
-    transform-origin: center;
-    color: var(--water);
-    opacity: 0.38;
-    filter: blur(0.7px);
+    font-family: var(--serif); font-size: 1em; line-height: 0.8; letter-spacing: -0.04em; white-space: nowrap;
+    transform: scaleY(-1) translateY(0.06em); transform-origin: center; color: var(--water); opacity: 0.38; filter: blur(0.7px);
   }
-  .reflection .tail { font-size: 0.34em; letter-spacing: 0; margin-left: 0.08em; opacity: 0.55; }
+  .reflection .tail { opacity: 0.55; }
   @keyframes ripple {
     0% { transform: scaleY(-1) translateY(0.06em); }
     20% { transform: scaleY(-1.04) translateY(0.06em) skewX(1.2deg); }
@@ -112,124 +97,142 @@
     100% { transform: scaleY(-1) translateY(0.06em); }
   }
   .reflection.ripple { animation: ripple 1.6s ease-out 1; }
-  .stats { display: flex; flex-wrap: wrap; gap: 8px 40px; padding: 20px 0 0; font-size: 1rem; color: rgba(230,237,232,0.85); }
-  .stats strong { color: var(--water); font-weight: 500; }
-  .stats .status { flex-basis: 100%; }
+  .stats { display: flex; flex-wrap: wrap; gap: 6px 36px; padding: 22px 0 0; font-size: 0.95rem; color: rgba(230,237,232,0.78); }
+  .stats strong { color: var(--surface); font-weight: 600; }
+  .phase { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin: 12px 0 0; font-size: 0.88rem; color: rgba(230,237,232,0.66); }
+  .bar { display: inline-block; width: 150px; height: 2px; background: rgba(230,237,232,0.22); vertical-align: middle; }
+  .bar i { display: block; height: 100%; width: 0; background: var(--water); transition: width 0.6s ease; }
 
-  /* panel on the water */
+  /* panel */
   .panel {
-    background: var(--surface); color: var(--ink);
-    margin: 44px 0 0; padding: clamp(20px, 3vw, 32px);
-    max-width: 560px; border-radius: 6px;
+    background: var(--surface); color: var(--ink); border-radius: 3px;
+    margin: clamp(36px, 5vw, 56px) 0 0; padding: clamp(20px, 3.5vw, 30px); max-width: 560px; scroll-margin-top: 90px;
   }
-  .tabs { display: flex; gap: 22px; margin-bottom: 18px; }
-  .tabs button {
-    background: none; border: 0; padding: 0 0 6px; font: inherit; font-size: 1.05rem; cursor: pointer;
-    color: var(--muted); border-bottom: 1.5px solid transparent;
-  }
+  .tabs { display: flex; gap: 26px; border-bottom: 1px solid var(--line); }
+  .tabs button { appearance: none; background: none; border: 0; padding: 0 2px 12px; margin: 0 0 -1px; font-size: 0.97rem; font-weight: 500; cursor: pointer; color: var(--muted); border-bottom: 1.5px solid transparent; }
   .tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--ink); }
-  .field { display: flex; align-items: center; gap: 10px; border: 1px solid var(--line); background: #fff; border-radius: 4px; padding: 6px 6px 6px 14px; }
-  .field input {
-    flex: 1; min-width: 0; border: 0; background: none; font: inherit; font-size: 1.35rem; padding: 6px 0; outline: none;
-    font-family: var(--serif);
-  }
-  .field .unit { color: var(--muted); }
-  .field button { background: none; border: 1px solid var(--line); border-radius: 3px; padding: 6px 10px; font: inherit; font-size: 0.9rem; cursor: pointer; }
-  .field button:hover { border-color: var(--ink); }
+  .field { margin-top: 22px; display: flex; align-items: center; gap: 10px; border: 1px solid var(--line); border-radius: 3px; padding: 10px 10px 10px 14px; background: #fff; }
+  .field input { flex: 1; min-width: 0; border: 0; background: transparent; font-size: 1.4rem; padding: 0; outline: none; color: var(--ink); }
+  .field input::placeholder { color: var(--muted); opacity: 0.6; }
+  .field .unit { font-size: 0.88rem; color: var(--muted); }
+  .field button { font-size: 0.82rem; padding: 5px 10px; border: 1px solid var(--line); background: transparent; border-radius: 3px; cursor: pointer; color: var(--ink); }
+  .field button:hover { border-color: var(--muted); }
+  .field button[disabled] { opacity: 0.45; cursor: default; }
   .btn {
-    display: inline-block; margin-top: 14px; border: 0; border-radius: 4px; cursor: pointer;
-    background: var(--deep); color: var(--water); font: inherit; font-weight: 500; font-size: 1.02rem; padding: 12px 20px;
+    display: block; width: 100%; margin-top: 14px; padding: 15px; border: 0; border-radius: 3px; cursor: pointer; text-align: center; text-decoration: none;
+    background: var(--deep); color: var(--surface); font-weight: 500; font-size: 0.97rem;
   }
   .btn:hover { background: var(--deeper); }
-  .btn[disabled] { opacity: 0.55; cursor: not-allowed; }
-  .btn.secondary { background: none; color: var(--ink); border: 1px solid var(--line); }
-  .holdings { margin: 14px 0 0; color: var(--muted); font-size: 0.95rem; }
-  .status-line { margin: 10px 0 0; min-height: 1.4em; font-size: 0.95rem; }
+  .btn[disabled] { opacity: 0.55; cursor: default; }
+  .btn[disabled]:hover { background: var(--deep); }
+  .status-line { margin: 12px 0 0; min-height: 1.4em; font-size: 0.88rem; font-weight: 500; }
   .status-line.err { color: #7a2e1c; }
-  .panel .note { font-size: 0.9rem; color: var(--muted); margin: 14px 0 0; }
-  .water .wrap { padding-bottom: clamp(48px, 7vw, 96px); }
+  .holdings { margin: 14px 0 0; font-size: 0.9rem; }
+  .panel .note { font-size: 0.85rem; color: var(--muted); margin: 16px 0 0; }
+  .panel .links { margin: 12px 0 0; font-size: 0.85rem; display: flex; flex-wrap: wrap; gap: 6px 20px; }
+  .water .wrap { padding-bottom: clamp(56px, 8vw, 104px); }
+
+  /* mobile bar */
+  .mcta {
+    display: none; position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 12px 20px calc(12px + env(safe-area-inset-bottom)); background: var(--deep); color: var(--surface);
+    transform: translateY(100%); transition: transform 0.25s ease;
+  }
+  .mcta.on { transform: translateY(0); }
+  .mcta .r { font-family: var(--serif); font-size: 1.5rem; line-height: 1; letter-spacing: -0.02em; }
+  .mcta .r small { font-family: var(--sans); font-size: 0.72rem; color: rgba(230,237,232,0.7); margin-left: 8px; letter-spacing: 0; }
+  .mcta a { text-decoration: none; background: var(--surface); color: var(--ink); padding: 10px 16px; border-radius: 3px; font-weight: 500; font-size: 0.92rem; }
 
   /* sections */
-  section { padding: clamp(56px, 8vw, 110px) 0 0; }
-  section:last-of-type { padding-bottom: clamp(56px, 8vw, 110px); }
-  .two { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(28px, 5vw, 80px); align-items: start; }
-  .steps { list-style: none; margin: 0; padding: 0; counter-reset: step; }
-  .steps li { position: relative; padding-left: 2.4em; margin-bottom: 1.4em; max-width: 60ch; }
-  .steps li::before {
-    counter-increment: step; content: counter(step);
-    position: absolute; left: 0; top: 0.05em;
-    font-family: var(--serif); font-size: 1.6rem; line-height: 1; color: var(--muted);
-  }
-  .steps strong { font-weight: 500; }
-  .plain { list-style: none; margin: 0; padding: 0; }
-  .plain li { padding: 16px 0; border-top: 1px solid var(--line); max-width: 64ch; }
-  .plain li:last-child { border-bottom: 1px solid var(--line); }
-  .plain strong { display: block; font-family: var(--serif); font-size: 1.35rem; font-weight: 400; margin-bottom: 4px; }
-  .plain p { margin: 0; }
-  .callout { background: var(--deep); color: var(--water); padding: clamp(24px, 4vw, 48px); border-radius: 6px; }
-  .callout h3 { font-size: clamp(1.7rem, 2.6vw, 2.2rem); }
-  .callout p { color: rgba(230,237,232,0.88); }
+  section { padding: clamp(64px, 9vw, 116px) 0 0; scroll-margin-top: 76px; }
+  section.last { padding-bottom: clamp(64px, 9vw, 116px); }
+  .intro { max-width: 62ch; margin-bottom: clamp(28px, 4vw, 44px); }
+  .lead strong { font-weight: 600; }
+  .lead span { color: var(--muted); }
+  .steps { list-style: none; margin: 0; padding: 0; max-width: 780px; }
+  .steps li { display: grid; grid-template-columns: 52px 1fr; gap: 8px; padding: 18px 0; border-top: 1px solid var(--line); }
+  .steps li:last-child { border-bottom: 1px solid var(--line); }
+  .steps li > span { font-family: var(--serif); font-size: 1.6rem; line-height: 1.15; }
+  .steps p { margin: 0; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px 52px; }
+  .grid p { margin: 0; }
+  .callout { background: var(--deep); color: var(--water); margin-top: clamp(64px, 9vw, 116px); padding: clamp(56px, 8vw, 96px) 0; }
+  .callout h2 { color: var(--surface); }
+  .callout p { color: rgba(230,237,232,0.88); font-size: 1.03rem; }
+  .callout p + p { color: rgba(230,237,232,0.62); }
   .callout p:last-child { margin-bottom: 0; }
 
   /* ledger */
-  table { width: 100%; border-collapse: collapse; font-size: 0.98rem; }
-  th, td { text-align: left; padding: 12px 16px 12px 0; border-top: 1px solid var(--line); vertical-align: top; }
-  th { font-weight: 500; color: var(--muted); border-top: 0; padding-top: 0; }
-  td.num, th.num { text-align: right; padding-right: 0; padding-left: 16px; }
-  tbody tr:last-child td { border-bottom: 1px solid var(--line); }
+  .chart { margin: 0 0 32px; }
+  .chart svg { display: block; width: 100%; height: clamp(120px, 18vw, 170px); }
+  .chart .axis { display: flex; justify-content: space-between; gap: 16px; margin-top: 8px; font-size: 0.8rem; color: var(--muted); }
+  .chart .axis b { color: var(--ink); font-weight: 600; }
+  .scroll { overflow-x: auto; }
+  table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 0.93rem; }
+  th { text-align: left; font-weight: 500; font-size: 0.8rem; color: var(--muted); padding: 0 16px 10px 0; border-bottom: 1px solid var(--line); }
+  td { padding: 11px 16px 11px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th.num, td.num { text-align: right; }
+  th:last-child, td:last-child { padding-right: 0; }
   td a { color: var(--muted); }
   .empty { color: var(--muted); }
 
+  /* lists with rules */
+  .ruled { list-style: none; margin: 0; padding: 0; max-width: 720px; }
+  .ruled li { padding: 16px 0; border-top: 1px solid var(--line); }
+  .ruled li:last-child { border-bottom: 1px solid var(--line); }
+  .ruled p { margin: 0; }
+
   /* read */
-  .addr { display: grid; grid-template-columns: 11em 1fr; gap: 8px 18px; margin: 0 0 24px; font-size: 0.98rem; }
+  .two { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(28px, 5vw, 80px); align-items: start; }
+  .addr { display: grid; grid-template-columns: 10.5em 1fr; gap: 8px 18px; margin: 0 0 24px; font-size: 0.92rem; }
   .addr dt { color: var(--muted); margin: 0; }
   .addr dd { margin: 0; overflow-wrap: anywhere; }
-  pre {
-    background: var(--surface); border: 1px solid var(--line); border-radius: 4px;
-    padding: 18px 20px; overflow: auto; font-size: 0.9rem; line-height: 1.5; margin: 0 0 1em;
-  }
-  footer { border-top: 1px solid var(--line); padding: 28px 0 48px; color: var(--muted); font-size: 0.95rem; }
+  pre { background: var(--deep); color: var(--water); border-radius: 3px; padding: 18px 20px; overflow: auto; font-size: 0.86rem; line-height: 1.55; margin: 0 0 1.2em; }
+  footer { border-top: 1px solid var(--line); padding: 28px 0 48px; color: var(--muted); font-size: 0.9rem; }
   footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 32px; justify-content: space-between; }
 
-  @media (max-width: 760px) {
-    .ratio, .reflect-wrap { font-size: clamp(5rem, 24vw, 19rem); }
+  @media (max-width: 720px) {
+    :root { --ratio-size: clamp(4.8rem, 23vw, 17rem); }
+    nav a.opt { display: none; }
+    .mcta { display: flex; }
     .two { grid-template-columns: 1fr; }
-    .addr { grid-template-columns: 1fr; gap: 2px 0; margin-bottom: 20px; }
+    .addr { grid-template-columns: 1fr; gap: 2px 0; }
     .addr dt { margin-top: 10px; }
-    nav a:nth-child(3) { display: none; }
-    .stats { gap: 6px 22px; }
-    table { font-size: 0.9rem; }
-    th:nth-child(5), td:nth-child(5) { display: none; }
+    .stats { gap: 4px 22px; }
+    .steps li { grid-template-columns: 36px 1fr; }
   }
   @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
     .reflection.ripple { animation: none; }
+    .mcta, .bar i { transition: none; }
   }
 </style>
 </head>
 <body>
+<a class="skip" href="#deposit">Skip to deposit</a>
 
 <header>
   <div class="wrap">
-    <a class="wordmark" href="#" aria-label="STILL home">
+    <a class="wordmark" href="#top" aria-label="STILL, top of page">
       <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="27" fill="none" stroke="currentColor" stroke-width="5"/><path d="M5 32h54a27 27 0 0 1-54 0z" fill="currentColor"/></svg>
       <span>still</span>
     </a>
-    <nav>
+    <nav aria-label="Sections">
       <a href="#deposit">Deposit</a>
-      <a href="#ledger">Ledger</a>
-      <a href="#read">Read the contracts</a>
+      <a href="#ledger" class="opt">Ledger</a>
+      <a href="#read" class="opt">Read the contracts</a>
       <a href="#" id="xlink" rel="noopener">X</a>
     </nav>
   </div>
 </header>
 
-<main>
+<main id="top">
   <div class="hero">
     <div class="wrap">
       <h1>Hold still.</h1>
       <p class="lede">A vault on Robinhood Chain whose share is a plain ERC-20. Every STILL trade pays a fee, the fee buys STILL, and the STILL goes into the vault. Your balance of vSTILL never changes. What each unit redeems for does.</p>
-      <p class="ratio-label">STILL per vSTILL, read from the vault</p>
-      <div class="ratio" id="ratio" aria-live="polite">1.0000<span class="tail">000</span></div>
+      <p class="ratio-label" id="ratio-label">STILL per vSTILL, read from the vault</p>
+      <div class="ratio" id="ratio" aria-live="polite" aria-atomic="true">1.0000<span class="tail">000</span></div>
     </div>
   </div>
 
@@ -237,102 +240,110 @@
     <div class="wrap">
       <div class="reflect-wrap" aria-hidden="true"><div class="reflection" id="reflection">1.0000<span class="tail">000</span></div></div>
       <div class="stats">
-        <div>Up <strong id="s-up">0.00%</strong> since launch</div>
-        <div>Last harvest <strong id="s-last">none yet</strong></div>
-        <div><strong id="s-eth">0</strong> ETH harvested into <strong id="s-still">0</strong> STILL so far</div>
-        <div class="status" id="s-phase">Reading the chain</div>
+        <span id="s-up">Nothing harvested yet</span>
+        <span>Last harvest <strong id="s-last">none yet</strong></span>
+        <span><strong id="s-eth">0</strong> ETH harvested into <strong id="s-still">0</strong> STILL so far</span>
+      </div>
+      <div class="phase">
+        <span id="s-phase">Reading the chain</span>
+        <span class="bar" id="bar" hidden><i id="bar-fill"></i></span>
       </div>
 
       <div class="panel" id="deposit">
-        <div class="tabs" role="tablist">
-          <button role="tab" aria-selected="true" id="tab-dep">Deposit STILL</button>
-          <button role="tab" aria-selected="false" id="tab-red">Redeem vSTILL</button>
+        <div class="tabs" role="tablist" aria-label="Deposit or redeem">
+          <button type="button" role="tab" aria-selected="true" id="tab-dep" aria-controls="panel-body">Deposit STILL</button>
+          <button type="button" role="tab" aria-selected="false" id="tab-red" aria-controls="panel-body">Redeem vSTILL</button>
         </div>
-        <div class="field">
-          <input id="amount" inputmode="decimal" placeholder="0.0" aria-label="Amount">
-          <span class="unit" id="unit">STILL</span>
-          <button type="button" id="max">Max</button>
+        <div id="panel-body" role="tabpanel">
+          <div class="field">
+            <input id="amount" inputmode="decimal" placeholder="0" aria-label="Amount" autocomplete="off">
+            <span class="unit" id="unit">STILL</span>
+            <button type="button" id="max" disabled>Max</button>
+          </div>
+          <button type="button" class="btn" id="act">Connect wallet</button>
+          <p class="status-line" id="status" aria-live="polite"></p>
+          <p class="holdings" id="holdings">Connect a wallet to see what you hold.</p>
+          <p class="note">Deposits mint vSTILL at the current ratio. Redemptions burn vSTILL for STILL at that block's ratio. Both settle in the block they are sent. There is no fee on either side and nothing to claim in between.</p>
+          <p class="links"><a href="#" id="buy" rel="noopener">No STILL yet? Buy it on pons</a><a href="#risks">Read this before you deposit</a></p>
         </div>
-        <button class="btn" id="act">Connect wallet</button>
-        <div class="holdings" id="holdings">Connect a wallet to see what you hold.</div>
-        <div class="status-line" id="status"></div>
-        <p class="note">Deposits mint vSTILL at the current ratio. Redemptions burn vSTILL for STILL at that block's ratio. Both settle in the block they are sent. There is no fee on either side and nothing to claim in between.</p>
       </div>
     </div>
   </div>
 
   <section id="how">
-    <div class="wrap two">
-      <div>
-        <h2>What happens to a fee</h2>
-        <p>Nothing here is new. It is an ERC-4626 vault, the standard every lending market and aggregator already knows, pointed at a token that earns its own yield from trading.</p>
-      </div>
+    <div class="wrap">
+      <h2>What happens to a fee</h2>
+      <p class="intro">Nothing here is new. It is an ERC-4626 vault, the standard every lending market and aggregator already knows, pointed at a token that earns its own yield from trading.</p>
       <ol class="steps">
-        <li><strong>Buy STILL on pons.</strong> It is an ordinary fixed-supply token. Nothing about the token itself is special, and that is the point.</li>
-        <li><strong>Deposit it here for vSTILL.</strong> vSTILL is an ordinary ERC-20 too. Send it, pool it, post it somewhere else. Nothing about it is special either.</li>
-        <li><strong>Every trade on pons pays a fee in ETH.</strong> Buys and sells, on the curve and in the pool. That fee is owed to a contract with no owner. Anyone can call its harvest function. It claims the ETH, buys STILL and sends the STILL to the vault.</li>
-        <li><strong>No vSTILL is minted for it.</strong> So each unit of vSTILL now redeems for more STILL than it did a block ago. That is the whole mechanism.</li>
-        <li><strong>Redeem when you like.</strong> Burn vSTILL, take STILL at that block's ratio. Same block, no queue, no exit fee.</li>
+        <li><span>1</span><p class="lead"><strong>Buy STILL on pons.</strong> <span>It is an ordinary fixed-supply token. Nothing about the token itself is special, and that is the point.</span></p></li>
+        <li><span>2</span><p class="lead"><strong>Deposit it here for vSTILL.</strong> <span>vSTILL is an ordinary ERC-20 too. Send it, pool it, post it somewhere else. Nothing about it is special either.</span></p></li>
+        <li><span>3</span><p class="lead"><strong>Every trade on pons pays a fee in ETH.</strong> <span id="fee-copy">Buys and sells, on the curve and in the pool. pons keeps a cut of it. The rest is owed to a contract with no owner. Anyone can call its harvest function. It claims the ETH, buys STILL and sends the STILL to the vault.</span></p></li>
+        <li><span>4</span><p class="lead"><strong>No vSTILL is minted for it.</strong> <span>So each unit of vSTILL now redeems for more STILL than it did a block ago. That is the whole mechanism.</span></p></li>
+        <li><span>5</span><p class="lead"><strong>Redeem when you like.</strong> <span>Burn vSTILL, take STILL at that block's ratio. Same block, no queue, no exit fee.</span></p></li>
       </ol>
     </div>
   </section>
 
   <section id="never">
-    <div class="wrap two">
-      <div>
-        <h2>What never happens</h2>
-        <p>When a market declines a yield-bearing token, it is rarely because of the yield. It is because the token does something unusual, and unusual means custom code and an untested liquidation path. So the list that matters is the list of things vSTILL does not do.</p>
+    <div class="wrap">
+      <h2>What never happens</h2>
+      <p class="intro">When a market declines a yield-bearing token, it is rarely because of the yield. It is because the token does something unusual, and unusual means custom code and an untested liquidation path. So the list that matters is the list of things vSTILL does not do.</p>
+      <div class="grid">
+        <p class="lead"><strong>No claim step.</strong> <span>There is nothing to collect and nothing to forget. The yield is already inside the number.</span></p>
+        <p class="lead"><strong>No rebase.</strong> <span>Your wallet shows the same vSTILL balance a year from now. Every cached balance stays correct.</span></p>
+        <p class="lead"><strong>No epochs, no queue, no cooldown, no exit fee.</strong> <span>Deposit and redeem settle in the block they are sent.</span></p>
+        <p class="lead"><strong>No receipt NFT.</strong> <span>vSTILL is fungible, so it can be priced, pooled and moved like anything else.</span></p>
+        <p class="lead"><strong>No transfer hooks.</strong> <span>Nothing fires when a contract takes custody of it.</span></p>
+        <p class="lead"><strong>No owner.</strong> <span>The vault has no pause, no upgrade, no fee switch and no admin key. Neither does the contract that receives the fees. The functions are not there to find.</span></p>
       </div>
-      <ul class="plain">
-        <li><strong>No claim step.</strong><p>There is nothing to collect and nothing to forget. The yield is already inside the number.</p></li>
-        <li><strong>No rebase.</strong><p>Your wallet shows the same vSTILL balance a year from now. Every cached balance stays correct.</p></li>
-        <li><strong>No epochs, no queue, no cooldown, no exit fee.</strong><p>Deposit and redeem settle in the block they are sent.</p></li>
-        <li><strong>No receipt NFT.</strong><p>vSTILL is fungible, so it can be priced, pooled and moved like anything else.</p></li>
-        <li><strong>No transfer hooks.</strong><p>Nothing fires when a contract takes custody of it.</p></li>
-        <li><strong>No owner.</strong><p>The vault has no pause, no upgrade, no fee switch and no admin key. Neither does the contract that receives the fees. The functions are not there to find.</p></li>
-      </ul>
     </div>
   </section>
 
-  <section id="ratio-only-up">
+  <div class="callout">
     <div class="wrap">
-      <div class="callout">
-        <h3>The ratio only turns one way</h3>
-        <p>The vault holds STILL and nothing else. It never provides liquidity, never lends, never sells. Harvest can only add STILL. Redeem can only remove STILL in exact proportion to the vSTILL it burns, and rounding always favours the vault. So STILL per vSTILL cannot go down, in any block, for any reason. It is a property of the code, checked by a fuzz test in the repository, not a promise.</p>
-        <p>It says nothing about what STILL is worth in ETH. A token nobody trades earns nothing, and the ratio simply stops moving.</p>
-      </div>
+      <h2>The ratio only turns one way</h2>
+      <p>The vault holds STILL and nothing else. It never provides liquidity, never lends, never sells. Harvest can only add STILL. Redeem can only remove STILL in exact proportion to the vSTILL it burns, and rounding always favours the vault. So STILL per vSTILL cannot go down, in any block, for any reason. It is a property of the code, checked by a fuzz test in the repository, not a promise.</p>
+      <p>It says nothing about what STILL is worth in ETH. A token nobody trades earns nothing, and the ratio simply stops moving.</p>
     </div>
-  </section>
+  </div>
 
   <section id="ledger">
     <div class="wrap">
       <h2>Harvest ledger</h2>
-      <p id="ledger-note">Every harvest, read from the harvester contract. Newest first.</p>
-      <table>
-        <thead><tr><th>When</th><th class="num">ETH spent</th><th class="num">STILL bought</th><th class="num">STILL per vSTILL after</th><th class="num">Block</th></tr></thead>
-        <tbody id="ledger-body"><tr><td colspan="5" class="empty">Reading the chain</td></tr></tbody>
-      </table>
+      <p class="intro" id="ledger-note">Every harvest, read from the harvester contract. Newest first.</p>
+      <div class="chart" id="chart" hidden>
+        <svg viewBox="0 0 800 170" preserveAspectRatio="none" aria-hidden="true">
+          <path id="chart-area" d="" fill="rgba(16,59,44,0.07)"></path>
+          <path id="chart-line" d="" fill="none" stroke="#103b2c" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+        </svg>
+        <div class="axis"><span id="chart-from"></span><span id="chart-label"></span><b id="chart-to"></b></div>
+      </div>
+      <div class="scroll">
+        <table>
+          <caption class="vh">Harvests, newest first</caption>
+          <thead><tr><th>When</th><th class="num">ETH spent</th><th class="num">STILL bought</th><th class="num">STILL per vSTILL after</th><th class="num">Block</th></tr></thead>
+          <tbody id="ledger-body"><tr><td colspan="5" class="empty">Reading the chain</td></tr></tbody>
+        </table>
+      </div>
     </div>
   </section>
 
-  <section id="honest">
-    <div class="wrap two">
-      <div>
-        <h2>Read this before you deposit</h2>
-        <p>You would find all of it in diligence anyway. Better that it is here.</p>
-      </div>
-      <ul class="plain">
-        <li><strong>The contracts are not audited.</strong><p>Neither the vault nor the harvester has been reviewed by a third party. Size any deposit as if the code could be wrong. pons v2, which STILL trades on, publishes its own audit status in its documentation.</p></li>
-        <li><strong>pons can redirect creator fees.</strong><p>pons v2 has a community takeover mechanism, behind a three day timelock, that can point a launch's creator fees at a new address. It exists for abandoned tokens. We cannot switch it off. If it were ever used on STILL, fees would stop reaching the vault and the ratio would stop rising. It would be public for three days before it took effect.</p></li>
-        <li><strong>Some fees wait on pons.</strong><p>After graduation, fees that need converting from STILL back to ETH are swept by pons' operator, not by us. Until a sweep happens that ETH is earned but not yet harvestable.</p></li>
-        <li><strong>Each harvest is itself a trade.</strong><p>Buying STILL on pons pays the same fee as any other buy. Part of every harvest goes back to pons and, through the creator tax, back into the next harvest.</p></li>
-        <li><strong>Nothing accepts vSTILL as collateral today.</strong><p>Every integration claim on this page describes what a plain ERC-20 with a view-function price makes possible, not a market you can open.</p></li>
-        <li><strong>Ratio up is not value up.</strong><p>STILL per vSTILL rises. STILL per ETH does whatever the market decides.</p></li>
+  <section id="risks">
+    <div class="wrap">
+      <h2>Read this before you deposit</h2>
+      <p class="intro">You would find all of it in diligence anyway. Better that it is here.</p>
+      <ul class="ruled">
+        <li><p class="lead"><strong>The contracts are not audited.</strong> <span>Neither the vault nor the harvester has been reviewed by a third party. Size any deposit as if the code could be wrong. pons v2, which STILL trades on, publishes its own audit status in its documentation.</span></p></li>
+        <li><p class="lead"><strong>pons can redirect creator fees.</strong> <span>pons v2 has a community takeover mechanism, behind a three day timelock, that can point a launch's creator fees at a new address. It exists for abandoned tokens. We cannot switch it off. If it were ever used on STILL, fees would stop reaching the vault and the ratio would stop rising. It would be public for three days before it took effect.</span></p></li>
+        <li><p class="lead"><strong>Some fees wait on pons.</strong> <span>After graduation, fees that need converting from STILL back to ETH are swept by pons' operator, not by us. Until a sweep happens that ETH is earned but not yet harvestable.</span></p></li>
+        <li><p class="lead"><strong>Each harvest is itself a trade.</strong> <span>Buying STILL on pons pays the same fee as any other buy. Part of every harvest goes back to pons and, through the creator tax, back into the next harvest.</span></p></li>
+        <li><p class="lead"><strong>Nothing accepts vSTILL as collateral today.</strong> <span>Every integration claim on this page describes what a plain ERC-20 with a view-function price makes possible, not a market you can open.</span></p></li>
+        <li><p class="lead"><strong>Ratio up is not value up.</strong> <span>STILL per vSTILL rises. STILL per ETH does whatever the market decides.</span></p></li>
       </ul>
     </div>
   </section>
 
-  <section id="read">
+  <section id="read" class="last">
     <div class="wrap two">
       <div>
         <h2>Read the contracts</h2>
@@ -346,7 +357,7 @@
 return stillPerShare * stillPriceInEth / 1e18;</code></pre>
         <h3>If you run risk or integrations</h3>
         <p>We are asking for a design review, not a listing. No one should list unaudited code, and we are not going to pretend otherwise. But if the mechanic is understood now, the day an audit report exists the conversation is short.</p>
-        <p>The repository has the source, the tests, including the fuzz test for the ratio invariant, and the deploy script that set the fee recipient. The addresses above are the only ones that matter.</p>
+        <p>The repository has the source, the tests, including the fuzz test for the ratio invariant, and the deploy script that set the fee recipient. The addresses above are the only ones that matter. <a href="https://github.com/bretdevs/still" rel="noopener">github.com/bretdevs/still</a></p>
       </div>
     </div>
   </section>
@@ -359,11 +370,16 @@ return stillPerShare * stillPriceInEth / 1e18;</code></pre>
   </div>
 </footer>
 
+<div class="mcta" id="mcta" aria-hidden="true">
+  <div class="r" id="mcta-ratio">1.0000<small>STILL per vSTILL</small></div>
+  <a href="#deposit">Deposit</a>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.4/ethers.umd.min.js" crossorigin="anonymous"></script>
 <script>
 /* ------------------------------------------------------------------ config
-   Fill these in from deployments/robinhood-4663.json. Until vault is set the
-   page runs in demo mode with simulated numbers. */
+   Fill from deployments/robinhood-4663.json. Until vault is set the page runs in
+   demo mode with simulated numbers. ?demo=launch|live|months picks the demo state. */
 const CONFIG = {
   chainId: 4663,
   rpc: "https://rpc.mainnet.chain.robinhood.com",
@@ -372,19 +388,17 @@ const CONFIG = {
   vault: "",
   harvester: "",
   curve: "",
+  buyUrl: "https://www.ponsfamily.com/launchpad",   // the STILL page on pons once it exists
   ponsFactory: "0x7eD598BcEf8bd9Edd8C97A195C6d13f40801EC7e",
   ponsEscrow: "0xd3AFEB2a57f70eF218Aa82451c51B2fb0416Ac9e",
   ponsHook: "0xE5e702641Ea86F4ae6cC3cDaeD2B886f976Be044",
   x: "https://x.com/",
-  pons: "https://www.ponsfamily.com/launchpad",
   pollMs: 15000,
 };
 
 const ABI = {
   vault: [
     "function convertToAssets(uint256) view returns (uint256)",
-    "function totalAssets() view returns (uint256)",
-    "function totalSupply() view returns (uint256)",
     "function balanceOf(address) view returns (uint256)",
     "function previewRedeem(uint256) view returns (uint256)",
     "function deposit(uint256 assets, address receiver) returns (uint256)",
@@ -401,46 +415,49 @@ const ABI = {
     "function totalStillBought() view returns (uint256)",
     "function lastBuyAt() view returns (uint256)",
     "function phase() view returns (uint8)",
-    "function pending() view returns (uint256 claimable, uint256 held)",
   ],
   curve: [
     "function realQuoteReserve() view returns (uint256)",
     "function graduationThreshold() view returns (uint256)",
+    "function feeBps() view returns (uint256)",
+    "function creatorTaxBps() view returns (uint256)",
   ],
 };
 
 const $ = (id) => document.getElementById(id);
 const demo = !CONFIG.vault;
 const ONE = 10n ** 18n;
-const fmt = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
+const fmt0 = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
 const fmt2 = new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 });
-const fmtEth = (wei) => {
-  const v = Number(ethers.formatEther(wei));
-  return v >= 100 ? fmt2.format(v) : v.toFixed(v >= 1 ? 3 : 4);
-};
-const fmtStill = (wei) => fmt.format(Math.floor(Number(ethers.formatUnits(wei, 18))));
+const wei = (v) => Number(v) / 1e18;
+const fmtEth = (w) => { const v = wei(w); return v >= 100 ? fmt2.format(v) : v.toFixed(3); };
+const fmtStill = (w) => fmt0.format(Math.floor(wei(w)));
+const ratioStr = (w) => wei(w).toFixed(7);
 const ago = (ts) => {
   const s = Math.max(0, Math.floor(Date.now() / 1000) - Number(ts));
   if (s < 60) return "just now";
   if (s < 3600) return `${Math.floor(s / 60)} min ago`;
   if (s < 86400) return `${Math.floor(s / 3600)} h ago`;
-  return `${Math.floor(s / 86400)} d ago`;
+  if (s < 172800) return "yesterday";
+  return new Date(Number(ts) * 1000).toLocaleDateString(undefined, { month: "short", day: "numeric" });
 };
-const when = (ts) => new Date(Number(ts) * 1000).toLocaleString(undefined, { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
+const when = (ts) => new Date(Number(ts) * 1000).toLocaleString();
+const pct = (n) => (n >= 0 && n < 0.1 ? n.toFixed(4) : n.toFixed(2)) + "%";
 
 $("xlink").href = CONFIG.x;
+$("buy").href = CONFIG.buyUrl;
 
-/* ------------------------------------------------------------ the ratio */
+/* ------------------------------------------------------------ rendering */
 let shownRatio = null;
 function renderRatio(ratioWei) {
-  const s = ethers.formatUnits(ratioWei, 18);
-  const [int, frac = ""] = s.split(".");
-  const f = (frac + "0000000").slice(0, 7);
-  const html = `${int}.${f.slice(0, 4)}<span class="tail">${f.slice(4, 7)}</span>`;
+  const s = ratioStr(ratioWei);
+  const html = `${s.slice(0, 6)}<span class="tail">${s.slice(6, 9)}</span>`;
   $("ratio").innerHTML = html;
   $("reflection").innerHTML = html;
+  $("mcta-ratio").innerHTML = `${s.slice(0, 6)}<small>STILL per vSTILL</small>`;
   const up = (Number(s) - 1) * 100;
-  $("s-up").textContent = `${up < 0 ? "" : ""}${up.toFixed(up < 0.1 ? 4 : 2)}%`;
+  $("s-up").innerHTML = up <= 0 ? "Nothing harvested yet" : `Up <strong>${pct(up)}</strong> since launch`;
+  for (const id of ["s-last", "s-eth"]) $(id).parentElement.hidden = up <= 0;
   if (shownRatio !== null && ratioWei > shownRatio) {
     const r = $("reflection");
     r.classList.remove("ripple"); void r.offsetWidth; r.classList.add("ripple");
@@ -448,19 +465,56 @@ function renderRatio(ratioWei) {
   shownRatio = ratioWei;
 }
 
+function renderStats(eth, still, last) {
+  $("s-eth").textContent = fmtEth(eth);
+  $("s-still").textContent = fmtStill(still);
+  $("s-last").textContent = !last ? "none yet" : ago(last);
+}
+
+function renderPhase(text, fraction) {
+  $("s-phase").textContent = text;
+  const bar = $("bar");
+  if (fraction === null || fraction === undefined) { bar.hidden = true; return; }
+  bar.hidden = false;
+  $("bar-fill").style.width = `${Math.min(100, Math.max(0, fraction * 100)).toFixed(1)}%`;
+}
+
+function renderFees(feeBps, taxBps) {
+  const fee = (Number(feeBps) / 100).toFixed(Number(feeBps) % 100 ? 2 : 0);
+  const tax = (Number(taxBps) / 100).toFixed(Number(taxBps) % 100 ? 2 : 0);
+  $("fee-copy").textContent = `Buys and sells, on the curve and in the pool: a ${fee}% pons fee plus a ${tax}% creator tax that was fixed at launch and cannot be raised. pons keeps a cut of the fee. The rest is owed to a contract with no owner. Anyone can call its harvest function. It claims the ETH, buys STILL and sends the STILL to the vault.`;
+}
+
+function renderChart(entriesNewestFirst) {
+  const pts = entriesNewestFirst.slice(0, 24).map((e) => wei(e.ratioAfter)).reverse();
+  const box = $("chart");
+  if (pts.length < 2) { box.hidden = true; return; }
+  const mn = Math.min(...pts), mx = Math.max(...pts), rg = (mx - mn) || 1e-9;
+  const X = (i) => (i / (pts.length - 1)) * 800, Y = (v) => 158 - ((v - mn) / rg) * 140;
+  let d = `M0 ${Y(pts[0]).toFixed(1)}`;
+  for (let i = 1; i < pts.length; i++) d += ` H${X(i).toFixed(1)} V${Y(pts[i]).toFixed(1)}`;
+  $("chart-line").setAttribute("d", d);
+  $("chart-area").setAttribute("d", d + " V170 H0 Z");
+  $("chart-from").textContent = pts[0].toFixed(7);
+  $("chart-to").textContent = pts[pts.length - 1].toFixed(7);
+  $("chart-label").textContent = `STILL per vSTILL, last ${pts.length} harvests`;
+  box.hidden = false;
+}
+
 function renderLedger(entries, note) {
   const body = $("ledger-body");
   if (note) $("ledger-note").textContent = note;
+  renderChart(entries);
   if (!entries.length) {
     body.innerHTML = `<tr><td colspan="5" class="empty">No harvests yet. The first one lands once fees have been swept to the harvester.</td></tr>`;
     return;
   }
-  body.innerHTML = entries.map((e) => `<tr>
-    <td>${when(e.timestamp)}</td>
+  body.innerHTML = entries.slice(0, 12).map((e) => `<tr>
+    <td><span title="${when(e.timestamp)}">${ago(e.timestamp)}</span></td>
     <td class="num">${fmtEth(e.ethSpent)}</td>
     <td class="num">${fmtStill(e.stillBought)}</td>
-    <td class="num">${Number(ethers.formatUnits(e.ratioAfter, 18)).toFixed(6)}</td>
-    <td class="num"><a href="${CONFIG.explorer}/block/${e.blockNumber}" rel="noopener">${e.blockNumber}</a></td>
+    <td class="num">${ratioStr(e.ratioAfter)}</td>
+    <td class="num"><a href="${CONFIG.explorer}/block/${e.blockNumber}" rel="noopener">${fmt0.format(Number(e.blockNumber))}</a></td>
   </tr>`).join("");
 }
 
@@ -468,98 +522,138 @@ function renderAddrs(rows) {
   $("addrs").innerHTML = rows.map(([k, v]) => `<dt>${k}</dt><dd>${v ? `<a class="mono" href="${CONFIG.explorer}/address/${v}" rel="noopener">${v}</a>` : `<span class="mono">not deployed yet</span>`}</dd>`).join("");
 }
 
+/* -------------------------------------------------------------- mobile bar */
+(() => {
+  const bar = $("mcta");
+  const target = $("deposit");
+  if (!("IntersectionObserver" in window)) return;
+  const io = new IntersectionObserver((es) => {
+    const e = es[0];
+    const past = !e.isIntersecting && e.boundingClientRect.top < 0;
+    bar.classList.toggle("on", past);
+    bar.setAttribute("aria-hidden", String(!past));
+    document.body.classList.toggle("mcta-on", past && window.innerWidth <= 720);
+  }, { rootMargin: "0px 0px -40px 0px" });
+  io.observe(target);
+})();
+
 /* -------------------------------------------------------------- demo mode */
 function runDemo() {
-  const t0 = Math.floor(Date.now() / 1000);
-  let ratio = 1_004_731_218n * 10n ** 9n; // 1.004731218
-  let eth = 1_230n * 10n ** 15n; // 1.23 ETH
-  let still = 1_204_113n * ONE;
-  const entries = [];
-  for (let i = 8; i >= 1; i--) {
-    entries.push({ timestamp: t0 - i * 1800 - 240, ethSpent: 40n * 10n ** 15n + BigInt(i) * 10n ** 15n, stillBought: 38_000n * ONE + BigInt(i) * 900n * ONE, ratioAfter: ratio - BigInt(i) * 45n * 10n ** 12n, blockNumber: 18_402_113 - i * 7200 });
+  const state = new URLSearchParams(location.search).get("demo") || "live";
+  const now = Math.floor(Date.now() / 1000);
+  let ratio, eth, still, block, entries = [], last = 0;
+  if (state === "launch") {
+    ratio = ONE; eth = 0n; still = 0n; block = 50906455;
+  } else if (state === "months") {
+    eth = 41700n * 10n ** 15n; still = 30118442n * ONE; block = 62488210;
+    let r = 1230000000n * 10n ** 9n;
+    for (let i = 12; i >= 1; i--) { const j = BigInt(Math.floor(Math.random() * 400)); r += (180n + j) * 10n ** 12n; entries.push({ timestamp: now - i * 5400 - 120 - Math.floor(Math.random() * 1800), ethSpent: (230n + j) * 10n ** 15n, stillBought: (15000n + j * 60n) * ONE, ratioAfter: r, blockNumber: block - i * 6200 - Math.floor(Math.random() * 900) }); }
+    ratio = r;
+  } else {
+    eth = 1230n * 10n ** 15n; still = 1204113n * ONE; block = 50906455;
+    let r = ONE;
+    for (let i = 12; i >= 1; i--) { const j = BigInt(Math.floor(Math.random() * 500)); r += (200n + j) * 10n ** 12n; entries.push({ timestamp: now - i * 7200 - 240 - Math.floor(Math.random() * 3000), ethSpent: (45n + j / 6n) * 10n ** 15n, stillBought: (40000n + j * 110n) * ONE, ratioAfter: r, blockNumber: block - i * 14400 - Math.floor(Math.random() * 2000) }); }
+    ratio = r;
   }
+  if (entries.length) last = entries[entries.length - 1].timestamp;
   const paint = () => {
     renderRatio(ratio);
-    $("s-last").textContent = ago(entries[entries.length - 1].timestamp);
-    $("s-eth").textContent = fmtEth(eth);
-    $("s-still").textContent = fmtStill(still);
-    $("s-phase").textContent = "Demo mode. STILL is not deployed yet, so these numbers are simulated.";
+    renderStats(eth, still, last);
     renderLedger([...entries].reverse(), "Demo data until the contracts are wired. Newest first.");
   };
   paint();
+  renderPhase(state === "months" ? "STILL trades in a permanently locked Uniswap v4 pool. Demo mode, numbers are simulated." : "STILL is on the pons curve, 38.2% of the way to its Uniswap v4 pool. Demo mode, numbers are simulated.", state === "months" ? null : 0.382);
+  renderFees(100, 300);
   renderAddrs([["STILL token", ""], ["Vault (vSTILL)", ""], ["Harvester", ""], ["pons curve", ""], ["pons factory", CONFIG.ponsFactory], ["pons fee escrow", CONFIG.ponsEscrow], ["pons hook", CONFIG.ponsHook]]);
-  setInterval(() => {
-    const spent = 30n * 10n ** 15n + BigInt(Math.floor(Math.random() * 40)) * 10n ** 15n;
-    const bought = (spent * 950_000n);
-    ratio += BigInt(Math.floor(Math.random() * 60) + 20) * 10n ** 12n;
-    eth += spent; still += bought;
-    entries.push({ timestamp: Math.floor(Date.now() / 1000), ethSpent: spent, stillBought: bought, ratioAfter: ratio, blockNumber: entries[entries.length - 1].blockNumber + 7200 });
-    paint();
-  }, 45000);
-  setInterval(() => { $("s-last").textContent = ago(entries[entries.length - 1].timestamp); }, 20000);
+  if (state !== "launch") {
+    setInterval(() => {
+      const spent = 40n * 10n ** 15n + BigInt(Math.floor(Math.random() * 60)) * 10n ** 15n;
+      const bought = spent * (state === "months" ? 70000n : 950000n);
+      ratio += BigInt(Math.floor(Math.random() * 60) + 20) * 10n ** 12n;
+      eth += spent; still += bought; block += 1200 + Math.floor(Math.random() * 800);
+      last = Math.floor(Date.now() / 1000);
+      entries.push({ timestamp: last, ethSpent: spent, stillBought: bought, ratioAfter: ratio, blockNumber: block });
+      paint();
+    }, 45000);
+  }
+  setInterval(() => { if (last) $("s-last").textContent = ago(last); }, 20000);
 }
 
 /* -------------------------------------------------------------- live mode */
-const provider = demo ? null : new ethers.JsonRpcProvider(CONFIG.rpc, CONFIG.chainId, { staticNetwork: true });
-const vaultR = demo ? null : new ethers.Contract(CONFIG.vault, ABI.vault, provider);
-const harvR = demo || !CONFIG.harvester ? null : new ethers.Contract(CONFIG.harvester, ABI.harvester, provider);
-const curveR = demo || !CONFIG.curve ? null : new ethers.Contract(CONFIG.curve, ABI.curve, provider);
-let lastHarvestTs = 0n;
+let provider = null, vaultR = null, harvR = null, curveR = null, lastHarvestTs = 0n, feesRendered = false;
+if (!demo) {
+  if (typeof ethers === "undefined") {
+    renderPhase("The wallet library did not load. Reload the page.", null);
+  } else {
+    provider = new ethers.JsonRpcProvider(CONFIG.rpc, CONFIG.chainId, { staticNetwork: true });
+    vaultR = new ethers.Contract(CONFIG.vault, ABI.vault, provider);
+    harvR = CONFIG.harvester ? new ethers.Contract(CONFIG.harvester, ABI.harvester, provider) : null;
+    curveR = CONFIG.curve ? new ethers.Contract(CONFIG.curve, ABI.curve, provider) : null;
+  }
+}
 
 async function refresh() {
+  if (!vaultR) return;
   try {
     const ratio = await vaultR.convertToAssets(ONE);
     renderRatio(ratio);
-    if (harvR) {
-      const [entries, eth, still, last, phase] = await Promise.all([
-        harvR.recent(12), harvR.totalEthSpent(), harvR.totalStillBought(), harvR.lastBuyAt(), harvR.phase(),
-      ]);
-      lastHarvestTs = last;
-      $("s-last").textContent = last === 0n ? "none yet" : ago(last);
-      $("s-eth").textContent = fmtEth(eth);
-      $("s-still").textContent = fmtStill(still);
-      renderLedger(entries.map((e) => ({ timestamp: e.timestamp, ethSpent: e.ethSpent, stillBought: e.stillBought, ratioAfter: e.ratioAfter, blockNumber: e.blockNumber })));
-      let status = "";
-      if (phase === 0n && curveR) {
-        const [raised, threshold] = await Promise.all([curveR.realQuoteReserve(), curveR.graduationThreshold()]);
-        const pct = threshold === 0n ? 0 : Number((raised * 1000n) / threshold) / 10;
-        status = `STILL is on the pons curve, ${pct.toFixed(1)}% of the way to its Uniswap v4 pool.`;
-      } else if (phase === 2n) {
-        status = "STILL trades in a permanently locked Uniswap v4 pool.";
-      } else if (phase === 1n) {
-        status = "STILL has sold out its curve and is waiting for its pool to be created.";
-      } else if (phase === 3n) {
-        status = "The pons launch was rescued. Harvests are paused because there is no pool to buy from.";
-      }
-      $("s-phase").textContent = status;
+    if (!harvR) return;
+    const [entries, eth, still, last, phase] = await Promise.all([
+      harvR.recent(24), harvR.totalEthSpent(), harvR.totalStillBought(), harvR.lastBuyAt(), harvR.phase(),
+    ]);
+    lastHarvestTs = last;
+    renderStats(eth, still, last === 0n ? 0 : last);
+    renderLedger(entries.map((e) => ({ timestamp: e.timestamp, ethSpent: e.ethSpent, stillBought: e.stillBought, ratioAfter: e.ratioAfter, blockNumber: e.blockNumber })));
+    if (phase === 0n && curveR) {
+      const [raised, threshold] = await Promise.all([curveR.realQuoteReserve(), curveR.graduationThreshold()]);
+      const f = threshold === 0n ? 0 : Number((raised * 1000n) / threshold) / 1000;
+      renderPhase(`STILL is on the pons curve, ${(f * 100).toFixed(1)}% of the way to its Uniswap v4 pool.`, f);
+    } else if (phase === 2n) {
+      renderPhase("STILL trades in a permanently locked Uniswap v4 pool.", null);
+    } else if (phase === 1n) {
+      renderPhase("STILL has sold out its curve and is waiting for its pool to be created.", null);
+    } else if (phase === 3n) {
+      renderPhase("The pons launch was rescued. Harvests are paused because there is no pool to buy from.", null);
+    }
+    if (!feesRendered && curveR) {
+      const [feeBps, taxBps] = await Promise.all([curveR.feeBps(), curveR.creatorTaxBps()]);
+      renderFees(feeBps, taxBps); feesRendered = true;
     }
   } catch (e) {
     console.error(e);
-    $("s-phase").textContent = "Could not reach the chain. Retrying.";
+    renderPhase("Could not reach the chain. Retrying.", null);
   }
 }
 
 /* ------------------------------------------------------------------ wallet */
-let signer = null, me = null, mode = "dep";
-const tokenAddr = () => (mode === "dep" ? CONFIG.token : CONFIG.vault);
-function setMode(m) {
-  mode = m;
-  $("tab-dep").setAttribute("aria-selected", m === "dep");
-  $("tab-red").setAttribute("aria-selected", m === "red");
-  $("unit").textContent = m === "dep" ? "STILL" : "vSTILL";
-  $("act").textContent = me ? (m === "dep" ? "Deposit" : "Redeem") : "Connect wallet";
-  $("amount").value = "";
-  $("status").textContent = "";
+let signer = null, me = null, mode = "dep", bal = { still: 0n, shares: 0n };
+function setStatus(msg, err) { $("status").textContent = msg; $("status").classList.toggle("err", !!err); }
+function primaryLabel() {
+  if (!me) return "Connect wallet";
+  if (mode === "dep" && bal.still === 0n) return "Buy STILL on pons";
+  if (mode === "red" && bal.shares === 0n) return "Nothing to redeem";
+  return mode === "dep" ? "Deposit" : "Redeem";
 }
+function paintPanel() {
+  $("tab-dep").setAttribute("aria-selected", mode === "dep");
+  $("tab-red").setAttribute("aria-selected", mode === "red");
+  $("unit").textContent = mode === "dep" ? "STILL" : "vSTILL";
+  $("act").textContent = primaryLabel();
+  $("act").disabled = !!me && mode === "red" && bal.shares === 0n;
+  $("max").disabled = !me || (mode === "dep" ? bal.still === 0n : bal.shares === 0n);
+}
+function setMode(m) { mode = m; $("amount").value = ""; setStatus(""); paintPanel(); }
 $("tab-dep").onclick = () => setMode("dep");
 $("tab-red").onclick = () => setMode("red");
+$("amount").addEventListener("input", (e) => { e.target.value = e.target.value.replace(/[^0-9.]/g, ""); });
 
 async function ensureChain() {
   const hex = "0x" + CONFIG.chainId.toString(16);
   try {
     await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: hex }] });
   } catch (e) {
-    if (e.code === 4902 || (e.data && e.data.originalError && e.data.originalError.code === 4902)) {
+    const code = e.code ?? e.data?.originalError?.code;
+    if (code === 4902) {
       await window.ethereum.request({ method: "wallet_addEthereumChain", params: [{ chainId: hex, chainName: "Robinhood Chain", nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 }, rpcUrls: [CONFIG.rpc], blockExplorerUrls: [CONFIG.explorer] }] });
     } else throw e;
   }
@@ -567,65 +661,65 @@ async function ensureChain() {
 
 async function connect() {
   if (demo) { setStatus("Demo mode. The contracts are not wired yet, so there is nothing to deposit into.", true); return; }
-  if (!window.ethereum) { setStatus("No wallet found. Install a wallet that supports Robinhood Chain.", true); return; }
+  if (!window.ethereum) { setStatus("No wallet found. Open this page in a wallet browser or install one that supports Robinhood Chain.", true); return; }
+  setStatus("Wrong network. Switch to Robinhood Chain.");
   await ensureChain();
+  setStatus("");
   const bp = new ethers.BrowserProvider(window.ethereum);
   signer = await bp.getSigner();
   me = await signer.getAddress();
-  $("act").textContent = mode === "dep" ? "Deposit" : "Redeem";
   await refreshHoldings();
+  paintPanel();
 }
 
-let bal = { still: 0n, shares: 0n };
 async function refreshHoldings() {
-  if (!me) return;
+  if (!me || !provider) return;
   const still = new ethers.Contract(CONFIG.token, ABI.token, provider);
   const [s, v] = await Promise.all([still.balanceOf(me), vaultR.balanceOf(me)]);
   const worth = v === 0n ? 0n : await vaultR.previewRedeem(v);
   bal = { still: s, shares: v };
-  $("holdings").textContent = `You hold ${fmtStill(s)} STILL and ${fmtStill(v)} vSTILL, which redeems for ${fmtStill(worth)} STILL right now.`;
+  $("holdings").textContent = s === 0n && v === 0n
+    ? "This wallet holds no STILL yet. Buy some on pons, then deposit it here."
+    : `You hold ${fmtStill(s)} STILL and ${fmtStill(v)} vSTILL, which redeems for ${fmtStill(worth)} STILL right now.`;
 }
 
-function setStatus(msg, err) { $("status").textContent = msg; $("status").classList.toggle("err", !!err); }
-
-$("max").onclick = () => {
-  if (!me) return;
-  $("amount").value = ethers.formatUnits(mode === "dep" ? bal.still : bal.shares, 18);
-};
+$("max").onclick = () => { if (me) $("amount").value = ethers.formatUnits(mode === "dep" ? bal.still : bal.shares, 18); };
 
 $("act").onclick = async () => {
   try {
     if (!me) { await connect(); return; }
+    if (mode === "dep" && bal.still === 0n) { window.open(CONFIG.buyUrl, "_blank", "noopener"); return; }
     const raw = $("amount").value.trim();
     if (!raw || Number(raw) <= 0) { setStatus("Enter an amount.", true); return; }
     const amount = ethers.parseUnits(raw, 18);
     const vault = new ethers.Contract(CONFIG.vault, ABI.vault, signer);
+    $("act").disabled = true;
     if (mode === "dep") {
-      if (amount > bal.still) { setStatus("That is more STILL than you hold.", true); return; }
+      if (amount > bal.still) { setStatus("That is more STILL than you hold.", true); $("act").disabled = false; return; }
       const still = new ethers.Contract(CONFIG.token, ABI.token, signer);
       const allowance = await still.allowance(me, CONFIG.vault);
-      if (allowance < amount) {
-        setStatus("Approving STILL for the vault.");
-        await (await still.approve(CONFIG.vault, amount)).wait();
-      }
-      setStatus("Depositing.");
-      await (await vault.deposit(amount, me)).wait();
-      setStatus(`Deposited ${fmtStill(amount)} STILL.`);
+      if (allowance < amount) { setStatus("Approve STILL in your wallet."); await (await still.approve(CONFIG.vault, amount)).wait(); }
+      setStatus("Sent. Waiting for the block.");
+      const rc = await (await vault.deposit(amount, me)).wait();
+      setStatus(`Deposited ${fmtStill(amount)} STILL in block ${fmt0.format(rc.blockNumber)}.`);
     } else {
-      if (amount > bal.shares) { setStatus("That is more vSTILL than you hold.", true); return; }
-      setStatus("Redeeming.");
-      await (await vault.redeem(amount, me, me)).wait();
-      setStatus(`Redeemed ${fmtStill(amount)} vSTILL.`);
+      if (amount > bal.shares) { setStatus("That is more vSTILL than you hold.", true); $("act").disabled = false; return; }
+      setStatus("Sent. Waiting for the block.");
+      const rc = await (await vault.redeem(amount, me, me)).wait();
+      setStatus(`Redeemed ${fmtStill(amount)} vSTILL in block ${fmt0.format(rc.blockNumber)}.`);
     }
     $("amount").value = "";
     await Promise.all([refreshHoldings(), refresh()]);
   } catch (e) {
     console.error(e);
     setStatus(e.shortMessage || e.reason || e.message || "The transaction did not go through.", true);
+  } finally {
+    paintPanel();
   }
 };
 
 /* ------------------------------------------------------------------ boot */
+paintPanel();
 if (demo) {
   runDemo();
 } else {
@@ -634,7 +728,7 @@ if (demo) {
   setInterval(refresh, CONFIG.pollMs);
   setInterval(() => { if (lastHarvestTs > 0n) $("s-last").textContent = ago(lastHarvestTs); }, 20000);
   if (window.ethereum) {
-    window.ethereum.on?.("accountsChanged", () => { me = null; signer = null; setMode(mode); $("holdings").textContent = "Connect a wallet to see what you hold."; });
+    window.ethereum.on?.("accountsChanged", () => { me = null; signer = null; bal = { still: 0n, shares: 0n }; $("holdings").textContent = "Connect a wallet to see what you hold."; paintPanel(); });
     window.ethereum.on?.("chainChanged", () => location.reload());
   }
 }
