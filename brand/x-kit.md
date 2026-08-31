@@ -8,7 +8,9 @@ Replace `[TOKEN]`, `[VAULT]`, `[HARVESTER]` and `[SITE]` before posting.
 
 Name: still
 
-Bio: A vault on Robinhood Chain. Fees buy STILL into the vault, vSTILL just gets worth more. No claim step. No owner. Unaudited.
+Bio: A vault on Robinhood Chain. Fees buy STILL into the vault, vSTILL just gets worth more. No claim step. No owner. Unaudited, Hashlock audit scheduled.
+
+When the Hashlock report is published, change "Unaudited, Hashlock audit scheduled" to "Audited by Hashlock" and pin the report link. Not before.
 
 Link: [SITE]
 

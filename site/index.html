@@ -337,7 +337,7 @@
       <h2>Read this before you deposit</h2>
       <p class="intro">You would find all of it in diligence anyway. Better that it is here.</p>
       <ul class="ruled">
-        <li><p class="lead"><strong>The contracts are not audited.</strong> <span>Neither the vault nor the harvester has been reviewed by a third party. Size any deposit as if the code could be wrong. pons v2, which STILL trades on, publishes its own audit status in its documentation.</span></p></li>
+        <li><p class="lead" id="audit-risk"><strong>The contracts are not audited.</strong> <span>Neither the vault nor the harvester has been reviewed by a third party. Size any deposit as if the code could be wrong. pons v2, which STILL trades on, publishes its own audit status in its documentation.</span></p></li>
         <li><p class="lead"><strong>pons can redirect creator fees.</strong> <span>pons v2 has a community takeover mechanism, behind a three day timelock, that can point a launch's creator fees at a new address. It exists for abandoned tokens. We cannot switch it off. If it were ever used on STILL, fees would stop reaching the vault and the ratio would stop rising. It would be public for three days before it took effect.</span></p></li>
         <li><p class="lead"><strong>Some fees wait on pons.</strong> <span>After graduation, fees that need converting from STILL back to ETH are swept by pons' operator, not by us. Until a sweep happens that ETH is earned but not yet harvestable.</span></p></li>
         <li><p class="lead"><strong>Each harvest is itself a trade.</strong> <span>Buying STILL on pons pays the same fee as any other buy. Part of every harvest goes back to pons and, through the creator tax, back into the next harvest.</span></p></li>
@@ -353,6 +353,7 @@
         <h2>Read the contracts</h2>
         <p>Everything on this page is a view call. There is no API, no indexer and no backend in the trust path. If the site goes away the vault does not notice.</p>
         <dl class="addr" id="addrs"></dl>
+        <p id="audit-line"></p>
       </div>
       <div>
         <h3>Price it like this</h3>
@@ -369,7 +370,7 @@ return stillPerShare * stillPriceInEth / 1e18;</code></pre>
 
 <footer>
   <div class="wrap">
-    <div>Not investment advice. The contracts are unaudited.</div>
+    <div id="audit-footer">Not investment advice. The contracts are unaudited.</div>
     <div>Robinhood Chain, chain id 4663</div>
   </div>
 </footer>
@@ -398,6 +399,9 @@ const CONFIG = {
   ponsHook: "0xE5e702641Ea86F4ae6cC3cDaeD2B886f976Be044",
   x: "https://x.com/",
   pollMs: 15000,
+  // Audit slot. status: "none" | "scheduled" | "review" | "complete". The badge only says
+  // "Audited by" once status is "complete" and reportUrl points at the published report.
+  audit: { firm: "Hashlock", firmUrl: "https://x.com/Hashlock_", reportUrl: "", status: "scheduled" },
 };
 
 const ABI = {
@@ -525,6 +529,36 @@ function renderLedger(entries, note) {
 function renderAddrs(rows) {
   $("addrs").innerHTML = rows.map(([k, v]) => `<dt>${k}</dt><dd>${v ? `<a class="mono" href="${CONFIG.explorer}/address/${v}" rel="noopener">${v}</a>` : `<span class="mono">not deployed yet</span>`}</dd>`).join("");
 }
+
+/* ------------------------------------------------------------------ audit */
+function renderAudit() {
+  const a = CONFIG.audit || { status: "none" };
+  const firm = a.firmUrl ? `<a href="${a.firmUrl}" rel="noopener">${a.firm}</a>` : a.firm;
+  const report = a.reportUrl ? `<a href="${a.reportUrl}" rel="noopener">Read the report</a>` : "";
+  const pons = "pons v2, which STILL trades on, publishes its own audit status in its documentation.";
+  let risk, line, foot;
+  if (a.status === "complete" && a.reportUrl) {
+    risk = `<strong>Audited by ${a.firm}.</strong> <span>${report}. An audit lowers the odds of a bug in the vault and the harvester; it does not remove them. Size any deposit accordingly. ${pons}</span>`;
+    line = `Audit: ${firm}, ${report.toLowerCase()}.`;
+    foot = `Not investment advice. Audited by ${firm}.`;
+  } else if (a.status === "review") {
+    risk = `<strong>The contracts are not audited yet.</strong> <span>${firm} is reviewing the vault and the harvester now. The report will be linked here when it is published. Until then, size any deposit as if the code could be wrong. ${pons}</span>`;
+    line = `Audit: under review by ${firm}. The report will be linked here.`;
+    foot = `Not investment advice. The contracts are under review by ${firm} and not yet audited.`;
+  } else if (a.status === "scheduled") {
+    risk = `<strong>The contracts are not audited yet.</strong> <span>${firm} is scheduled to review the vault and the harvester. The report will be linked here when it is published. Until then, size any deposit as if the code could be wrong. ${pons}</span>`;
+    line = `Audit: scheduled with ${firm}. The report will be linked here.`;
+    foot = `Not investment advice. The contracts are unaudited. An audit by ${firm} is scheduled.`;
+  } else {
+    risk = `<strong>The contracts are not audited.</strong> <span>Neither the vault nor the harvester has been reviewed by a third party. Size any deposit as if the code could be wrong. ${pons}</span>`;
+    line = "";
+    foot = "Not investment advice. The contracts are unaudited.";
+  }
+  $("audit-risk").innerHTML = risk;
+  $("audit-line").innerHTML = line;
+  $("audit-footer").innerHTML = foot;
+}
+renderAudit();
 
 /* -------------------------------------------------------------- mobile bar */
 (() => {

@@ -126,3 +126,5 @@ Every tick it reads `pending()`, quotes the buy (curve maths before graduation, 
 Finance blue, not paper. Background `#f4f7fb`, deep water `#0a2540`, ink `#0f1f33`, muted `#5b6b80`, line `#d3dbe6`, surface `#ffffff`, accent `#1f5fff` for the primary button, focus ring and chart. IBM Plex Sans for everything, Plex Mono for addresses and code. The one signature element is the ratio sitting on the water line with its reflection beneath it; the reflection ripples once when a harvest lands. Everything else is quiet on purpose. No dashes in copy anywhere.
 
 The site has three review states while the contracts are not wired: `?demo=launch`, `?demo=live` (default) and `?demo=months`.
+
+Audit slot: `CONFIG.audit` in `site/index.html`. `status` is `none`, `scheduled`, `review` or `complete`; the footer, the first risk item and the line under the addresses all read from it. It only says "Audited by" when `status` is `complete` and `reportUrl` points at the published report. Currently `scheduled` with Hashlock.
