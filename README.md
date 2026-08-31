@@ -125,6 +125,10 @@ Every tick it reads `pending()`, quotes the buy (curve maths before graduation, 
 
 Finance blue, not paper. Background `#f4f7fb`, deep water `#0a2540`, ink `#0f1f33`, muted `#5b6b80`, line `#d3dbe6`, surface `#ffffff`, accent `#1f5fff` for the primary button, focus ring and chart. IBM Plex Sans for everything, Plex Mono for addresses and code. The one signature element is the ratio sitting on the water line with its reflection beneath it; the reflection ripples once when a harvest lands. Everything else is quiet on purpose. No dashes in copy anywhere.
 
-The site has three review states while the contracts are not wired: `?demo=launch`, `?demo=live` (default) and `?demo=months`.
+The site has three review states while the contracts are not wired: `?demo=launch`, `?demo=live` (default) and `?demo=months`. `?motion=0` switches the scroll motion off, which is useful for screenshots.
+
+Motion: GSAP with ScrollTrigger from cdnjs. Sections reveal once as they enter, the ratio counts up on first load, the reflection lags the number on scroll and ripples on a harvest, both charts draw themselves when they come into view, and the header blurs with a progress line. Two layers of slow drifting light sit behind the page and inside the water block. All of it is off under `prefers-reduced-motion`.
+
+Sections beyond the vault itself: a position card and a vault card next to the deposit panel, an illustrative projection driven by volume, market value and deposit share, a comparison of the yield shapes launchpad tokens use, a status board that reads the audit slot, a questions list and a listing checklist for integrators.
 
 Audit slot: `CONFIG.audit` in `site/index.html`. `status` is `none`, `scheduled`, `review` or `complete`; the footer, the first risk item and the line under the addresses all read from it. It only says "Audited by" when `status` is `complete` and `reportUrl` points at the published report. Currently `scheduled` with Hashlock.
