@@ -1,0 +1,15 @@
+{
+  "name": "still-keeper",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Calls harvest() on the StillHarvester on a schedule. Anyone can; this just keeps it regular.",
+  "scripts": {
+    "start": "node index.mjs",
+    "dry": "DRY_RUN=1 node index.mjs"
+  },
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "viem": "^2.21.0"
+  }
+}

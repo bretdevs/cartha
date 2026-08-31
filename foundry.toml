@@ -1,0 +1,14 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+solc_version = "0.8.26"
+optimizer = true
+optimizer_runs = 1000
+evm_version = "cancun"
+fs_permissions = [{ access = "read-write", path = "./deployments" }]
+
+[fuzz]
+runs = 512
+[lint]
+exclude_lints = ["multi-contract-file"]
