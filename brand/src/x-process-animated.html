@@ -3,158 +3,172 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cartha. Buy it. Deposit it. Done.</title>
+<title>Cartha. Capital, intelligently allocated.</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+  /* original site tokens */
+  :root {
+    --water: #f4f7fb; --deep: #0a2540; --ink: #0f1f33; --muted: #5b6b80; --line: #d3dbe6;
+    --surface: #ffffff; --accent: #1f5fff; --accent-dark: #174ad1;
+    --sans: "Inter", "Helvetica Neue", Arial, sans-serif;
+    --display: "Inter Tight", "Inter", sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+    --ratio-size: 148px;
+  }
   * { box-sizing: border-box; margin: 0; }
   html, body { height: 100%; }
-  body { background: #071a30; display: grid; place-items: center; overflow: hidden;
-         font-family: "Inter", -apple-system, sans-serif; }
+  body { background: #071a30; display: grid; place-items: center; overflow: hidden; }
 
-  /* fixed 1600x900 stage, scaled to fit the window for recording at any size */
-  .stage { width: 1600px; height: 900px; position: relative; overflow: hidden;
-           background: #f4f7fb; color: #0f1f33; transform-origin: center; flex: none; }
+  .stage { width: 1600px; height: 900px; position: relative; overflow: hidden; background: var(--water);
+           color: var(--ink); font-family: var(--sans); font-size: 16.5px; line-height: 1.6;
+           font-variant-numeric: tabular-nums; transform-origin: center; flex: none; }
 
-  .water { position: absolute; left: 0; right: 0; bottom: 0; height: 520px; background: #0a2540;
-           border-top: 1px solid rgba(232,238,246,.45); }
-  .glow { position: absolute; border-radius: 50%; pointer-events: none; }
-  .g1 { width: 900px; height: 520px; left: -220px; bottom: 60px;
-        background: radial-gradient(ellipse, rgba(106,166,255,.30) 0%, rgba(106,166,255,.12) 32%, rgba(106,166,255,0) 62%); }
-  .g2 { width: 980px; height: 560px; right: -280px; bottom: -60px;
-        background: radial-gradient(ellipse, rgba(31,95,255,.26) 0%, rgba(31,95,255,.10) 32%, rgba(31,95,255,0) 62%); }
+  /* announce, original */
+  .announce { background: var(--accent); color: #fff; font-size: .85rem; font-weight: 500; text-align: center; padding: 9px 44px; }
+  .announce u { text-decoration-color: rgba(255,255,255,.5); text-underline-offset: 3px; }
 
-  .brand { position: absolute; left: 64px; top: 52px; display: flex; align-items: center; gap: 12px; }
-  .brand svg { width: 26px; height: 26px; }
-  .brand span { font-family: "Inter Tight", sans-serif; font-weight: 500; font-size: 30px; line-height: 1; letter-spacing: -.035em; }
+  /* header, original */
+  header { padding: 14px 64px; display: flex; align-items: center; justify-content: space-between; }
+  .wordmark { display: inline-flex; align-items: baseline; gap: 10px; }
+  .wordmark svg { width: 22px; height: 22px; transform: translateY(2px); }
+  .wordmark span { font-family: var(--display); font-weight: 600; font-size: 1.35rem; line-height: 1; letter-spacing: -.035em; }
+  nav { display: flex; gap: 24px; font-size: .92rem; color: var(--muted); }
 
-  .h { position: absolute; left: 64px; top: 118px; font-family: "Inter Tight", sans-serif; font-weight: 500;
-       font-size: 96px; line-height: 1; letter-spacing: -.05em; }
-  .h .w { opacity: .18; }
-  .sub { position: absolute; left: 66px; top: 240px; font-size: 26px; line-height: 1.5; color: #5b6b80; max-width: 1050px; }
-  .sub b { color: #0f1f33; font-weight: 600; }
+  /* hero, original proportions tightened */
+  .hero { position: relative; padding: 10px 64px 0; }
+  .hero h1 { font-family: var(--display); font-weight: 500; font-size: 56px; line-height: 1.02; letter-spacing: -.045em; }
+  .hero .cur { font-weight: 400; animation: blink 1s steps(2) infinite; }
+  @keyframes blink { to { opacity: 0; } }
+  .ratio-label { margin: 18px 0 0; color: var(--muted); font-size: .9rem; }
+  .ratio { font-family: var(--display); font-weight: 500; font-size: var(--ratio-size); line-height: .8;
+           letter-spacing: -.06em; white-space: nowrap; position: relative; z-index: 2; transform: translateY(.06em); }
+  .ratio .tail, .reflection .tail { font-size: .34em; font-weight: 400; letter-spacing: -.02em; margin-left: .1em; }
+  .ratio .tail { color: var(--muted); }
 
-  .ratio { position: absolute; right: 64px; top: 78px; text-align: right; }
-  .ratio .lbl { font-size: 17px; color: #5b6b80; margin-bottom: 2px; }
-  .ratio .n { font-family: "Inter Tight", sans-serif; font-weight: 500; font-size: 84px; line-height: .9;
-              letter-spacing: -.05em; white-space: nowrap; font-variant-numeric: tabular-nums; }
-  .ratio .n small { font-size: .34em; font-weight: 400; letter-spacing: -.02em; color: #5b6b80; margin-left: .08em; }
-  .ratio .refl { height: 52px; overflow: hidden;
+  /* the water, original */
+  .waterblk { position: absolute; left: 0; right: 0; bottom: 0; top: 356px; background: var(--deep); color: #e8eef6; overflow: hidden; }
+  .waterblk::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: rgba(232,238,246,.45); z-index: 3; }
+  .caustics { position: absolute; inset: 0; pointer-events: none; }
+  .caustics i { position: absolute; border-radius: 50%; }
+  .caustics .l1 { width: 900px; height: 500px; left: -200px; top: -170px;
+    background: radial-gradient(ellipse, rgba(106,166,255,.34) 0%, rgba(106,166,255,.14) 32%, rgba(106,166,255,0) 62%); }
+  .caustics .l2 { width: 1000px; height: 560px; right: -320px; top: 0;
+    background: radial-gradient(ellipse, rgba(31,95,255,.3) 0%, rgba(31,95,255,.12) 32%, rgba(31,95,255,0) 62%); }
+  .winner { position: relative; z-index: 2; padding: 0 64px; }
+
+  .reflect-wrap { font-size: var(--ratio-size); height: .5em; overflow: hidden; user-select: none;
     -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,.35) 45%, rgba(0,0,0,0) 92%);
             mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,.35) 45%, rgba(0,0,0,0) 92%); }
-  .ratio .refl div { font-family: "Inter Tight", sans-serif; font-weight: 500; font-size: 84px; line-height: .9;
-              letter-spacing: -.05em; white-space: nowrap; color: #9db7d6; opacity: .35; filter: blur(.9px);
-              transform: scaleY(-1) translateY(10px); transform-origin: center; font-variant-numeric: tabular-nums; }
-  .ratio .refl small { font-size: .34em; font-weight: 400; opacity: .55; margin-left: .08em; }
+  .reflection { font-family: var(--display); font-weight: 500; font-size: 1em; line-height: .8; letter-spacing: -.06em;
+    white-space: nowrap; color: #e8eef6; opacity: .28; transform: scaleY(-1) translateY(.06em); animation: idle 11s ease-in-out infinite; }
+  .reflection .tail { opacity: .55; }
+  @keyframes idle { 0%,100% { transform: scaleY(-1) translateY(.06em); } 50% { transform: scaleY(-1.025) translateY(.06em) skewX(.5deg); } }
+  @keyframes ripple { 0% { transform: scaleY(-1) translateY(.06em); } 20% { transform: scaleY(-1.05) translateY(.06em) skewX(1.4deg); }
+    45% { transform: scaleY(-.96) translateY(.06em) skewX(-1.1deg); } 70% { transform: scaleY(-1.02) translateY(.06em) skewX(.5deg); }
+    100% { transform: scaleY(-1) translateY(.06em); } }
+  .reflection.ripple { animation: ripple 1.7s ease-out 1; }
 
-  .row { position: absolute; left: 64px; right: 64px; top: 388px;
-         display: grid; grid-template-columns: 1fr 44px 1fr 44px 1fr 44px 1fr; align-items: stretch; }
-  .card { background: #fff; border-radius: 12px; padding: 24px 24px 20px; min-height: 300px;
-          box-shadow: 0 1px 2px rgba(10,37,64,.10), 0 18px 44px rgba(7,26,48,.35);
-          display: flex; flex-direction: column; }
-  .card .num { font-family: "IBM Plex Mono", monospace; font-size: 15px; color: #5b6b80; margin-bottom: 12px; }
-  .card h3 { font-family: "Inter Tight", sans-serif; font-weight: 600; font-size: 25px; letter-spacing: -.025em;
-             line-height: 1.15; margin-bottom: 14px; }
-  .scene { font-size: 16.5px; }
-  .kv { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0;
-        border-top: 1px solid #e4eaf2; }
-  .kv span { color: #5b6b80; }
-  .kv b { font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .kv b.up { color: #1a9e5c; }
-  .bar { height: 5px; border-radius: 3px; background: #e4eaf2; overflow: hidden; margin-top: 12px; }
-  .bar i { display: block; height: 100%; width: 0; background: #1f5fff; }
-  .bar-lbl { font-size: 13px; color: #5b6b80; margin-top: 6px; }
-  .btn { display: flex; align-items: center; justify-content: center; gap: 9px; padding: 12px;
-         border-radius: 7px; background: #1f5fff; color: #fff; font-weight: 600; font-size: 16px;
-         margin-bottom: 6px; }
-  .btn .dot { width: 8px; height: 8px; border-radius: 50%; background: #7bffbf; display: none; }
-  .btn.done { background: #0f1f33; font-family: "IBM Plex Mono", monospace; font-weight: 500; font-size: 15px; }
-  .btn.done .dot { display: inline-block; }
-  .pill { align-self: flex-start; font-family: "IBM Plex Mono", monospace; font-size: 14px; color: #1f5fff;
-          background: rgba(31,95,255,.10); border-radius: 999px; padding: 4px 12px; margin: 10px 0 2px; }
-  .tag { font-size: 13.5px; color: #5b6b80; margin-top: auto; padding-top: 12px; }
+  /* stats + phase + trades, original */
+  .stats { display: flex; flex-wrap: wrap; gap: 6px 36px; padding: 10px 0 0; font-size: .95rem; color: rgba(232,238,246,.75); }
+  .stats strong { color: #fff; font-weight: 600; }
+  .phase { display: flex; align-items: center; gap: 14px; margin: 8px 0 0; font-size: .88rem; color: rgba(232,238,246,.62); }
+  .bar { display: inline-block; width: 150px; height: 3px; border-radius: 2px; background: rgba(232,238,246,.2); overflow: hidden; }
+  .bar i { display: block; height: 100%; width: 0; background: var(--accent); }
+  .trades { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 26px; margin: 10px 0 0; font-size: .86rem; color: rgba(232,238,246,.62); min-height: 1.5em; }
+  .trades b { color: #9cc2ff; font-weight: 500; }
+  .trades .owed strong { color: #fff; font-weight: 600; }
+  .trades .hpill { font-family: var(--mono); font-size: .82rem; color: #bcd3ff; background: rgba(31,95,255,.25); border-radius: 999px; padding: 3px 10px; }
 
-  .arrow { display: flex; align-items: center; justify-content: center; }
-  .arrow svg { width: 26px; height: 26px; color: rgba(232,238,246,.55); }
-  .arrow path { stroke-dasharray: 40; stroke-dashoffset: 40; }
-
-  .foot { position: absolute; left: 64px; right: 64px; bottom: 42px; display: flex;
-          justify-content: space-between; align-items: center; color: rgba(232,238,246,.8); font-size: 23px; }
-  .foot .dom { font-family: "Inter Tight", sans-serif; font-weight: 500; font-size: 28px; color: #fff; letter-spacing: -.02em; }
-  .foot .aud { display: flex; align-items: center; gap: 10px; }
-  .foot .aud svg { width: 22px; height: 22px; color: #6aa6ff; }
-  .foot .aud b { color: #fff; font-weight: 600; }
+  /* app cards, original */
+  .app { display: grid; grid-template-columns: minmax(0,1.15fr) minmax(0,1fr) minmax(0,1fr); gap: 18px; margin-top: 20px; align-items: start; }
+  .card { min-width: 0; background: var(--surface); color: var(--ink); border-radius: 10px; padding: 20px 22px;
+          box-shadow: 0 1px 2px rgba(10,37,64,.08), 0 14px 36px rgba(10,37,64,.2); }
+  .card h3 { font-family: var(--sans); font-size: .8rem; font-weight: 500; color: var(--muted); margin-bottom: 10px; }
+  .kv { list-style: none; padding: 0; font-size: .92rem; }
+  .kv li { display: flex; justify-content: space-between; gap: 14px; padding: 8px 0; border-top: 1px solid var(--line); }
+  .kv li:first-child { border-top: 0; padding-top: 0; }
+  .kv span:first-child { color: var(--muted); }
+  .kv b { font-weight: 500; text-align: right; }
+  .tabs { display: flex; gap: 26px; border-bottom: 1px solid var(--line); }
+  .tabs div { padding: 0 2px 10px; margin-bottom: -1px; font-size: .97rem; font-weight: 500; color: var(--muted); border-bottom: 1.5px solid transparent; }
+  .tabs div.on { color: var(--ink); border-bottom-color: var(--accent); }
+  .field { margin-top: 16px; display: flex; align-items: center; gap: 10px; border: 1px solid var(--line); border-radius: 6px;
+           padding: 9px 9px 9px 14px; background: #fff; }
+  .field .amt { flex: 1; font-size: 1.4rem; color: var(--ink); min-height: 1.3em; }
+  .field .amt:empty::before { content: "0"; color: var(--muted); opacity: .6; }
+  .field .unit { font-size: .88rem; color: var(--muted); }
+  .field .max { font-size: .82rem; font-weight: 500; padding: 5px 10px; border: 1px solid var(--line); border-radius: 5px; color: var(--ink); }
+  .btn { display: block; width: 100%; margin-top: 13px; padding: 14px; border-radius: 6px; text-align: center;
+         background: var(--accent); color: #fff; font-weight: 600; font-size: .97rem; }
+  .status-line { margin: 10px 0 0; min-height: 1.4em; font-size: .88rem; font-weight: 500; }
+  .holdings { margin: 10px 0 0; font-size: .9rem; }
 </style>
 </head>
 <body>
 <div class="stage" id="stage">
-  <div class="water"></div>
-  <div class="glow g1"></div><div class="glow g2"></div>
+  <div class="announce fx">Audited by Hashlock. 0 critical, 0 high. <u>Read the report</u></div>
 
-  <div class="brand fx"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="27" fill="none" stroke="#0f1f33" stroke-width="5"/><path d="M5 32h54a27 27 0 0 1-54 0z" fill="#0f1f33"/></svg><span>cartha</span></div>
+  <header class="fx">
+    <div class="wordmark"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="27" fill="none" stroke="currentColor" stroke-width="5"/><path d="M5 32h54a27 27 0 0 1-54 0z" fill="currentColor"/></svg><span>cartha</span></div>
+    <nav><span>Deposit</span><span>How it works</span><span>Ledger</span><span>Status</span><span>Contracts</span></nav>
+  </header>
 
-  <div class="h fx"><span class="w" id="w1">Buy it.</span> <span class="w" id="w2">Deposit it.</span> <span class="w" id="w3">Done.</span></div>
-  <div class="sub fx">Every CARTHA trade pays a fee. The fee buys CARTHA into the vault, and no vCARTHA is minted for it. <b>Your balance never moves. What it redeems for does.</b></div>
-
-  <div class="ratio fx">
-    <div class="lbl">CARTHA per vCARTHA</div>
-    <div class="n" id="ratio-n">1.0000<small>000</small></div>
-    <div class="refl"><div id="ratio-r">1.0000<small>000</small></div></div>
+  <div class="hero">
+    <h1 class="fx">Capital. Intelligently <span id="tw"></span><span class="cur" id="cur">_</span></h1>
+    <p class="ratio-label fx">CARTHA per vCARTHA, read from the vault</p>
+    <div class="ratio fx"><span id="ratio-main">1.0000</span><span class="tail" id="ratio-tail">000</span></div>
   </div>
 
-  <div class="row">
-    <div class="card" id="c1">
-      <div class="num">01</div>
-      <h3>Buy CARTHA on pons</h3>
-      <div class="scene">
-        <div class="kv fx1"><span>You pay</span><b>0.50 ETH</b></div>
-        <div class="kv fx1"><span>You receive</span><b id="buyN">0 CARTHA</b></div>
-        <div class="fx1"><div class="bar"><i id="curveBar"></i></div>
-        <div class="bar-lbl">Curve progress <span id="curvePct">0</span>%</div></div>
-      </div>
-      <div class="tag fx1">An ordinary fixed supply token. That is the point.</div>
-    </div>
-    <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path id="a1" d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+  <div class="waterblk">
+    <div class="caustics"><i class="l1"></i><i class="l2"></i></div>
+    <div class="winner">
+      <div class="reflect-wrap"><div class="reflection" id="reflection"><span id="refl-main">1.0000</span><span class="tail" id="refl-tail">000</span></div></div>
 
-    <div class="card" id="c2">
-      <div class="num">02</div>
-      <h3>Connect and deposit</h3>
-      <div class="scene">
-        <div class="btn fx2" id="connectBtn"><span class="dot"></span><span id="connectTxt">Connect wallet</span></div>
-        <div class="kv fx2"><span>Deposit</span><b>1,000,000 CARTHA</b></div>
-        <div class="kv fx2"><span>You receive</span><b id="depN">1,000,000 vCARTHA</b></div>
+      <div class="stats fx">
+        <span id="s-up">Nothing harvested yet</span>
+        <span id="s-lastw" hidden>Last harvest <strong id="s-last">just now</strong></span>
+        <span id="s-ethw" hidden><strong id="s-eth">0.0756</strong> ETH harvested into <strong id="s-still">71,120</strong> CARTHA so far</span>
       </div>
-      <div class="tag fx2">At carthafund.com. Settles the same block.</div>
-    </div>
-    <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path id="a2" d="M5 12h14M13 6l6 6-6 6"/></svg></div>
-
-    <div class="card" id="c3">
-      <div class="num">03</div>
-      <h3>Trades feed the vault</h3>
-      <div class="scene">
-        <div class="kv fx3"><span>Buy 0.31 ETH</span><b class="up">+0.0124 ETH</b></div>
-        <div class="kv fx3"><span>Sell 0.12 ETH</span><b class="up">+0.0048 ETH</b></div>
-        <div class="pill fx3" id="harvestPill">harvest(), anyone can call it</div>
-        <div class="kv fx3"><span>Into the vault</span><b class="up" id="harvN">+71,120 CARTHA</b></div>
+      <div class="phase fx"><span>CARTHA is on the pons curve, 38.2% of the way to its Uniswap v4 pool.</span><span class="bar"><i id="bar-fill"></i></span></div>
+      <div class="trades" id="trades">
+        <span class="t">Buy 0.31 ETH <b>+0.0124 ETH</b></span>
+        <span class="t">Sell 0.12 ETH <b>+0.0048 ETH</b></span>
+        <span class="t">Buy 1.02 ETH <b>+0.0408 ETH</b></span>
+        <span class="t">Sell 0.44 ETH <b>+0.0176 ETH</b></span>
+        <span class="t owed">Owed to the harvester <strong>0.0756 ETH</strong></span>
+        <span class="t hpill" id="hpill">harvest(), anyone can call it</span>
       </div>
-      <div class="tag fx3">No vCARTHA minted for it. The ratio steps up.</div>
-    </div>
-    <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path id="a3" d="M5 12h14M13 6l6 6-6 6"/></svg></div>
 
-    <div class="card" id="c4">
-      <div class="num">04</div>
-      <h3>Redeem when you like</h3>
-      <div class="scene">
-        <div class="kv fx4"><span>You burn</span><b>1,000,000 vCARTHA</b></div>
-        <div class="kv fx4"><span>You receive</span><b class="up" id="redN">1,000,000 CARTHA</b></div>
-        <div class="kv fx4"><span>Queue, exit fee</span><b>None</b></div>
+      <div class="app">
+        <div class="card fxc">
+          <div class="tabs"><div class="on">Deposit CARTHA</div><div>Redeem vCARTHA</div></div>
+          <div class="field"><div class="amt" id="amt"></div><span class="unit">CARTHA</span><span class="max" id="max">Max</span></div>
+          <div class="btn" id="act">Connect wallet</div>
+          <p class="status-line" id="status"></p>
+          <p class="holdings" id="holdings">Connect a wallet to see what you hold.</p>
+        </div>
+        <div class="card fxc">
+          <h3>Your position</h3>
+          <ul class="kv">
+            <li><span>vCARTHA held</span><b id="p-shares">Connect a wallet</b></li>
+            <li><span>Redeems for</span><b id="p-worth"></b></li>
+            <li><span>Share of the vault</span><b id="p-share"></b></li>
+            <li><span>CARTHA in wallet</span><b id="p-wallet"></b></li>
+            <li><span>Network</span><b>Robinhood Chain</b></li>
+          </ul>
+        </div>
+        <div class="card fxc">
+          <h3>The vault</h3>
+          <ul class="kv">
+            <li><span>CARTHA in the vault</span><b id="v-assets">212,000,000 CARTHA</b></li>
+            <li><span>vCARTHA in circulation</span><b>212,000,000 vCARTHA</b></li>
+            <li><span>CARTHA per vCARTHA</span><b id="v-ratio">1.0000000</b></li>
+            <li><span>Exit</span><b>Redeem, same block</b></li>
+            <li><span>Queue</span><b>None</b></li>
+          </ul>
+        </div>
       </div>
-      <div class="tag fx4">No claim step. No owner. Just the ratio.</div>
     </div>
-  </div>
-
-  <div class="foot fx">
-    <div class="dom">carthafund.com</div>
-    <div class="aud"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Audited by <b>Hashlock</b>. 0 critical, 0 high.</span></div>
   </div>
 </div>
 
@@ -162,87 +176,106 @@
 <script>
 (function () {
   var stage = document.getElementById("stage");
-  function fit() {
-    var s = Math.min(window.innerWidth / 1600, window.innerHeight / 900);
-    stage.style.transform = "scale(" + s + ")";
-  }
-  fit(); window.addEventListener("resize", fit);
+  function fit() { stage.style.transform = "scale(" + Math.min(innerWidth / 1600, innerHeight / 900) + ")"; }
+  fit(); addEventListener("resize", fit);
 
+  var $ = function (id) { return document.getElementById(id); };
   var fmt = function (n) { return Math.round(n).toLocaleString("en-US"); };
-  var buyN = document.getElementById("buyN"), curveBar = document.getElementById("curveBar"),
-      curvePct = document.getElementById("curvePct"), connectTxt = document.getElementById("connectTxt"),
-      connectBtn = document.getElementById("connectBtn"), redN = document.getElementById("redN"),
-      ratioN = document.getElementById("ratio-n"), ratioR = document.getElementById("ratio-r");
-
   function paintRatio(v) {
-    var s = v.toFixed(7), main = s.slice(0, 6), tail = s.slice(6);
-    var html = main + "<small>" + tail + "</small>";
-    ratioN.innerHTML = html; ratioR.innerHTML = html;
+    var s = v.toFixed(7);
+    $("ratio-main").textContent = s.slice(0, 6); $("ratio-tail").textContent = s.slice(6);
+    $("refl-main").textContent = s.slice(0, 6); $("refl-tail").textContent = s.slice(6);
+    $("v-ratio").textContent = s;
   }
 
-  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var finalState = function () {
-    document.querySelectorAll(".fx,.fx1,.fx2,.fx3,.fx4,.card").forEach(function (el) { el.style.opacity = 1; el.style.transform = "none"; });
-    document.querySelectorAll(".arrow path").forEach(function (p) { p.style.strokeDashoffset = 0; });
-    document.querySelectorAll(".w").forEach(function (w) { w.style.opacity = 1; });
-    buyN.textContent = "1,000,000 CARTHA"; curveBar.style.width = "38%"; curvePct.textContent = "38";
-    connectBtn.classList.add("done"); connectTxt.textContent = "0x7a3c\u20264f21 connected";
-    redN.textContent = "1,004,731 CARTHA"; paintRatio(1.0047312);
-  };
-  if (reduced || typeof gsap === "undefined") { finalState(); return; }
+  var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduced || typeof gsap === "undefined") {
+    document.querySelectorAll(".fx,.fxc,.trades .t").forEach(function (el) { el.style.opacity = 1; });
+    $("tw").textContent = "allocated"; $("cur").style.display = "none"; $("bar-fill").style.width = "38.2%";
+    $("act").textContent = "Deposit"; $("amt").textContent = "1000000";
+    $("status").textContent = "Deposited 1,000,000 CARTHA in block 50,906,455.";
+    $("holdings").textContent = "You hold 0 CARTHA and 1,000,000 vCARTHA, which redeems for 1,004,731 CARTHA right now.";
+    $("p-shares").textContent = "1,000,000 vCARTHA"; $("p-worth").textContent = "1,004,731 CARTHA";
+    $("p-share").textContent = "0.47%"; $("p-wallet").textContent = "0 CARTHA";
+    $("v-assets").textContent = "212,071,120 CARTHA";
+    $("s-up").innerHTML = "Up <strong>0.47%</strong> since launch"; $("s-lastw").hidden = false; $("s-ethw").hidden = false;
+    paintRatio(1.0047312);
+    return;
+  }
 
-  gsap.set(".fx", { autoAlpha: 0, y: 18 });
-  gsap.set(".card", { autoAlpha: 0, y: 26 });
-  gsap.set(".fx1,.fx2,.fx3,.fx4", { autoAlpha: 0, y: 10 });
+  gsap.set(".fx", { autoAlpha: 0, y: 14 });
+  gsap.set(".fxc", { autoAlpha: 0, y: 26 });
+  gsap.set(".trades .t", { autoAlpha: 0, y: 8 });
 
-  var counters = { buy: 0, red: 1000000, ratio: 1 };
+  var word = "allocated", c = { i: 0, ratio: 1, assets: 212000000, worth: 0 };
 
-  var tl = gsap.timeline({ repeat: -1, repeatDelay: 1.6, defaults: { ease: "power3.out" },
-    onRepeat: function () {
-      counters.buy = 0; counters.red = 1000000; counters.ratio = 1;
-      buyN.textContent = "0 CARTHA"; curveBar.style.width = "0%"; curvePct.textContent = "0";
-      connectBtn.classList.remove("done"); connectTxt.textContent = "Connect wallet";
-      redN.textContent = "1,000,000 CARTHA"; paintRatio(1);
-    }
-  });
+  function reset() {
+    c.i = 0; c.ratio = 1; c.assets = 212000000; c.worth = 0;
+    $("tw").textContent = ""; $("cur").style.display = "inline";
+    $("bar-fill").style.width = "0"; $("amt").textContent = ""; $("act").textContent = "Connect wallet";
+    $("status").textContent = ""; $("holdings").textContent = "Connect a wallet to see what you hold.";
+    $("p-shares").textContent = "Connect a wallet"; $("p-worth").textContent = ""; $("p-share").textContent = ""; $("p-wallet").textContent = "";
+    $("v-assets").textContent = "212,000,000 CARTHA";
+    $("s-up").textContent = "Nothing harvested yet"; $("s-lastw").hidden = true; $("s-ethw").hidden = true;
+    $("reflection").classList.remove("ripple");
+    paintRatio(1);
+  }
 
-  tl.to(".fx", { autoAlpha: 1, y: 0, duration: .7, stagger: .08 })
+  function press(el) { return gsap.to(el, { scale: .97, duration: .1, yoyo: true, repeat: 1, ease: "power1.inOut" }); }
 
-    // 01 buy
-    .to("#c1", { autoAlpha: 1, y: 0, duration: .55 }, "-=.2")
-    .to("#w1", { opacity: 1, duration: .4 }, "<")
-    .to(".fx1", { autoAlpha: 1, y: 0, duration: .45, stagger: .18 }, "-=.1")
-    .to(counters, { buy: 1000000, duration: 1.1, ease: "power2.out",
-        onUpdate: function () { buyN.textContent = fmt(counters.buy) + " CARTHA"; } }, "-=.5")
-    .to("#curveBar", { width: "38%", duration: .9, ease: "power2.inOut",
-        onUpdate: function () { curvePct.textContent = Math.round(parseFloat(curveBar.style.width) || 0); } }, "<")
+  var tl = gsap.timeline({ repeat: -1, repeatDelay: 2, defaults: { ease: "power3.out" }, onRepeat: reset });
 
-    // 02 connect + deposit
-    .to("#a1", { strokeDashoffset: 0, duration: .4, ease: "power1.inOut" }, "+=.2")
-    .to("#c2", { autoAlpha: 1, y: 0, duration: .55 }, "-=.15")
-    .to("#w2", { opacity: 1, duration: .4 }, "<")
-    .to(".fx2", { autoAlpha: 1, y: 0, duration: .45, stagger: .2 }, "-=.1")
-    .to("#connectBtn", { scale: .96, duration: .12, yoyo: true, repeat: 1, ease: "power1.inOut" }, "+=.35")
-    .add(function () { connectBtn.classList.add("done"); connectTxt.textContent = "0x7a3c\u20264f21 connected"; })
+  tl.to(".fx", { autoAlpha: 1, y: 0, duration: .6, stagger: .07 })
+    .to(c, { i: word.length, duration: .9, ease: "none",
+        onUpdate: function () { $("tw").textContent = word.slice(0, Math.round(c.i)); } }, "-=.3")
+    .add(function () { $("cur").style.display = "none"; }, "+=.4")
+    .to("#bar-fill", { width: "38.2%", duration: .9, ease: "power2.inOut" }, "-=1.1")
+    .to(".fxc", { autoAlpha: 1, y: 0, duration: .55, stagger: .12 }, "-=.9")
 
-    // 03 harvest
-    .to("#a2", { strokeDashoffset: 0, duration: .4, ease: "power1.inOut" }, "+=.3")
-    .to("#c3", { autoAlpha: 1, y: 0, duration: .55 }, "-=.15")
-    .to(".fx3", { autoAlpha: 1, y: 0, duration: .45, stagger: .24 }, "-=.1")
-    .fromTo("#harvestPill", { scale: 1 }, { scale: 1.06, duration: .16, yoyo: true, repeat: 1, ease: "power1.inOut" }, "-=.3")
-    .to(counters, { ratio: 1.0047312, duration: 1.2, ease: "power2.out",
-        onUpdate: function () { paintRatio(counters.ratio); } }, "-=.1")
-    .fromTo("#ratio-r", { scaleY: -1, skewX: 0 },
-        { keyframes: [ { scaleY: -1.06, skewX: 1.4, duration: .3 }, { scaleY: -.96, skewX: -1.1, duration: .35 }, { scaleY: -1, skewX: 0, duration: .45 } ] }, "<")
+    /* connect */
+    .add(press($("act")), "+=.5")
+    .add(function () {
+      $("act").textContent = "Deposit";
+      $("holdings").textContent = "You hold 1,000,000 CARTHA and 0 vCARTHA, which redeems for 0 CARTHA right now.";
+      $("p-shares").textContent = "0 vCARTHA"; $("p-worth").textContent = "0 CARTHA";
+      $("p-share").textContent = "0%"; $("p-wallet").textContent = "1,000,000 CARTHA";
+    }, "+=.25")
 
-    // 04 redeem
-    .to("#a3", { strokeDashoffset: 0, duration: .4, ease: "power1.inOut" }, "+=.25")
-    .to("#c4", { autoAlpha: 1, y: 0, duration: .55 }, "-=.15")
-    .to(".fx4", { autoAlpha: 1, y: 0, duration: .45, stagger: .2 }, "-=.1")
-    .to(counters, { red: 1004731, duration: 1, ease: "power2.out",
-        onUpdate: function () { redN.textContent = fmt(counters.red) + " CARTHA"; } }, "-=.3")
-    .to("#w3", { opacity: 1, duration: .5 }, "-=.6")
-    .to({}, { duration: .4 });
+    /* max + deposit */
+    .add(press($("max")), "+=.7")
+    .add(function () { $("amt").textContent = "1000000"; }, "+=.15")
+    .add(press($("act")), "+=.6")
+    .add(function () { $("status").textContent = "Approve CARTHA in your wallet."; }, "+=.2")
+    .add(function () { $("status").textContent = "Sent. Waiting for the block."; }, "+=1.0")
+    .add(function () {
+      $("status").textContent = "Deposited 1,000,000 CARTHA in block 50,906,455.";
+      $("amt").textContent = "";
+      $("holdings").textContent = "You hold 0 CARTHA and 1,000,000 vCARTHA, which redeems for 1,000,000 CARTHA right now.";
+      $("p-shares").textContent = "1,000,000 vCARTHA"; $("p-worth").textContent = "1,000,000 CARTHA";
+      $("p-share").textContent = "0.47%"; $("p-wallet").textContent = "0 CARTHA";
+    }, "+=1.0")
+
+    /* fees accumulate */
+    .to(".trades .t", { autoAlpha: 1, y: 0, duration: .4, stagger: .5 }, "+=.7")
+    .fromTo("#hpill", { scale: 1 }, { scale: 1.07, duration: .18, yoyo: true, repeat: 1 }, "-=.1")
+
+    /* harvest lands */
+    .add(function () {
+      $("s-lastw").hidden = false; $("s-ethw").hidden = false;
+      var r = $("reflection"); r.classList.remove("ripple"); void r.offsetWidth; r.classList.add("ripple");
+    }, "+=.3")
+    .to(c, { ratio: 1.0047312, assets: 212071120, worth: 1004731, duration: 1.4, ease: "power2.out",
+        onUpdate: function () {
+          paintRatio(c.ratio);
+          $("v-assets").textContent = fmt(c.assets) + " CARTHA";
+          $("p-worth").textContent = fmt(c.worth) + " CARTHA";
+          var up = (c.ratio - 1) * 100;
+          $("s-up").innerHTML = "Up <strong>" + up.toFixed(2) + "%</strong> since launch";
+        },
+        onComplete: function () {
+          $("holdings").textContent = "You hold 0 CARTHA and 1,000,000 vCARTHA, which redeems for 1,004,731 CARTHA right now.";
+        } }, "<")
+    .to({}, { duration: .5 });
 })();
 </script>
 </body>
