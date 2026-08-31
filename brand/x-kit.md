@@ -8,7 +8,19 @@ Replace `[TOKEN]`, `[VAULT]`, `[HARVESTER]` and `[SITE]` before posting.
 
 Name: cartha
 
-Bio: A vault on Robinhood Chain. Fees buy CARTHA into the vault, vCARTHA just gets worth more. No claim step. No owner. Unaudited, Hashlock audit scheduled.
+Bio (pick one, all under 160 characters):
+
+A, the balanced one, use this: The vault on Robinhood Chain. Every $CARTHA trade buys CARTHA into the vault. Nothing to claim, no rebase, no owner. Independently reviewed, audit scheduled.
+
+B, mechanism first: Fees buy $CARTHA into an ERC-4626 vault. vCARTHA never rebases and never needs claiming, it just redeems for more. No owner, no admin keys. Robinhood Chain.
+
+C, trader voice: One number, one direction. Trading fees buy $CARTHA into the vault and CARTHA per vCARTHA only steps up. Nothing to claim, nobody to trust. Robinhood Chain.
+
+D, integrator voice: A price-accruing ERC-4626 share over launchpad fees. Priced by one view call. No rebase, no claim step, no admin surface. Read the review, then the code.
+
+Profile fields: Website cartha-phi.vercel.app. Location: Robinhood Chain, 4663. Category: if offered, Financial services or none.
+
+When the Hashlock report is published, swap "Independently reviewed, audit scheduled" for "Audited by Hashlock" in whichever bio is live, and pin the report.
 
 When the Hashlock report is published, change "Unaudited, Hashlock audit scheduled" to "Audited by Hashlock" and pin the report link. Not before.
 
