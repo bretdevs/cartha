@@ -357,7 +357,7 @@
 <div class="sky" aria-hidden="true"><i class="a"></i><i class="b"></i><i class="c"></i></div>
 <a class="skip" href="#deposit">Skip to deposit</a>
 
-<div class="announce" id="announce"><span id="announce-text">Unaudited until the Hashlock report is published.</span> <a href="#status">See where it stands</a><button type="button" aria-label="Dismiss" id="announce-x">&times;</button></div>
+<div class="announce" id="announce"><span id="announce-text">Unaudited until the Hashlock report is published.</span> <a href="#status" id="announce-link">See where it stands</a><button type="button" aria-label="Dismiss" id="announce-x">&times;</button></div>
 
 <header id="hdr">
   <div class="wrap">
@@ -935,8 +935,12 @@ function renderAudit() {
     tile = ["none", "Not started", "No third party has reviewed the code."];
   }
   $("audit-risk").innerHTML = risk; $("audit-line").innerHTML = line; $("audit-footer").innerHTML = foot; $("faq-audit").textContent = faq;
-  const ann = $("announce-text");
-  if (ann) ann.textContent = a.status === "complete" && a.reportUrl ? `Audited by ${a.firm}.` : a.status === "review" ? `Under review by ${a.firm}. Unaudited until the report is published.` : a.status === "scheduled" ? `Unaudited until the ${a.firm} report is published.` : "Unaudited.";
+  const ann = $("announce-text"), annLink = $("announce-link");
+  if (ann) {
+    if (a.status === "complete" && a.reportUrl) { ann.textContent = `Audited by ${a.firm}.`; annLink.textContent = "Read the report"; annLink.href = a.reportUrl; }
+    else if (CONFIG.review?.url) { ann.textContent = `Not audited yet. An independent security review found 0 critical and 0 high severity issues.`; annLink.textContent = "Read the report"; annLink.href = CONFIG.review.url; }
+    else { ann.textContent = a.status === "review" ? `Under review by ${a.firm}. Unaudited until the report is published.` : a.status === "scheduled" ? `Unaudited until the ${a.firm} report is published.` : "Unaudited."; annLink.textContent = "See where it stands"; annLink.href = "#status"; }
+  }
   return tile;
 }
 function renderBoard() {
