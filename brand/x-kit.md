@@ -73,7 +73,7 @@ Source, tests and the deploy script that set the fee recipient: [SITE]
 
 Most tokens on pons pay you fees to claim. This one buys itself into a vault and makes the share you already hold worth more.
 
-Buy CARTHA on pons. Deposit on the site. Nothing to claim.
+Buy CARTHA on pons. Deposit on the site. Capital. Intelligently allocated.
 
 [SITE]
 

@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cartha. Nothing to claim.</title>
+<title>Cartha. Capital, intelligently allocated.</title>
 <meta name="description" content="A vault on Robinhood Chain. Trading fees buy CARTHA into the vault and vCARTHA just gets worth more. No claim step, no rebase, no owner.">
-<meta property="og:title" content="Cartha. Nothing to claim.">
+<meta property="og:title" content="Cartha. Capital, intelligently allocated.">
 <meta property="og:description" content="Your balance never moves. What it redeems for does. A vault on Robinhood Chain with no claim step and no owner.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://cartha-phi.vercel.app/og.png">
@@ -81,8 +81,8 @@
   .hero { position: relative; padding: clamp(56px, 8vw, 110px) 0 0; overflow: hidden; }
   .hero .bg { position: absolute; inset: 0; z-index: -1; background: linear-gradient(115deg, #ffffff 0%, #f4f7fb 40%, #dfe9ff 100%); }
   .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.9; }
-  .hero h1 { font-size: clamp(3rem, 7.2vw, 6.2rem); line-height: 0.98; letter-spacing: -0.045em; min-height: 1em; }
-  .hero h1 .cur { display: inline-block; width: 0.06em; height: 0.82em; background: var(--ink); margin-left: 0.06em; vertical-align: -0.06em; animation: blink 0.9s steps(2) infinite; }
+  .hero h1 { font-size: clamp(2.6rem, 5.8vw, 4.9rem); line-height: 1.02; letter-spacing: -0.045em; }
+  .hero h1 .cur { display: inline; font-weight: 400; color: var(--ink); animation: blink 1s steps(2) infinite; }
   .hero h1 .cur.off { display: none; }
   @keyframes blink { to { opacity: 0; } }
   .hero .lede { font-size: clamp(1.05rem, 1.35vw, 1.22rem); max-width: 56ch; margin: 24px 0 0; }
@@ -384,7 +384,7 @@
     <div class="bg" aria-hidden="true"></div>
     <canvas id="waterlines" aria-hidden="true"></canvas>
     <div class="wrap">
-      <h1 id="h1"><span id="h1-text">Nothing to claim.</span><span class="cur off" id="h1-cur" aria-hidden="true"></span></h1>
+      <h1 id="h1" aria-label="Capital. Intelligently allocated">Capital.<br>Intelligently <span id="tw" aria-hidden="true">allocated</span><span class="cur" id="h1-cur" aria-hidden="true">_</span></h1>
       <p class="lede rv">A vault on Robinhood Chain whose share is a plain ERC-20. Every CARTHA trade pays a fee, the fee buys CARTHA, and the CARTHA goes into the vault. Your balance of vCARTHA never changes. What each unit redeems for does.</p>
       <div class="actions rv">
         <a class="cta" href="#deposit">Deposit CARTHA <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 13 13 3M5 3h8v8"/></svg></a>
@@ -1020,10 +1020,17 @@ for (const id of ["in-vol", "in-cap", "in-dep"]) $(id).addEventListener("input",
 
 /* ------------------------------------------------------------- typewriter */
 (() => {
-  const el = $("h1-text"), cur = $("h1-cur"); if (!el || !motion) return;
-  const full = el.textContent; el.textContent = ""; cur.classList.remove("off");
-  let i = 0; const tick = () => { i++; el.textContent = full.slice(0, i); if (i < full.length) setTimeout(tick, 70 + Math.random() * 60); else setTimeout(() => cur.classList.add("off"), 1800); };
-  setTimeout(tick, 250);
+  const el = $("tw"), cur = $("h1-cur"); if (!el) return;
+  if (!motion) { cur.classList.add("off"); return; }
+  const words = ["allocated", "compounded", "harvested", "returned"];
+  let w = 0, text = words[0], deleting = false;
+  const step = () => {
+    if (!deleting && text.length < words[w].length) { text = words[w].slice(0, text.length + 1); el.textContent = text; setTimeout(step, 190); return; }
+    if (!deleting) { deleting = true; setTimeout(step, 2700); return; }
+    if (text.length > 0) { text = text.slice(0, -1); el.textContent = text; setTimeout(step, 110); return; }
+    deleting = false; w = (w + 1) % words.length; setTimeout(step, 350);
+  };
+  setTimeout(step, 2700);
 })();
 
 /* ------------------------------------------------------------------ motion */
